@@ -1,3 +1,4 @@
+import {useUser} from "@/context/UserContext.jsx";
 
 
 export const signUpUser = async (
@@ -23,5 +24,49 @@ export const signUpUser = async (
         console.log(res.body);
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const signInUser = async (
+    request
+)=> {
+    try {
+        const res = await fetch("http://localhost:8000/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                    ...request
+            })
+        })
+        if (!res.ok) {
+            const errorDetails = await res.json();
+            console.error("Erreur serveur :", errorDetails);
+            throw new Error("Échec de la connexion");
+        }
+        const data = await res.json();
+        sessionStorage.setItem("access_token", data.token);
+
+        return await getMe();
+
+    } catch(error) {
+        console.log("Erreur dans signInUser :", error);
+        throw error;
+    }
+}
+
+export const getMe = async() => {
+    try {
+        const res = await fetch("http://localhost:8000/auth/me", {
+            headers: {
+                authorization: `Bearer ${sessionStorage.getItem("access_token")}`
+            }
+        })
+        console.log(res)
+
+        if(res.ok) return res.json();
+    } catch (error) {
+        console.log("Erreur dans get me :", error);
     }
 }

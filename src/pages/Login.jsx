@@ -2,14 +2,24 @@ import React from 'react';
 import {Controller, useForm} from "react-hook-form";
 import {Label} from "@/components/ui/label.jsx";
 import {Input} from "@/components/ui/input.jsx";
-import {signUpUser} from "@/api/auth.js";
+import {signInUser} from "@/api/auth.js";
 import {cn} from "@/lib/utils.js";
+import {useUser} from "@/context/UserContext.jsx";
 
 function Login() {
 
     const {control, handleSubmit, getValues} = useForm();
 
-    const onSubmit = (values) => signUpUser(values);
+    const { user, setUser } = useUser();
+
+    const onSubmit = (values) => {
+        signInUser(values).then((data) => {
+            console.log(data)
+            if(data) setUser(data);
+            console.log("user", user)
+
+        });
+    };
 
     return (
         <div className={"flex flex-col gap-4 items-center justify-center min-h-screen"}>
@@ -62,6 +72,8 @@ function Login() {
                                 </LabelInputContainer>
                             )}
                 />
+
+                <p className="text-sm italic font-light text-gray-500"> Pas encore robuxien ? <a href={"/register"}>S'inscrire</a> </p>
 
                 <button
                     className="group/btn relative block cursor-pointer h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
