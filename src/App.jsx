@@ -8,6 +8,7 @@ import Login from "@/pages/Login.jsx";
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import AuthRoute from "@/routes/AuthRoute.jsx";
 import VerifRoute from "@/routes/VerifRoute.jsx";
+import Profile from "@/pages/Profile.jsx";
 import Beneficiary from './pages/Beneficiary';
 import Dashboard from "@/pages/Dashboard.jsx";
 import BankAccount from "@/pages/BankAccount.jsx";
@@ -22,6 +23,8 @@ function App() {
 
           {/* Route possible seulement si authentifié*/}
           <Route element={<AuthRoute/>}>
+            <Route path={"/dashboard"} element={<Home/>}/>
+            <Route path={"/profile"} element={<Profile/>}/>
             <Route path={"/dashboard"} element={<Dashboard/>}/>
             <Route path={"/profile"} element={<Home/>}/>
             <Route path={"/bank-account/:account"} element={<BankAccount/>}/>
