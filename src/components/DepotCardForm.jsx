@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ArrowRight, Banknote, FilePenLine, Landmark, MapPin, QrCode, Type, User, Wallet} from "lucide-react";
+import {ArrowRight, Banknote, FilePenLine, Landmark, MapPin, QrCode, Type, User, Wallet, X} from "lucide-react";
 import {Controller, useForm} from "react-hook-form";
 import {
     Select,
@@ -11,13 +11,19 @@ import {
     SelectValue
 } from "@/components/ui/select.jsx";
 import {Input} from "@/components/ui/input.jsx";
-import {createTransaction} from "@/api/transaction.js";
+import {cancelTransaction, createTransaction} from "@/api/transaction.js";
 import {getRobuxBankAccount} from "@/api/bankAccount.js";
 import FinishedTransactionModal from "@/components/FinishedTransactionModal.jsx";
+import {MultiStepLoader} from "@/components/ui/multi-step-loader.jsx";
+import {Button} from "@/components/animate-ui/components/buttons/button.jsx";
 
 function DepotCardForm({allBankAccounts = []}) {
 
     const {handleSubmit, control} = useForm();
+
+
+    const [loading, setLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const [depotType, setDepotType] = useState("espece");
     const [robuxBankAccount, setRobuxBankAccount] = useState({});
@@ -27,6 +33,24 @@ function DepotCardForm({allBankAccounts = []}) {
     const [createdTransactionData, setCreateTransactionData] = React.useState({});
 
     const [submitError, setSubmitError] = React.useState("");
+
+
+    const STEP_DURATION = 1250;
+
+    const loadingStates = [
+        {
+            text: "Vérification des coordonnées bancaires...",
+        },
+        {
+            text: "Sécurisation de la transaction en cours...",
+        },
+        {
+            text: "Transfert des fonds vers le bénéficiaire...",
+        },
+        {
+            text: "Finalisation de l'opération...",
+        }
+    ]
 
     const onSubmit = (values) => {
 
@@ -46,22 +70,52 @@ function DepotCardForm({allBankAccounts = []}) {
 
             if(result?.detail) return;
 
-            console.log(finalPayload.iban_from);
-            console.log(allBankAccounts);
+
+            setLoading(true);
+            setIsLoading(true);
             const transactionPayload = {
                 ...finalPayload,
+                ...result,
                 to_account: allBankAccounts.find((bank_account) => bank_account.iban === finalPayload.iban_to).name,
                 type: depotType === "espece" ? "Espèces" : "Chèque",
             }
 
-            setIsModalOpen(true);
             setCreateTransactionData(transactionPayload);
+        });
+    }
+
+    const onCancel = () => {
+        console.log(createdTransactionData);
+        cancelTransaction(parseInt(createdTransactionData.transaction_id)).then((result) => {
+            console.log(result);
+            setSubmitError("Vous avez annuler le virement.")
+            setLoading(false);
+            setIsLoading(false);
         });
     }
 
     useEffect(() => {
         getRobuxBankAccount().then((result) => setRobuxBankAccount(result));
     }, []);
+
+
+    useEffect(() => {
+        let timer;
+
+        if (isLoading) {
+            const totalTime = loadingStates.length * STEP_DURATION;
+
+            timer = setTimeout(() => {
+                setLoading(false);
+                setIsLoading(false);
+
+                setIsModalOpen(true);
+
+            }, totalTime);
+        }
+
+        return () => clearTimeout(timer);
+    }, [isLoading, loadingStates.length]);
 
     return (
         <>
@@ -275,7 +329,11 @@ function DepotCardForm({allBankAccounts = []}) {
                     <div className="flex items-baseline gap-1 sm:gap-2 justify-center w-full">
                         <Controller
                             control={control}
-                            rules={{ required: "Montant requis", valueAsNumber: true }}
+                            rules={{ required: "Montant requis", valueAsNumber: true,
+                                min: {
+                                    value: 0.01,
+                                    message: "Le montant doit être supérieur à 0"
+                                }}}
                             name="amount"
                             defaultValue={0.00}
                             render={({ field, fieldState }) => (
@@ -311,6 +369,25 @@ function DepotCardForm({allBankAccounts = []}) {
                 )}
 
             </form>
+
+
+            {loading && (
+                <div className={"absolute w-full h-full top-0 left-0 bg-white flex items-center justify-center"}>
+                    <MultiStepLoader loadingStates={loadingStates} duration={STEP_DURATION} loading={isLoading} loop={false}/>
+
+                    <div className={"z-999 mt-auto mb-10 flex flex-col items-center"}>
+                        <Button
+                            onClick={onCancel}
+                            className={"z-999 flex items-center font-bold bg-red-50 text-red-600 hover:!bg-red-100 px-10 py-5"}>
+                            <X size={50}/> Annuler l'opération
+                        </Button>
+                        <p className={"text-center text-xs text-gray-400 mt-2 z-999 max-w-xs"}>
+                            L'opération sera validée automatiquement à la fin du temps imparti
+                        </p>
+                    </div>
+                </div>
+            )}
+
             <FinishedTransactionModal open={isModalOpen} onClose={() => setIsModalOpen(false)} transaction={createdTransactionData}/>
         </>
     );

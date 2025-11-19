@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import GridBackground from "@/components/ui/GridBackground.jsx";
 import { motion } from "motion/react";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip.jsx";
-import {ArrowRight, ArrowUpDown, MoveUpRight} from "lucide-react";
+import {ArrowRight, ArrowUpDown, LogIn} from "lucide-react";
 import { GradientBackground } from "@/components/animate-ui/components/backgrounds/gradient.jsx";
 import { useNavigate } from "react-router-dom";
 import {useUser} from "@/context/UserContext.jsx";
-import Login from "@/pages/Login.jsx";
 import {Card} from "@/components/ui/card.jsx";
 import BankCard from "@/components/Card.jsx";
 
@@ -96,7 +95,7 @@ function Home() {
             }
           >
             {user ? "Aller au dashboard" : "S'inscrire"}
-            {user ? <ArrowRight /> : <Login/>}
+            {user ? <ArrowRight /> : <LogIn/>}
           </button>
 
         </div>
@@ -184,7 +183,7 @@ function Home() {
                     className={"max-w-4"}
                   />
                 </div>
-                =
+
                 <div className={"flex gap-1 items-center"}>
                   <p>0.01</p>
                   <span className={"text-lg"}>€</span>

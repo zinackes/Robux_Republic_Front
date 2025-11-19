@@ -102,6 +102,7 @@ function VirementCardForm({allBankAccounts}) {
             console.log(beneficiaries);
             setCreateTransactionData({
                 ...finalPayload,
+                ...result,
                 to_account: beneficiaries.find((beneficiary) => beneficiary.iban_to === finalPayload.iban_to)?.name ?? finalPayload.iban_to,
                 from_account: allBankAccounts.find((bank_account) => bank_account.iban === finalPayload.iban_from).name,
                 type: "Virement",
@@ -265,7 +266,12 @@ function VirementCardForm({allBankAccounts}) {
                     <div className="flex items-baseline gap-1 sm:gap-2 justify-center w-full">
                         <Controller
                             control={control}
-                            rules={{ required: "Montant requis", valueAsNumber: true }}
+                            rules={{ required: "Montant requis", valueAsNumber: true,
+                                min: {
+                                    value: 0.01,
+                                    message: "Le montant doit être supérieur à 0"
+                                    }
+                            }}
                             name="amount"
                             defaultValue={0.00}
                             render={({ field, fieldState }) => (
