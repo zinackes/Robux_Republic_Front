@@ -49,7 +49,7 @@ export default function App() {
               </LabelInputContainer>
             )}
           />
-          <button className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[15px] py-4 rounded-2xl transition-colors shadow-sm" type="submit">
+          <button className="w-full mt-6 bg-[#8d00ff] hover:bg-[#7a00cc] text-white font-bold text-[15px] py-4 rounded-2xl transition-colors shadow-sm" type="submit">
             Créer le compte
           </button>
         </form>

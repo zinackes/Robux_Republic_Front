@@ -6,6 +6,7 @@ export default function SimpleModal({ isOpen, onClose, title, children }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+      
       <div className="relative rounded-3xl p-[2px] max-w-md w-full bg-black overflow-hiddenshadow-[0_0_20px_rgba(0,255,200,0.25)]"
         style={{
           background: "linear-gradient(135deg, #00f6ff, #8d00ff)",
@@ -30,6 +31,33 @@ export default function SimpleModal({ isOpen, onClose, title, children }) {
             </button>
           </div>
           <div className="mb-4">{children}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ function ConfirmationModal({ isOpen, onClose, onConfirm, title, message }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+      <div className="bg-white w-full max-w-sm p-6 rounded-xl shadow-lg">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">{title}</h2>
+        <p className="text-gray-600 mb-6">{message}</p>
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+          >
+            Annuler
+          </button>
+          <button
+            onClick={onConfirm}
+            className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+          >
+            Supprimer
+          </button>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import PersonalInfoCard from "@/components/ui/PersonalInfoCard.jsx";
 import { CreditCard, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip.jsx";
-import ModalCreateAccount from "@/components/CreateAccount.jsx";
+import ConfirmationModal from "@/components/ModalDeleteAccount.jsx";
 import { useUser } from "@/context/UserContext.jsx";
 
 export default function BodyProfile() {
@@ -17,7 +17,6 @@ export default function BodyProfile() {
             </div>
         );
     }
-
     return (
         <div className="relative w-full h-screen flex items-center justify-center">
             <div className="absolute inset-0 z-0 bg-grid-pattern opacity-20">
@@ -30,11 +29,7 @@ export default function BodyProfile() {
                     )}
                 />
             </div>
-            
-
             <div className="relative z-10 flex flex-col items-center justify-center gap-12">
-            <ModalCreateAccount />
-                {/* Titre */}
                 <h1 className="font-title text-5xl font-bold sm:text-6xl md:text-7xl text-center">
                     <motion.div className="flex flex-col items-center justify-center gap-4 text-center sm:flex-row">
                         <LayoutTextFlip
@@ -43,10 +38,7 @@ export default function BodyProfile() {
                         />
                     </motion.div>
                 </h1>
-
-                {/* Contenu principal */}
                 <div className="flex gap-6 max-w-6xl w-full justify-center items-start">
-                    {/* Colonne gauche */}
                     <div className="flex flex-col justify-between gap-6 w-64">
                         <div className="flex-1 bg-white/95 dark:bg-gray-900/95 rounded-3xl shadow-md p-6 border border-gray-100 dark:border-gray-800">
                             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
