@@ -7,12 +7,28 @@ import {
   FileText,
   TrendingUp,
   TrendingDown,
+  ArrowRightLeft,
+  ArrowDown,
+  ArrowRight,
 } from "lucide-react";
+import {
+  Tabs,
+  TabsContent,
+  TabsContents,
+  TabsList,
+  TabsTrigger,
+} from "@/components/animate-ui/components/animate/tabs.jsx";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card.jsx";
 import { useUser } from "@/context/UserContext.jsx";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { getTransactionsByIbanList } from "@/api/transaction.js";
 import { cn } from "@/lib/utils";
-import { getAllBankAccounts} from "@/api/bankAccount";
+import { getAllBankAccounts } from "@/api/bankAccount";
 import { generateSingleAccountPDF } from "@/api/bankAccount";
 import TransactionList from "@/components/transactions/TransactionList.jsx";
 import BankCard from "@/components/Card.jsx";
@@ -23,6 +39,12 @@ import DeleteAccountModal from "@/components/DeleteModal.jsx";
 import { getMe } from "@/api/auth.js";
 import { getTransactionByIban } from "@/api/transaction.js";
 import AppLayout from "@/components/AppLayout.jsx";
+import DepotCardForm from "@/components/DepotCardForm";
+import { getAllBankAccountsTransfert } from "@/api/bankAccount";
+import { fetchBeneficiaries } from "@/api/beneficiary.js";
+import VirementCardForm from "@/components/VirementCardForm.jsx";
+import { useSearchParams } from "react-router-dom";
+import ModalInfoBig from "@/components/transactions/ModalInfoBig.jsx";
 
 const ActionButton = ({ icon: Icon, label, onClick }) => (
   <button
@@ -55,7 +77,8 @@ function BankAccount() {
   );
   const [transactions, setTransactions] = useState(null);
   const [isLoading, setIsLoading] = useState(!bankAccount);
-  const [isAllTransactionsVisible, setIsAllTransactionsVisible] = useState(false);
+  const [isAllTransactionsVisible, setIsAllTransactionsVisible] =
+    useState(false);
   const [deleteBankAccount, setDeleteBankAccount] = useState(false);
 
   const [showInfo, setShowInfo] = useState(false);
@@ -65,6 +88,41 @@ function BankAccount() {
   const spendingLimit = 2000;
   const spendingPercentage = (monthlyExpenses / spendingLimit) * 100;
   const [createAccountIsVisible, setCreateAccountIsVisible] = useState(false);
+  const [createTransactionIsVisible, setCreateTransactionIsVisible] =
+    useState(false);
+  const [allBankAccounts, setAllBankAccounts] = useState([]);
+  const [allBeneficiaries, setAllBeneficiaries] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [defaultTab, setDefaultTab] = useState(
+    searchParams.get("type") || "virement"
+  );
+
+  useEffect(() => {
+    const defineDefaultTab = () => {
+      if (searchParams.get("type")) {
+        setDefaultTab(searchParams.get("type"));
+      } else {
+        setDefaultTab("depot");
+      }
+    };
+
+    defineDefaultTab();
+  }, []);
+
+  useEffect(() => {
+    if (user?.uid) {
+      getAllBankAccountsTransfert(user.uid).then((result) => {
+        setAllBankAccounts(result);
+      });
+    }
+
+    fetchBeneficiaries().then((result) => {
+      setAllBeneficiaries(result);
+    });
+  }, [user?.uid]);
+
+  if (!defaultTab) return null;
 
   useEffect(() => {
     const fetchAccountDetails = async () => {
@@ -97,6 +155,18 @@ function BankAccount() {
   }, [user?.uid, location.state?.bankAccount?.iban]);
 
   useEffect(() => {
+    if (user?.uid) {
+      getAllBankAccountsTransfert(user.uid).then((result) => {
+        setAllBankAccounts(result);
+      });
+    }
+
+    fetchBeneficiaries().then((result) => {
+      setAllBeneficiaries(result);
+    });
+  }, [user?.uid]);
+
+  useEffect(() => {
     const fetchTransactions = async () => {
       if (!bankAccount?.iban) return;
       try {
@@ -112,16 +182,14 @@ function BankAccount() {
   }, [bankAccount]);
 
   const handleDownloadPDF = async () => {
-  try {
-    const userInfo = await getMe();
-    generateSingleAccountPDF(userInfo, bankAccount, transactions);
-  } catch (err) {
-    console.error(err);
-    alert("Impossible de générer le relevé.");
-  }
-};
-
-
+    try {
+      const userInfo = await getMe();
+      generateSingleAccountPDF(userInfo, bankAccount, transactions);
+    } catch (err) {
+      console.error(err);
+      alert("Impossible de générer le relevé.");
+    }
+  };
 
   if (isLoading || !bankAccount) {
     return (
@@ -138,22 +206,32 @@ function BankAccount() {
   const displayedTransactions = isAllTransactionsVisible
     ? transactions
     : transactions
-      ? transactions.slice(0, 10)
-      : [];
+    ? transactions.slice(0, 10)
+    : [];
 
   return (
     <AppLayout>
       <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex flex-col space-y-4">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Détails du Compte
-          </h1>
+        <div className="flex flex-row justify-between items-start">
+          <div className="flex flex-col space-y-4">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Détails du Compte
+            </h1>
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="flex items-center text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors w-fit font-medium"
+            >
+              <ArrowLeft size={20} className="mr-2" />
+              Retour au Dashboard
+            </button>
+          </div>
+
           <button
-            onClick={() => navigate("/dashboard")}
-            className="flex items-center text-gray-400 hover:text-gray-700 transition-colors w-fit font-medium"
+            onClick={() => setCreateTransactionIsVisible(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-blue-200 dark:shadow-none transition-all active:scale-95"
           >
-            <ArrowLeft size={20} className="mr-2" />
-            Retour au Dashboard
+            <ArrowRightLeft size={18} />
+            Faire une transaction
           </button>
         </div>
 
@@ -187,12 +265,12 @@ function BankAccount() {
               <ActionButton
                 icon={Ban}
                 label="Clôturer"
-              onClick={() => setDeleteBankAccount(true)}
+                onClick={() => setDeleteBankAccount(true)}
               />
             </div>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-6">
             <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 h-full flex flex-col justify-between">
               <div className="flex justify-between items-start mb-8">
                 <h3 className="text-xl font-bold text-gray-900">
@@ -274,6 +352,81 @@ function BankAccount() {
         <BankDetailsDisplay iban={bankAccount?.iban} bic="RBUXFRPPXXX" />
       </ModalInfo>
 
+      <ModalInfoBig
+        open={createTransactionIsVisible}
+        onClose={() => setCreateTransactionIsVisible(false)}
+        title="Créer une transaction"
+      >
+        <div className="flex flex-col items-center justify-center w-full py-8">
+          <Tabs
+            defaultValue={defaultTab}
+            className={"font-text z-20 w-full md:w-2/3 max-w-4xl"}
+          >
+            <TabsList className={"px-1.5 !py-1.5 h-11"}>
+              <TabsTrigger
+                className={"text-md font-text px-10"}
+                value={"depot"}
+              >
+                Dépôt
+              </TabsTrigger>
+              <TabsTrigger
+                className={"font-text text-md px-10"}
+                value={"virement"}
+              >
+                Virement
+              </TabsTrigger>
+            </TabsList>
+
+            <Card
+              className={
+                "py-0 mt-6 shadow-lg border-gray-200 dark:border-neutral-700"
+              }
+            >
+              <TabsContents className={"px-6 py-6 relative"}>
+                <TabsContent value={"depot"} className={"flex flex-col gap-6"}>
+                  <CardHeader>
+                    <CardTitle
+                      className={
+                        "text-3xl font-title font-bold flex items-center gap-2"
+                      }
+                    >
+                      <div className={"bg-green-600/15 rounded-lg px-2.5 py-2"}>
+                        <ArrowDown className={"text-green-600"} />
+                      </div>
+                      Déposer de l'argent
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <DepotCardForm allBankAccounts={allBankAccounts} />
+                  </CardContent>
+                </TabsContent>
+
+                <TabsContent
+                  value={"virement"}
+                  className={"flex flex-col gap-6"}
+                >
+                  <CardHeader>
+                    <CardTitle
+                      className={
+                        "text-3xl font-title font-bold flex items-center gap-2"
+                      }
+                    >
+                      <div className={"bg-blue-600/15 rounded-lg px-2.5 py-2"}>
+                        <ArrowRight className={"text-blue-600"} />
+                      </div>
+                      Effectuer un virement
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className={"pb-6"}>
+                    <VirementCardForm allBankAccounts={allBankAccounts} />
+                  </CardContent>
+                </TabsContent>
+              </TabsContents>
+            </Card>
+          </Tabs>
+        </div>
+      </ModalInfoBig>
+
       <AnalysisModal
         open={showAnalysis}
         onClose={() => setShowAnalysis(false)}
@@ -281,12 +434,11 @@ function BankAccount() {
         monthlyExpenses={monthlyExpenses}
         transactions={transactions}
       />
-            <DeleteAccountModal  
-              iban={bankAccount.iban}
-              open={deleteBankAccount}
-              onClose={() => setDeleteBankAccount(false)}
-            />
-
+      <DeleteAccountModal
+        iban={bankAccount.iban}
+        open={deleteBankAccount}
+        onClose={() => setDeleteBankAccount(false)}
+      />
     </AppLayout>
   );
 }

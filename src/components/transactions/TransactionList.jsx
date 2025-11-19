@@ -27,7 +27,6 @@ const TransactionList = ({ transactions, toggleView, isExpanded }) => {
       </div>
     );
   }
-console.log("Rendering TransactionList with transactions:", transactions);
   return (
     <div className="border rounded-lg overflow-hidden bg-white">
       <div className="flex justify-between items-center px-4 py-3 border-b bg-gray-50">
