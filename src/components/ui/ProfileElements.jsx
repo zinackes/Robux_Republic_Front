@@ -42,7 +42,7 @@ export default function BodyProfile() {
                     </motion.div>
                 </h1>
                
-                <div className="flex gap-6 max-w-6xl w-full justify-center items-start">
+                <div className="flex gap-6 max-w-6xl w-full justify-center items-stretch">
                     <div className="flex flex-col justify-between gap-6 w-64">
                         <div className="flex-1 bg-white/95 dark:bg-gray-900/95 rounded-3xl shadow-md p-6 border border-gray-100 dark:border-gray-800">
                             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
