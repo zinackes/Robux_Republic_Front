@@ -1,4 +1,5 @@
 import {useUser} from "@/context/UserContext.jsx";
+import { Navigate } from "react-router-dom";
 
 
 export const signUpUser = async (
@@ -64,5 +65,6 @@ export const getMe = async() => {
         if(res.ok) return res.json();
     } catch (error) {
         console.log("Erreur dans get me :", error);
+        Navigate("/register");
     }
 }
