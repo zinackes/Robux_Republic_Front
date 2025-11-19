@@ -4,8 +4,9 @@ import PersonalInfoCard from "@/components/ui/PersonalInfoCard.jsx";
 import { CreditCard, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip.jsx";
-import ConfirmationModal from "@/components/ModalDeleteAccount.jsx";
 import { useUser } from "@/context/UserContext.jsx";
+import DeleteAccount from "@/components/DeleteModal.jsx";
+import Createaccount from "@/components/CreateAccount.jsx";
 
 export default function BodyProfile() {
     const { user, isPending } = useUser();
@@ -38,6 +39,10 @@ export default function BodyProfile() {
                         />
                     </motion.div>
                 </h1>
+
+                <DeleteAccount />
+                <Createaccount />
+               
                 <div className="flex gap-6 max-w-6xl w-full justify-center items-start">
                     <div className="flex flex-col justify-between gap-6 w-64">
                         <div className="flex-1 bg-white/95 dark:bg-gray-900/95 rounded-3xl shadow-md p-6 border border-gray-100 dark:border-gray-800">
