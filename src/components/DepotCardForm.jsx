@@ -117,14 +117,14 @@ function DepotCardForm({allBankAccounts = []}) {
                                                     <SelectItem key={account.iban} value={account.iban} className="text-xs sm:text-sm">
                                                         <span className="font-medium">{account.name}</span>
                                                         <span className="mx-1 text-gray-400">•</span>
-                                                        <span>{parseFloat(account.balance).toFixed(2)}</span>
+                                                        <span>{parseFloat(account.balance).toFixed(2)} RBX</span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
                                     {fieldState.error && (
-                                        <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
+                                        <p className="text-red-500 text-xs my-1">
                                             {fieldState.error.message}
                                         </p>
                                     )}
@@ -180,7 +180,6 @@ function DepotCardForm({allBankAccounts = []}) {
                     </div>
                 </div>
 
-                {/* BLOC 4: CONTENU DYNAMIQUE (Chèque ou Espèces) */}
                 <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col gap-4 mb-6 sm:mb-8">
 
                     {depotType === "espece" ? (
@@ -224,7 +223,7 @@ function DepotCardForm({allBankAccounts = []}) {
                                                        placeholder="FR76..."
                                                 />
                                                 {fieldState.error && (
-                                                    <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
+                                                    <p className="text-red-500 text-xs mt-1 mb-1">
                                                         {fieldState.error.message}
                                                     </p>
                                                 )}
@@ -242,7 +241,7 @@ function DepotCardForm({allBankAccounts = []}) {
                                 </div>
                                 <div className="flex-1 w-full">
                                     <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-                                        Banque de l'émetteur
+                                        Banque de l'émetteur (IBAN)
                                     </label>
                                     <Controller
                                         control={control}
@@ -252,10 +251,10 @@ function DepotCardForm({allBankAccounts = []}) {
                                             <div className="relative w-full">
                                                 <Input {...field}
                                                        className="bg-white border-gray-200 w-full shadow-sm rounded-lg text-sm h-10"
-                                                       placeholder="Ex: Crédit Mutuel..."
+                                                       placeholder="Ex: FR76..."
                                                 />
                                                 {fieldState.error && (
-                                                    <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
+                                                    <p className="text-red-500 text-xs my-1">
                                                         {fieldState.error.message}
                                                     </p>
                                                 )}
@@ -269,7 +268,6 @@ function DepotCardForm({allBankAccounts = []}) {
                     )}
                 </div>
 
-                {/* BLOC 5: MONTANT (HERO) */}
                 <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-purple-50 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-2 mt-2 mb-4">
                     <label className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
                         montant du dépôt
@@ -301,7 +299,6 @@ function DepotCardForm({allBankAccounts = []}) {
                     </div>
                 </div>
 
-                {/* BOUTON SUBMIT (Utilisation de <button> natif pour éviter l'import manquant) */}
                 <button
                     type="submit"
                     className="w-full sm:w-auto flex gap-2 justify-center items-center ml-auto text-sm sm:text-base py-3 px-6 rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-md shadow-blue-200 font-medium"

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {AlertTriangle, PlusCircle} from "lucide-react";
 import {RippleButton, RippleButtonRipples} from "@/components/animate-ui/components/buttons/ripple.jsx";
 import {createBeneficiary} from "@/api/beneficiary.js";
+import {createPortal} from "react-dom";
 
 function CreateBeneficiaryModal({ibanParams, setBeneficiaries, isOpen, setIsOpen}) {
 
@@ -38,7 +39,7 @@ function CreateBeneficiaryModal({ibanParams, setBeneficiaries, isOpen, setIsOpen
 
     if(!isOpen) return null;
 
-    return (
+    const contentType = (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
             <div
                 className="
@@ -157,6 +158,8 @@ function CreateBeneficiaryModal({ibanParams, setBeneficiaries, isOpen, setIsOpen
             </div>
         </div>
     );
+
+    return createPortal(contentType, document.body);
 }
 
 export default CreateBeneficiaryModal;

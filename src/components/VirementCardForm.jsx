@@ -198,14 +198,14 @@ function VirementCardForm({allBankAccounts}) {
                                                     <SelectItem key={account.iban} value={account.iban} className="text-xs sm:text-sm">
                                                         <span className="font-medium">{account.name}</span>
                                                         <span className="mx-1 text-gray-400">•</span>
-                                                        <span>{parseFloat(account.balance).toFixed(2)}</span>
+                                                        <span>{parseFloat(account.balance).toFixed(2)} RBX</span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
                                     {fieldState.error && (
-                                        <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
+                                        <p className="text-red-500 text-xs my-1">
                                             {fieldState.error.message}
                                         </p>
                                     )}
@@ -233,7 +233,7 @@ function VirementCardForm({allBankAccounts}) {
                                     <div className="flex items-center gap-2">
 
                                         <div className="flex-1 text-sm sm:text-base">
-                                            <Autocomplete {...field} suggestionsList={beneficiariesName} />
+                                            <Autocomplete {...field} suggestionsList={beneficiariesName} placeholder={"Chercher un bénéficiaire ou un Iban"}/>
                                         </div>
 
                                         {field.value && field.value.toString().includes("RobuxCommunity") && (
@@ -248,7 +248,7 @@ function VirementCardForm({allBankAccounts}) {
                                     </div>
 
                                     {fieldState.error && (
-                                        <p className="text-red-500 text-[10px] mt-1 absolute top-full left-0">
+                                        <p className="text-red-500 text-xs my-1">
                                             {fieldState.error.message}
                                         </p>
                                     )}
@@ -276,7 +276,7 @@ function VirementCardForm({allBankAccounts}) {
                                            placeholder="0.00"
                                     />
                                     {fieldState.error && (
-                                        <p className="text-red-500 text-[10px] absolute -bottom-4 w-max">
+                                        <p className="text-red-500 text-xs my-1">
                                             {fieldState.error.message}
                                         </p>
                                     )}
