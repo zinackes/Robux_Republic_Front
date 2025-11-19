@@ -1,42 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { fetchBeneficiaries, createBeneficiary, deleteBeneficiary } from '@/api/beneficiary.js'
-import { useState } from 'react'
-import { useEffect } from 'react'
 import { RippleButton, RippleButtonRipples } from '@/components/animate-ui/components/buttons/ripple'
-import { PlusCircle, Trash2, UserMinus, User, AlertTriangle } from "lucide-react";
+import { PlusCircle, Trash2, UserMinus, User, AlertTriangle, ChevronsDown } from "lucide-react";
 
 
 function Beneficiary() {
 
-  // États pour gérer les bénéficiaires, le formulaire, le chargement et les erreurs
   const [beneficiaries, setBeneficiaries] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [name, setName] = useState("")
   const [iban, setIban] = useState("")
+  const [showMore, setShowMore] = useState(false)
 
-
-  // Récupérer les bénéficiaires au chargement du composant
   useEffect(() => {
     fetchBeneficiaries()
       .then(data => {
         setBeneficiaries(data)
         setLoading(false)
-        setError(null)
       })
       .catch(err => {
         console.error("Erreur fetch:", err)
         setError(err.message)
         setLoading(false)
-      }).finally(() => {
-        setLoading(false)
       })
   }, [])
 
-
-
-  // Gérer la soumission du formulaire pour ajouter un bénéficiaire
   const handleSubmit = async () => {
     try {
       const newBeneficiary = await createBeneficiary(name, iban)
@@ -46,38 +36,43 @@ function Beneficiary() {
       setIban("")
       setError(null)
     } catch (err) {
-      // affiche les erreurs renvoyées par le backend
-      console.error("Erreur lors de l’ajout du bénéficiaire:", err)
+      console.error("Erreur lors de l’ajout :", err)
       setError(err.message)
     }
   }
 
+  const visibleBeneficiaries = showMore ? beneficiaries : beneficiaries.slice(0, 1)
+
+
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+
+      {/* HEADER */}
+      <div className="flex items-center justify-between mb-8">
         <h1 className="text-4xl font-extrabold text-gray-800 flex items-center gap-3">
           <User className="w-10 h-10 text-indigo-600" />
           Liste des Bénéficiaires
         </h1>
-        <RippleButton
-          onClick={() => setShowForm(true)}
-          className="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow hover:bg-indigo-700 transition duration-300 flex items-center gap-2"
-        >
-          <PlusCircle className="w-5 h-5" />
-          Ajouter un bénéficiaire
-          <RippleButtonRipples />
-        </RippleButton>
       </div>
 
-      {loading && <p className="text-gray-500">Chargement…</p>}
 
-      {/* Modal / Form */}
+
+      {/* ----------------------- */}
+      {/*       MODAL AJOUT       */}
+      {/* ----------------------- */}
       {showForm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border-l-4 border-indigo-500 animate-fadeIn">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800 flex items-center gap-2">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="
+            bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl 
+            border-2 
+            "
+            style={{
+              borderColor: "rgb(99,102,241)",
+              boxShadow: "0 0 10px rgba(99,102,241,0.5), 0 0 30px rgba(99,102,241,0.4)"
+            }}
+          >
+            <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
               <PlusCircle className="w-6 h-6 text-indigo-600" />
               Ajouter un Bénéficiaire
             </h2>
@@ -87,7 +82,7 @@ function Beneficiary() {
               placeholder="Nom"
               value={name}
               onChange={e => setName(e.target.value)}
-              className="border border-gray-300 p-3 mb-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+              className="border border-gray-300 p-3 mb-4 rounded-lg w-full focus:ring-2 focus:ring-indigo-400 transition"
             />
 
             <input
@@ -95,7 +90,7 @@ function Beneficiary() {
               placeholder="IBAN"
               value={iban}
               onChange={e => setIban(e.target.value)}
-              className="border border-gray-300 p-3 mb-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+              className="border border-gray-300 p-3 mb-4 rounded-lg w-full focus:ring-2 focus:ring-indigo-400 transition"
             />
 
             {error && (
@@ -112,6 +107,7 @@ function Beneficiary() {
               >
                 Annuler
               </button>
+
               <RippleButton
                 onClick={handleSubmit}
                 className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition flex items-center gap-2"
@@ -125,58 +121,112 @@ function Beneficiary() {
         </div>
       )}
 
-      {/* Liste des bénéficiaires */}
-      {beneficiaries.length === 0 ? (
-        <div className="flex flex-col items-center justify-center mt-20 text-gray-400">
-          <UserMinus className="w-16 h-16 mb-4" />
-          <p className="text-xl">Aucun bénéficiaire trouvé.</p>
-        </div>
-      ) : (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {beneficiaries.map((b) => {
-            
-            return (
-              <li
-                key={b.id}
-                className={`bg-white rounded-xl border-2 shadow-md p-5 relative group flex flex-col justify-between h-48 break-words hover:shadow-xl hover:border-indigo-400 hover:from-indigo-200/50 transition-all duration-300`}
-                style={{
-                  borderImageSlice: 1,
-                  borderImageSource: `linear-gradient(to right, var(--tw-gradient-stops))`,
-                }}
-              >
-                <div>
-                  <p className="text-xl font-bold text-gray-800 flex items-center gap-2 break-words">
-                    <User className="w-5 h-5 text-indigo-500" /> {b.name}
-                  </p>
-                  <p className="text-gray-500 text-sm mt-2 break-words">{b.iban_to}</p>
-                  <p className="text-gray-400 text-sm break-words">{b.creation_date.slice(8, 10)}/{b.creation_date.slice(5, 7)}/{b.creation_date.slice(0, 4)}</p>
-                </div>
 
-                {/* Bouton supprimer sous forme d'icône en bas à droite */}
-                <div className="absolute bottom-4 right-4">
-                  <RippleButton
-                    onClick={() => {
-                      deleteBeneficiary(b.iban_to).then(() => {
+
+      {/* ------------------------------- */}
+      {/*   CARTES DE BÉNÉFICIAIRES       */}
+      {/* ------------------------------- */}
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {/* CARD AJOUT TOUJOURS AFFICHÉE */}
+        <li
+          onClick={() => setShowForm(true)}
+          className="
+            flex flex-col items-center justify-center 
+            h-48 rounded-xl border-2 border-dotted border-gray-300 
+            bg-white shadow-sm hover:shadow-md 
+            hover:border-indigo-400 hover:bg-indigo-50/40
+            cursor-pointer transition
+          "
+        >
+          <PlusCircle className="w-10 h-10 text-indigo-500 mb-2" />
+          <p className="text-lg font-medium text-gray-700">Ajouter un bénéficiaire</p>
+        </li>
+
+        {/* SI VIDE → MESSAGE */}
+        {beneficiaries.length === 0 && (
+          <li className="col-span-full flex flex-col items-center mt-6 text-gray-400">
+            <UserMinus className="w-14 h-14 mb-3" />
+            <p className="text-lg">Aucun bénéficiaire trouvé.</p>
+          </li>
+        )}
+
+        {/* AFFICHAGE DES CARDS */}
+        {visibleBeneficiaries.map((b) => (
+          <li
+            key={b.id}
+            className="
+              bg-white rounded-xl shadow-md p-0 overflow-hidden border 
+              hover:shadow-xl hover:border-indigo-400 
+              transition-all h-48 flex flex-col
+            "
+          >
+
+            {/* Bandeau */}
+            <div className="bg-indigo-600 text-white px-4 py-2 text-lg font-semibold flex items-center gap-2">
+              <User className="w-5 h-5" />
+              {b.name}
+            </div>
+
+            {/* Contenu */}
+            <div className="p-4 flex flex-col justify-between h-full relative">
+
+              <div>
+                <p className="text-gray-500 text-sm break-words">{b.iban_to}</p>
+
+                <p className="text-gray-400 text-xs mt-1 break-words">
+                  {b.creation_date.slice(8, 10)}/{b.creation_date.slice(5, 7)}/{b.creation_date.slice(0, 4)}
+                </p>
+              </div>
+
+              <div className="absolute bottom-3 right-3">
+                <RippleButton
+                  onClick={() => {
+                    deleteBeneficiary(b.iban_to)
+                      .then(() => {
                         setBeneficiaries(prev => prev.filter(ben => ben.iban_to !== b.iban_to))
-                      }).catch(err => {
-                        console.error("Erreur lors de la suppression :", err)
+                      })
+                      .catch(err => {
+                        console.error("Erreur suppression :", err)
                         setError(err.message)
                       })
-                    }}
-                    className="text-gray-400 hover:text-gray-600 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                    <RippleButtonRipples />
-                  </RippleButton>
-                </div>
-              </li>
-            )
-          })}
-        </ul>
+                  }}
+                  className="text-gray-400 hover:text-gray-600 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+                >
+                  <Trash2 className="w-5 h-5" />
+                  <RippleButtonRipples />
+                </RippleButton>
+              </div>
+            </div>
+
+          </li>
+        ))}
+      </ul>
+
+
+      {beneficiaries.length > 1 && (
+        <div className="flex justify-center mt-6">
+          {!showMore ? (
+            <button
+              onClick={() => setShowMore(true)}
+              className="px-5 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 shadow flex items-center gap-2"
+            >
+              Voir plus
+              <ChevronsDown className="w-5 h-5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowMore(false)}
+              className="px-5 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-700 shadow flex items-center gap-2"
+            >
+              Voir moins
+            </button>
+          )}
+        </div>
       )}
+
     </div>
   )
-
 }
 
 export default Beneficiary
