@@ -1,7 +1,7 @@
 import {useUser} from "@/context/UserContext.jsx";
 import { Navigate } from "react-router-dom";
 
-
+// fonction pour inscrire un nouvel utilisateur
 export const signUpUser = async (
     user
 ) => {
@@ -25,6 +25,7 @@ export const signUpUser = async (
     }
 }
 
+// fonction pour se connecter
 export const signInUser = async (
     request
 )=> {
@@ -54,6 +55,7 @@ export const signInUser = async (
     }
 }
 
+// fonction pour récupérer les informations de l'utilisateur connecté
 export const getMe = async() => {
     try {
         const res = await fetch("http://localhost:8000/auth/me", {

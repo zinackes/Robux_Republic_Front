@@ -1,5 +1,5 @@
 
-
+// fonction pour récupérer tous les comptes bancaires d'un utilisateur pour les transferts
 export const getAllBankAccountsTransfert = async (uid) => {
     try {
         const res = await fetch("http://localhost:8000/bank_account/all-bank-accounts/" + uid, {
@@ -16,6 +16,7 @@ export const getAllBankAccountsTransfert = async (uid) => {
     }
 }
 
+// fonction pour récupérer le compte bancaire Robux
 export const getRobuxBankAccount = async () => {
     try {
         const res = await fetch("http://localhost:8000/bank_account/mother-bank-account", {
@@ -31,6 +32,7 @@ export const getRobuxBankAccount = async () => {
         console.error(e);
     }
 }
+// fonction pour récupérer tous les comptes bancaires d'un utilisateur
 export const getAllBankAccounts = async (uid) => {
     try {
         const res = await fetch("http://localhost:8000/bank_account/all-bank-accounts/" + uid, {
@@ -53,7 +55,7 @@ export const getAllBankAccounts = async (uid) => {
     return null;
   }
 };
-
+// fonction pour créer un compte bancaire
 export const createBankAccount = async  (
     account
 ) => {
@@ -72,7 +74,7 @@ export const createBankAccount = async  (
     }
 }
 
-
+// fonction pour supprimer un compte bancaire
 export const deleteBankAccount = async (iban) => {
   try {
     const res = await fetch(`http://localhost:8000/bank_account/close/${iban}`, {
