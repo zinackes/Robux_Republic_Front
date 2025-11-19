@@ -39,9 +39,6 @@ export default function BodyProfile() {
                         />
                     </motion.div>
                 </h1>
-
-                <DeleteAccount />
-                <Createaccount />
                
                 <div className="flex gap-6 max-w-6xl w-full justify-center items-start">
                     <div className="flex flex-col justify-between gap-6 w-64">

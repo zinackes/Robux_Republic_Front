@@ -6,13 +6,20 @@ export const getAllBankAccounts = async (uid) => {
             }
         });
 
-        if(res.ok){
-            return res.json();
-        }
-    } catch (e) {
-        console.error(e);
+    if (res.ok) {
+      const data = await res.json();
+      const notClosedAccount = Array.isArray(data)
+        ? data.filter((t) => t.is_closed === false) 
+        : [];
+
+      return {
+        account: notClosedAccount,
+      };
     }
-}
+  } catch (e) {
+    return null;
+  }
+};
 
 export const createBankAccount = async  (
     account

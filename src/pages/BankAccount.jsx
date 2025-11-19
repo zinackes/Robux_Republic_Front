@@ -21,6 +21,7 @@ import ModalInfo from "@/components/transactions/ModalInfo.jsx";
 import { set } from "react-hook-form";
 import BankDetailsDisplay from "@/components/transactions/BankDetailsDisplay.jsx";
 import AnalysisModal from "@/components/transactions/AnalysisModal.jsx";
+import DeleteAccountModal from "@/components/DeleteModal.jsx";
 const ActionButton = ({ icon: Icon, label, onClick }) => (
   <button
     onClick={onClick}
@@ -48,13 +49,16 @@ function BankAccount() {
   const [isLoading, setIsLoading] = useState(!bankAccount);
   const [isAllTransactionsVisible, setIsAllTransactionsVisible] =
     useState(false);
+      const [deleteBankAccount, setDeleteBankAccount] = useState(false);
+    
   const [showInfo, setShowInfo] = useState(false);
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [showAnalysis, setShowAnalysis] = useState(false);
   const spendingLimit = 2000;
   const spendingPercentage = (monthlyExpenses / spendingLimit) * 100;
-
+    const [createAccountIsVisible, setCreateAccountIsVisible] = useState(false);
+  
   useEffect(() => {
     const fetchAccountDetails = async () => {
       if (!user?.uid) {
@@ -173,7 +177,9 @@ function BankAccount() {
                 label="Relevés"
                 onClick={() => {}}
               />
-              <ActionButton icon={Ban} label="Cloturer" onClick={() => {}} />
+              <ActionButton icon={Ban} label="Cloturer" onClick={() => {
+                  setDeleteBankAccount(true);
+              }} />
             </div>
           </div>
 
@@ -267,6 +273,12 @@ function BankAccount() {
         monthlyExpenses={monthlyExpenses}
         transactions={transactions}
       />
+            <DeleteAccountModal  
+              iban={bankAccount.iban}
+              open={deleteBankAccount}
+              onClose={() => setDeleteBankAccount(false)}
+            />
+
     </div>
   );
 }

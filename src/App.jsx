@@ -20,13 +20,10 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home/>}/>
           <Route path={"/"} element={<Home/>}/>
-
           {/* Route possible seulement si authentifié*/}
           <Route element={<AuthRoute/>}>
-            <Route path={"/dashboard"} element={<Home/>}/>
             <Route path={"/profile"} element={<Profile/>}/>
             <Route path={"/dashboard"} element={<Dashboard/>}/>
-            <Route path={"/profile"} element={<Home/>}/>
             <Route path={"/bank-account/:account"} element={<BankAccount/>}/>
             <Route path={"/beneficiary"} element={<Beneficiary/>}/>
           </Route>
@@ -35,9 +32,6 @@ function App() {
             <Route path={"/login"} element={<Login/>}/>
             <Route path={"/register"} element={<Register/>}/>
           </Route>
-
-
-
       </Routes>
     </>
   )

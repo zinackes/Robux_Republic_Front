@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Navigate } from "react-router-dom";
 
+import CreateAccountModal from "@/components/CreateAccount.jsx";
+
 const AddAccountCard = () => {
   return (
     <div className="h-64 w-full max-w-md rounded-3xl border-2 border-dashed border-gray-300 bg-white/50 flex flex-col items-center justify-center gap-3 text-gray-400 cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-all duration-300 group">
@@ -31,15 +33,21 @@ function Dashboard() {
   const [bankAccounts, setBankAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAllAccountsVisible, setIsAllAccountsVisible] = useState(false);
+  const [createAccountIsVisible, setCreateAccountIsVisible] = useState(false);
   const [isAllTransactionsVisible, setIsAllTransactionsVisible] =
     useState(false);
+
+  const handleAccountCreated = (newAccount) => {
+    setBankAccounts((prevAccounts) => [...prevAccounts, newAccount]);
+    setCreateAccountIsVisible(false);
+  };
 
   useEffect(() => {
     if (!user?.uid) return;
 
     getAllBankAccounts(user.uid).then((data) => {
-      if (data && Array.isArray(data)) {
-        setBankAccounts(data);
+      if (data.account && Array.isArray(data.account)) {
+        setBankAccounts(data.account);
       } else {
         setBankAccounts([]);
       }
@@ -119,7 +127,11 @@ function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {displayedBankAccounts.map((account, index) => (
               <div
-                onClick={() => navigate(`/bank-account/${account.id}`, { state: { bankAccount: account } })}
+                onClick={() =>
+                  navigate(`/bank-account/${account.id}`, {
+                    state: { bankAccount: account },
+                  })
+                }
                 key={account.id || index}
                 className="cursor-pointer transition-transform hover:scale-105"
               >
@@ -142,7 +154,10 @@ function Dashboard() {
               </div>
             ))}
 
-            <div className="flex justify-center md:justify-start">
+            <div
+              className="flex justify-center md:justify-start"
+              onClick={() => setCreateAccountIsVisible(true)}
+            >
               <AddAccountCard />
             </div>
           </div>
@@ -170,6 +185,12 @@ function Dashboard() {
           )}
         </div>
       </div>
+
+      <CreateAccountModal
+        onSuccess={handleAccountCreated}
+        open={createAccountIsVisible}
+        onClose={() => setCreateAccountIsVisible(false)}
+      />
     </div>
   );
 }
