@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { createBankAccount } from "@/api/BankAccount.js";
 import { useUser } from "@/context/UserContext.jsx";
 
-  export default function App() {
+export default function App() {
   const [isOpen, setIsOpen] = useState(false);
   const { control, handleSubmit } = useForm();
   const { setUser } = useUser();
@@ -14,9 +14,9 @@ import { useUser } from "@/context/UserContext.jsx";
 
   const onSubmit = (values) => {
 
-    const loaddata ={
+    const loaddata = {
       name: values.name,
-      uid : user?.uid
+      uid: user?.uid
     }
 
     createBankAccount(loaddata).then((data) => {
@@ -39,8 +39,8 @@ import { useUser } from "@/context/UserContext.jsx";
             render={({ field,
               fieldState }) => (
               <LabelInputContainer className={"mb-4"}>
-                <label htmlFor="name">Nom du compte</label>
-                <input {...field} id="name" placeholder="Nom du compte" type="text" />
+                <label htmlFor="name" className="block text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-2">Nom du compte</label>
+                <input {...field} id="name" placeholder="Nom du compte" type="text" className="border border-gray-300 p-3 mb-4 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-indigo-400"/>
                 {fieldState.error && (
                   <p className="text-red-500 text-xs ml-2">
                     {fieldState.error.message}
@@ -49,11 +49,8 @@ import { useUser } from "@/context/UserContext.jsx";
               </LabelInputContainer>
             )}
           />
-          <button
-            className="group/btn relative block cursor-pointer h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
-            type="submit"
-          >
-            Créer le compte &rarr;
+          <button className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[15px] py-4 rounded-2xl transition-colors shadow-sm" type="submit">
+            Créer le compte
           </button>
         </form>
       </SimpleModal>
