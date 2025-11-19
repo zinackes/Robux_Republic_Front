@@ -132,13 +132,14 @@ export const getBankAccountInfoForPDF = async (
     }
 };
 
+// Cette fonction génère le PDF pour un compte bancaire donné
 export const generateSingleAccountPDF = (userInfo, account, transactions) => {
     const pdf = new jsPDF({
         unit: "pt", // plus précis
         format: "a4"
     });
 
-    // --- HEADER MODERNE ---
+    // header 
     pdf.setFillColor(34, 112, 214); // bleu moderne (#2270D6)
     pdf.rect(0, 0, pdf.internal.pageSize.width, 90, "F");
 
@@ -146,7 +147,7 @@ export const generateSingleAccountPDF = (userInfo, account, transactions) => {
     pdf.setTextColor(255, 255, 255);
     pdf.text("Relevé de Compte", 40, 55);
 
-    // --- INFO BLOCK ---
+    // info utilisateur
     pdf.setFontSize(14);
     pdf.setTextColor(30, 30, 30);
 
@@ -163,7 +164,7 @@ export const generateSingleAccountPDF = (userInfo, account, transactions) => {
     pdf.text(`Email : ${userInfo.email}`, 55, 180);
     pdf.text(`Adresse : ${userInfo.address}`, 55, 200);
 
-    // --- INFO COMPTE ---
+    // info compte bancaire
     pdf.setFillColor(245, 248, 255);
     pdf.roundedRect(40, 240, 520, 110, 10, 10, "F");
 
@@ -179,7 +180,7 @@ export const generateSingleAccountPDF = (userInfo, account, transactions) => {
     pdf.text(`Solde : ${Number(account.balance).toFixed(2)} €`, 55, 330);
 
 
-    // --- TABLEAU DES TRANSACTIONS ---
+    // tableau des transactions
     const startY = 380;
 
     if (transactions.length === 0) {
@@ -216,7 +217,7 @@ export const generateSingleAccountPDF = (userInfo, account, transactions) => {
         });
     }
 
-    // --- PIED DE PAGE ---
+    // footer 
     const pageCount = pdf.internal.getNumberOfPages();
 
     for (let i = 1; i <= pageCount; i++) {

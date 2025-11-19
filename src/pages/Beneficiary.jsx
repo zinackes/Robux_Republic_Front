@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { fetchBeneficiaries, createBeneficiary, deleteBeneficiary } from '@/api/beneficiary.js'
 import { RippleButton, RippleButtonRipples } from '@/components/animate-ui/components/buttons/ripple'
-import { PlusCircle, Trash2, UserMinus, User, AlertTriangle, ChevronsDown } from "lucide-react";
-
+import { PlusCircle, Trash2, UserMinus, User, AlertTriangle, ChevronsDown, Grid } from "lucide-react";
+import GridBackground from '@/components/ui/GridBackground.jsx';
+import BeneficiaryCard from '@/components/BeneficiaryCard.jsx';
 
 function Beneficiary() {
 
@@ -15,7 +16,7 @@ function Beneficiary() {
   const [showMore, setShowMore] = useState(false)
 
   // Bénéficiaires à afficher
-  const visibleBeneficiaries = showMore ? beneficiaries : beneficiaries.slice(0, 1)
+  const visibleBeneficiaries = showMore ? beneficiaries : beneficiaries.slice(0, 2)
 
   // Fetch des bénéficiaires au chargement
   useEffect(() => {
@@ -50,7 +51,9 @@ function Beneficiary() {
 
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <GridBackground> 
+
+      <div className="min-h-screen">
 
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-4xl font-extrabold text-gray-800 flex items-center gap-3">
@@ -205,56 +208,12 @@ function Beneficiary() {
         )}
 
         {visibleBeneficiaries.map((b) => (
-          <li
-            key={b.id}
-            className="
-              bg-white rounded-xl shadow-md p-0 overflow-hidden border 
-              hover:shadow-xl hover:border-indigo-400 
-              transition-all h-48 flex flex-col
-            "
-          >
-
-            <div className="bg-indigo-600 text-white px-4 py-2 text-lg font-semibold flex items-center gap-2">
-              <User className="w-5 h-5" />
-              {b.name}
-            </div>
-
-            <div className="p-4 flex flex-col justify-between h-full relative">
-
-              <div>
-                <p className="text-gray-500 text-sm break-words">{b.iban_to}</p>
-
-                <p className="text-gray-400 text-xs mt-1 break-words">
-                  {b.creation_date.slice(8, 10)}/{b.creation_date.slice(5, 7)}/{b.creation_date.slice(0, 4)}
-                </p>
-              </div>
-
-              <div className="absolute bottom-3 right-3">
-                <RippleButton
-                  onClick={() => {
-                    deleteBeneficiary(b.iban_to)
-                      .then(() => {
-                        setBeneficiaries(prev => prev.filter(ben => ben.iban_to !== b.iban_to))
-                      })
-                      .catch(err => {
-                        console.error("Erreur suppression :", err)
-                        setError(err.message)
-                      })
-                  }}
-                  className="text-gray-400 hover:text-gray-600 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
-                >
-                  <Trash2 className="w-5 h-5" />
-                  <RippleButtonRipples />
-                </RippleButton>
-              </div>
-            </div>
-
-          </li>
+          <BeneficiaryCard key={b.id} beneficiary={b} setError={setError} setBeneficiaries={setBeneficiaries} />
         ))}
       </ul>
 
 
-      {beneficiaries.length > 5 && (
+      {beneficiaries.length > 2 && (
         <div className="flex justify-center mt-6">
           {!showMore ? (
             <button
@@ -276,6 +235,12 @@ function Beneficiary() {
       )}
 
     </div>
+
+
+    </GridBackground>
+    
+
+
   )
 }
 
