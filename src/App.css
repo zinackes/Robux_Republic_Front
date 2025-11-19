@@ -130,6 +130,12 @@
   }
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  @apply appearance-none;
+  -moz-appearance: textfield;
+}
+
 @theme inline {
   --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
 }

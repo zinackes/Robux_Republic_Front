@@ -83,7 +83,7 @@ function Transaction() {
                         <TabsTrigger className={"font-text text-md px-10"} value={"virement"}>Virement</TabsTrigger>
                     </TabsList>
                     <Card className={"py-0"}>
-                        <TabsContents className={"px-6 py-6"}>
+                        <TabsContents className={"px-6 py-6 relative"}>
                             <TabsContent value={"depot"} className={"flex flex-col gap-6"}>
                                 <CardHeader>
                                     <CardTitle className={"text-3xl font-title font-bold flex items-center gap-2"}>

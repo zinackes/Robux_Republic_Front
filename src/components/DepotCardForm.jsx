@@ -23,6 +23,8 @@ function DepotCardForm({allBankAccounts}) {
     const [depotType, setDepotType] = useState("espece");
     const [robuxBankAccount, setRobuxBankAccount] = useState({});
 
+    const [submitError, setSubmitError] = React.useState("");
+
     const onSubmit = (values) => {
 
         const finalPayload = {
@@ -37,6 +39,7 @@ function DepotCardForm({allBankAccounts}) {
 
         createTransaction(finalPayload).then((result) => {
             console.log(result);
+            setSubmitError(result?.detail);
         });
     }
 
@@ -200,9 +203,17 @@ function DepotCardForm({allBankAccounts}) {
                                 </label>
                                 <Controller
                                     control={control}
+                                    rules={{required: "Emetteur du cheque requis"}}
                                     defaultValue={null}
-                                    render={({ field }) => (
-                                        <Input {...field} className={"bg-white border w-full shadow-sm rounded-lg"} placeholder={"FR76..."}/>
+                                    render={({ field, fieldState }) => (
+                                        <div className={"relative w-full"}>
+                                            <Input {...field} className={"bg-white border w-full shadow-sm rounded-lg"} placeholder={"FR76..."}/>
+                                            {fieldState.error && (
+                                                <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
+                                                    {fieldState.error.message}
+                                                </p>
+                                            )}
+                                        </div>
                                     )}
                                     name={"iban_from"}
                                 />
@@ -219,9 +230,17 @@ function DepotCardForm({allBankAccounts}) {
                                 </label>
                                 <Controller
                                     control={control}
+                                    rules={{required: "Banque de l'emetteur requis"}}
                                     defaultValue={null}
-                                    render={({ field }) => (
-                                        <Input {...field} className={"bg-white border w-full shadow-sm rounded-lg"} placeholder={"FR76..."}/>
+                                    render={({ field, fieldState }) => (
+                                        <div className={"relative w-full"}>
+                                            <Input {...field} className={"bg-white border w-full shadow-sm rounded-lg"} placeholder={"FR76..."}/>
+                                            {fieldState.error && (
+                                                <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
+                                                    {fieldState.error.message}
+                                                </p>
+                                            )}
+                                        </div>
                                     )}
                                     name={"iban_bank_from"}
                                 />
@@ -269,6 +288,11 @@ function DepotCardForm({allBankAccounts}) {
             <Button type={"submit"} className={"flex gap-3 ml-auto text-lg !px-8 !py-6 !rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-blue-500"}>
                 Générer le mandat <ArrowRight/>
             </Button>
+
+
+            {submitError && (
+                <p className="text-red-400 text-xs text-center sm:text-right mt-2">{submitError}</p>
+            )}
 
         </form>
     );
