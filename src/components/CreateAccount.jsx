@@ -15,23 +15,19 @@ export default function CreateAccountModal({ open, onClose, onSuccess }) {
     }
   }, [open, reset]);
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     const loaddata = {
       name: values.name,
-      uid: user?.uid,
+      uid: sessionStorage.getItem("access_token"),
     };
-
-    createBankAccount(loaddata).then((data) => {
-      if (onSuccess) {
-        const dataMerged = {
-          ...data.bank_account, 
-          ...data.user_bank_account, 
-        };
-        onSuccess(dataMerged);
-      }
-      onClose();
-    });
+    const result = await createBankAccount(loaddata);
+    if (result.error) {
+      setError(result.error);
+      return;
+    }
+    setIsOpen(false);
   };
+
   return (
     <SimpleModal isOpen={open} onClose={onClose} title="Création de Compte">
       <form onSubmit={handleSubmit(onSubmit)}>

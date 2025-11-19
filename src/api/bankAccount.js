@@ -58,23 +58,29 @@ export const getAllBankAccounts = async (uid) => {
     }
 };
 
-export const createBankAccount = async (
-    account
-) => {
-    try {
-        const res = await fetch("http://localhost:8000/bank_account", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                authorization: `Bearer ${sessionStorage.getItem("access_token")}`
-            },
-            body: JSON.stringify(account)
-        })
-        return await res.json();
-    } catch (error) {
-        console.log(error)
+export const createBankAccount = async (account) => {
+  try {
+    const res = await fetch("http://localhost:8000/bank_account", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify(account),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || data.error) {
+      throw new Error(data.error || "Erreur lors de la création du compte");
     }
-}
+
+    return data;
+  } catch (error) {
+    console.error("Erreur création compte :", error.message);
+    return { error: error.message }; 
+  }
+};
 
 // fonction pour supprimer un compte bancaire
 export const deleteBankAccount = async (iban) => {

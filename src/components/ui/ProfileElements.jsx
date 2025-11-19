@@ -82,7 +82,7 @@ export default function BodyProfile() {
             </label>
             <label className="flex items-center justify-between p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors dark:bg-gray-900 dark:hover:bg-gray-800">
               <span className="font-medium text-gray-700 dark:text-gray-300">
-                Notifications Push (Mobile)
+                Notifications Push
               </span>
               <input
                 type="checkbox"
