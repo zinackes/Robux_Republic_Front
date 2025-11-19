@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import AuthRoute from "@/routes/AuthRoute.jsx";
 import VerifRoute from "@/routes/VerifRoute.jsx";
 import Dashboard from "@/pages/Dashboard.jsx";
+import BankAccount from "@/pages/BankAccount.jsx";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route element={<AuthRoute/>}>
             <Route path={"/dashboard"} element={<Dashboard/>}/>
             <Route path={"/profile"} element={<Home/>}/>
+            <Route path={"/bank-account/:account"} element={<BankAccount/>}/>
           </Route>
 
           <Route element={<VerifRoute/>}>

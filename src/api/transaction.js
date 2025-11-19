@@ -11,8 +11,12 @@ export const getTransactionByIban = async (iban) => {
 
     if (res.ok) {
       const data = await res.json();
+      const completedTransactions = Array.isArray(data)
+        ? data.filter((t) => t.status === "completed") 
+        : [];
+
       return {
-        transactions: data,
+        transactions: completedTransactions,
         userIban: iban,
       };
     }
@@ -23,6 +27,13 @@ export const getTransactionByIban = async (iban) => {
 
 const processAllTransactions = (apiResults) => {
   let finalTransactionList = [];
+
+  let expensesThisMonth = 0;
+  let incomeThisMonth = 0;
+
+  const now = new Date();
+  const currentMonth = now.getMonth(); 
+  const currentYear = now.getFullYear();
 
   apiResults.forEach((result) => {
     if (
@@ -50,6 +61,29 @@ const processAllTransactions = (apiResults) => {
         counterparty = null;
       }
 
+      let ts = transaction.timestamp;
+
+      if (typeof ts === "number") {
+        if (ts < 10000000000) {
+          ts = ts * 1000;
+        }
+      }
+
+      const tDate = new Date(ts);
+   
+      if (
+        tDate.getMonth() === currentMonth &&
+        tDate.getFullYear() === currentYear
+      ) {
+        const amount = Math.abs(parseFloat(transaction.amount));
+
+        if (type === "debit") {
+          expensesThisMonth += amount;
+        } else if (type === "credit") {
+          incomeThisMonth += amount;
+        }
+      }
+
       return {
         ...transaction,
         type: type,
@@ -63,7 +97,11 @@ const processAllTransactions = (apiResults) => {
 
   finalTransactionList.sort((a, b) => b.id - a.id);
 
-  return finalTransactionList;
+  return {
+    transactions: finalTransactionList,
+    expenses: expensesThisMonth, 
+    income: incomeThisMonth, 
+  };
 };
 
 export const getTransactionsByIbanList = async (ibanList) => {
@@ -79,7 +117,6 @@ export const getTransactionsByIbanList = async (ibanList) => {
     const successfulResults = results.filter(Boolean);
 
     const allProcessedTransactions = processAllTransactions(successfulResults);
-
     return allProcessedTransactions;
   } catch (error) {
     console.error(

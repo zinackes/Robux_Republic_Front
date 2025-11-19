@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ExternalLink , Wallet , Plus } from "lucide-react";
+import { ExternalLink, Wallet, Plus } from "lucide-react";
 import { useUser } from "@/context/UserContext.jsx";
 
 import { getAllBankAccounts } from "@/api/bankAccount";
@@ -8,7 +8,10 @@ import { getTransactionsByIbanList } from "@/api/transaction.js";
 import TransactionList from "@/components/transactions/TransactionList.jsx";
 import BankCard from "@/components/Card.jsx";
 
+import { useNavigate } from "react-router-dom";
+
 import { cn } from "@/lib/utils";
+import { Navigate } from "react-router-dom";
 
 const AddAccountCard = () => {
   return (
@@ -23,11 +26,13 @@ const AddAccountCard = () => {
 
 function Dashboard() {
   const { user } = useUser();
-
-  // State
+  const navigate = useNavigate();
   const [transactions, setTransactions] = useState(null);
   const [bankAccounts, setBankAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAllAccountsVisible, setIsAllAccountsVisible] = useState(false);
+  const [isAllTransactionsVisible, setIsAllTransactionsVisible] =
+    useState(false);
 
   useEffect(() => {
     if (!user?.uid) return;
@@ -51,9 +56,8 @@ function Dashboard() {
       try {
         const ibanList = bankAccounts.map((acc) => acc.iban);
         const data = await getTransactionsByIbanList(ibanList);
-        setTransactions(data);
+        setTransactions(data.transactions);
       } catch (error) {
-        console.error("Erreur transactions:", error);
       } finally {
         setIsLoading(false);
       }
@@ -61,7 +65,6 @@ function Dashboard() {
 
     fetchTransactions();
   }, [bankAccounts]);
-  console.log(user.uid);
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -72,8 +75,18 @@ function Dashboard() {
     );
   }
 
+  const displayedBankAccounts = isAllAccountsVisible
+    ? bankAccounts
+    : bankAccounts.slice(0, 5);
+
+  const displayedTransactions = isAllTransactionsVisible
+    ? transactions
+    : transactions
+    ? transactions.slice(0, 10)
+    : [];
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-8 font-sans text-gray-800 overflow-x-hidden">
+    <div className="relative min-h-screen bg-gray-50 p-6 md:p-8 font-sans text-gray-800 overflow-x-hidden">
       <div
         className={cn(
           "absolute inset-0 z-0 pointer-events-none",
@@ -93,31 +106,39 @@ function Dashboard() {
             </p>
           </div>
 
-          <button className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-200 transition-all active:scale-95">
-            {" "}
+          <button
+            className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-200 transition-all active:scale-95"
+            onClick={() => setIsAllAccountsVisible(!isAllAccountsVisible)}
+          >
             <ExternalLink size={18} />
-            Voir tous mes comptes
+            {isAllAccountsVisible ? "Voir moins" : "Voir tous mes comptes"}
           </button>
         </div>
 
         <div className="mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {bankAccounts.map((account, index) => (
+            {displayedBankAccounts.map((account, index) => (
               <div
+                onClick={() => navigate(`/bank-account/${account.id}`, { state: { bankAccount: account } })}
                 key={account.id || index}
-                className="flex justify-center md:justify-start"
+                className="cursor-pointer transition-transform hover:scale-105"
               >
-                <BankCard
-                  label="COMPTE COURANT"
-                  accountName={account.name || "Compte sans nom"}
-                  balance={account.balance || 0}
-                  iban={account.iban}
-                  icon={
-                    account.name?.toLowerCase().includes("principal")
-                      ? undefined
-                      : Wallet
-                  }
-                />
+                <div
+                  key={account.id || index}
+                  className="flex justify-center md:justify-start"
+                >
+                  <BankCard
+                    label="COMPTE COURANT"
+                    accountName={account.name || "Compte sans nom"}
+                    balance={account.balance || 0}
+                    iban={account.iban}
+                    icon={
+                      account.name?.toLowerCase().includes("principal")
+                        ? undefined
+                        : Wallet
+                    }
+                  />
+                </div>
               </div>
             ))}
 
@@ -132,14 +153,15 @@ function Dashboard() {
             <h2 className="text-xl font-bold text-gray-900">
               Transactions Récentes
             </h2>
-            <button className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">
-              Voir tout
-            </button>
           </div>
 
           {transactions && transactions.length > 0 ? (
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-              <TransactionList transactions={transactions} />
+              <TransactionList
+                transactions={displayedTransactions}
+                toggleView={setIsAllTransactionsVisible}
+                isExpanded={isAllTransactionsVisible}
+              />
             </div>
           ) : (
             <div className="text-center py-12 bg-white rounded-3xl border border-dashed border-gray-200 text-gray-400">

@@ -30,6 +30,8 @@ const BankCard = ({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(balance);
+
+  
   return (
     <div
       className="relative w-full max-w-md h-64 rounded-3xl p-6 text-white shadow-xl overflow-hidden transition-transform hover:scale-[1.02] duration-300"
