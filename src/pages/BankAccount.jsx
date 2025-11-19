@@ -14,7 +14,8 @@ import { useUser } from "@/context/UserContext.jsx";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { getTransactionsByIbanList } from "@/api/transaction.js";
 import { cn } from "@/lib/utils";
-import { getAllBankAccounts } from "@/api/bankAccount";
+import { getAllBankAccounts} from "@/api/bankAccount";
+import { generateSingleAccountPDF } from "@/api/bankAccount";
 import TransactionList from "@/components/transactions/TransactionList.jsx";
 import BankCard from "@/components/Card.jsx";
 import ModalInfo from "@/components/transactions/ModalInfo.jsx";
@@ -22,6 +23,8 @@ import { set } from "react-hook-form";
 import BankDetailsDisplay from "@/components/transactions/BankDetailsDisplay.jsx";
 import AnalysisModal from "@/components/transactions/AnalysisModal.jsx";
 import DeleteAccountModal from "@/components/DeleteModal.jsx";
+import { getMe } from "@/api/auth.js";
+import { getTransactionByIban } from "@/api/transaction.js";
 const ActionButton = ({ icon: Icon, label, onClick }) => (
   <button
     onClick={onClick}
@@ -49,16 +52,16 @@ function BankAccount() {
   const [isLoading, setIsLoading] = useState(!bankAccount);
   const [isAllTransactionsVisible, setIsAllTransactionsVisible] =
     useState(false);
-      const [deleteBankAccount, setDeleteBankAccount] = useState(false);
-    
+  const [deleteBankAccount, setDeleteBankAccount] = useState(false);
+
   const [showInfo, setShowInfo] = useState(false);
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [showAnalysis, setShowAnalysis] = useState(false);
   const spendingLimit = 2000;
   const spendingPercentage = (monthlyExpenses / spendingLimit) * 100;
-    const [createAccountIsVisible, setCreateAccountIsVisible] = useState(false);
-  
+  const [createAccountIsVisible, setCreateAccountIsVisible] = useState(false);
+
   useEffect(() => {
     const fetchAccountDetails = async () => {
       if (!user?.uid) {
@@ -104,6 +107,18 @@ function BankAccount() {
     fetchTransactions();
   }, [bankAccount]);
 
+  const handleDownloadPDF = async () => {
+  try {
+    const userInfo = await getMe();
+    generateSingleAccountPDF(userInfo, bankAccount, transactions);
+  } catch (err) {
+    console.error(err);
+    alert("Impossible de générer le relevé.");
+  }
+};
+
+
+
   if (isLoading || !bankAccount) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -117,8 +132,8 @@ function BankAccount() {
   const displayedTransactions = isAllTransactionsVisible
     ? transactions
     : transactions
-    ? transactions.slice(0, 10)
-    : [];
+      ? transactions.slice(0, 10)
+      : [];
 
   return (
     <div className="relative min-h-screen bg-gray-50/50 font-sans text-gray-800 overflow-x-hidden p-6 md:p-12">
@@ -175,10 +190,10 @@ function BankAccount() {
               <ActionButton
                 icon={FileText}
                 label="Relevés"
-                onClick={() => {}}
+                onClick={handleDownloadPDF}
               />
               <ActionButton icon={Ban} label="Cloturer" onClick={() => {
-                  setDeleteBankAccount(true);
+                setDeleteBankAccount(true);
               }} />
             </div>
           </div>
@@ -273,11 +288,11 @@ function BankAccount() {
         monthlyExpenses={monthlyExpenses}
         transactions={transactions}
       />
-            <DeleteAccountModal  
-              iban={bankAccount.iban}
-              open={deleteBankAccount}
-              onClose={() => setDeleteBankAccount(false)}
-            />
+      <DeleteAccountModal
+        iban={bankAccount.iban}
+        open={deleteBankAccount}
+        onClose={() => setDeleteBankAccount(false)}
+      />
 
     </div>
   );
