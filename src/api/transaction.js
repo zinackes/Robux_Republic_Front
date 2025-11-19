@@ -1,3 +1,4 @@
+// fonction pour récupérer les transactions par IBAN
 export const getTransactionByIban = async (iban) => {
   try {
     const res = await fetch(
@@ -104,6 +105,7 @@ const processAllTransactions = (apiResults) => {
   };
 };
 
+// fonction pour récupérer les transactions par une liste d'IBANs
 export const getTransactionsByIbanList = async (ibanList) => {
   if (!ibanList || ibanList.length === 0) {
     return [];

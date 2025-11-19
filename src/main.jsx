@@ -11,7 +11,7 @@ import {UserProvider} from "@/context/UserContext.jsx";
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
       <UserProvider>
-          <ThemeProvider defaultTheme="white" storageKey="vite-ui-theme">
+          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
               <App />
           </ThemeProvider>
       </UserProvider>

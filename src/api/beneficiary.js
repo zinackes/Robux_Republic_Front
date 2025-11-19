@@ -1,4 +1,4 @@
-
+// Fonction pour récupérer tous les bénéficiaires
 export async function fetchBeneficiaries() {
     try {
         const response = await fetch('http://127.0.0.1:8000/beneficiaires/all-beneficiaries', {
@@ -54,6 +54,7 @@ export async function createBeneficiary(name, iban) {
     }
 }
 
+// Fonction pour supprimer un bénéficiaire
 export async function deleteBeneficiary(iban) {
     try {
         const response = await fetch(`http://127.0.0.1:8000/beneficiaires/${iban}`, {

@@ -1,3 +1,4 @@
+// fonction pour mettre à jour le profil utilisateur 
 export const UpdateUserProfile = async (user) => {
     try {
         const res = await fetch(`http://localhost:8000/auth/users/${user.uid}/profile`, {
@@ -12,7 +13,6 @@ export const UpdateUserProfile = async (user) => {
                 email: user.email
             })
         });
-
         return await res.json();
     } catch (error) {
         console.log(error);
