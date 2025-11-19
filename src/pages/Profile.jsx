@@ -6,7 +6,7 @@ export default function Profile(){
     return(
         <>
         <AppLayout>
-        <BodyProfile />
+            <BodyProfile />
         </AppLayout>
         </>
     );
