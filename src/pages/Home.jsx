@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import GridBackground from "@/components/ui/GridBackground.jsx";
-import { cn } from "@/lib/utils.js";
-import DropdownTransactionMenu from "@/components/DropdownTransactionMenu.jsx";
 import { motion } from "motion/react";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip.jsx";
-import { ArrowUpDown, MoveUpRight } from "lucide-react";
+import {ArrowRight, ArrowUpDown, MoveUpRight} from "lucide-react";
 import { GradientBackground } from "@/components/animate-ui/components/backgrounds/gradient.jsx";
 import { useNavigate } from "react-router-dom";
+import {useUser} from "@/context/UserContext.jsx";
+import Login from "@/pages/Login.jsx";
+import {Card} from "@/components/ui/card.jsx";
+import BankCard from "@/components/Card.jsx";
 
 function Home() {
   const navigate = useNavigate();
+
+  const { user } = useUser();
 
   const [convertMoney, setConvertMoney] = useState({
     top: {
@@ -84,14 +88,17 @@ function Home() {
             Bienvenue à Robux Republic. La banque nouvelle génération pour les
             joueurs. Transformez vos Robux en véritable capital.
           </p>
+
           <button
-            onClick={() => navigate("/dashboard")}
+            onClick={() => user ? navigate("/dashboard") : navigate("/register")}
             className={
               "relative mt-5 z-20 font-bold text-md flex items-center gap-2 font-text bg-blue-600 hover:bg-blue-700 transition text-white px-6 py-3 rounded-full cursor-pointer"
             }
           >
-            Commencer <MoveUpRight />
+            {user ? "Aller au dashboard" : "S'inscrire"}
+            {user ? <ArrowRight /> : <Login/>}
           </button>
+
         </div>
 
         <div
@@ -186,53 +193,7 @@ function Home() {
             </div>
           </div>
 
-          <GradientBackground>
-            <div className="relative z-10 flex justify-between items-center mt-2 mb-10">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Roblox_Logo_2022_present.svg/2560px-Roblox_Logo_2022_present.svg.png"
-                alt="Roblox"
-                className="h-6 sm:h-8 brightness-0 invert opacity-90"
-              />
-
-              <div className="relative max-w-12 z-10 overflow-hidden">
-                <div className="max-w-12 overflow-hidden h-9 px-1 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-md border border-yellow-600/30 flex items-center justify-center opacity-90">
-                  <div className="w-full h-[1px] bg-yellow-600/40 absolute overflow-hidden"></div>
-                  <div className="h-full w-[1px] bg-yellow-600/40 absolute"></div>
-                  <div className="w-6 h-5 border border-yellow-600/40 rounded-sm"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Section: Numbers & Details */}
-            <div className="relative z-10 mt-auto">
-              {/* Card Numbers */}
-              <div className="mb-6 sm:mb-10">
-                <p className="font-mono text-xl sm:text-3xl tracking-widest font-medium drop-shadow-md">
-                  4921 8305 1294 3810
-                </p>
-              </div>
-
-              {/* Name & Date */}
-              <div className="flex justify-between items-end">
-                <div className="flex flex-col">
-                  <span className="text-[10px] sm:text-xs uppercase tracking-widest text-blue-100/70 font-medium mb-1">
-                    Card Holder
-                  </span>
-                  <span className="font-bold text-sm sm:text-lg tracking-wider uppercase">
-                    John Doe
-                  </span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-[10px] sm:text-xs uppercase tracking-widest text-blue-100/70 font-medium mb-1">
-                    Expires
-                  </span>
-                  <span className="font-bold text-sm sm:text-lg tracking-wider">
-                    09/28
-                  </span>
-                </div>
-              </div>
-            </div>
-          </GradientBackground>
+          <BankCard iban={"FR76 3000 4028 3790 736"}/>
         </div>
       </div>
     </GridBackground>

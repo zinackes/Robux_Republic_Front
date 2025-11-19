@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 export const Logo = () => {
   return (
     <Link to="/dashboard" className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
-      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <img src={"/robux_republic_logo.png"} className={"w-10"}/>
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-medium text-black dark:text-white whitespace-pre">
         Robux Republic
       </motion.span>
@@ -27,8 +27,8 @@ export const Logo = () => {
 
 export const LogoIcon = () => {
   return (
-    <Link to="/dashboard" className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
-      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+    <Link to="/dashboard" className="font-normal relative flex space-x-2 items-center text-sm text-black py-1 relative z-20">
+      <img src={"/robux_republic_logo.png"} className={"w-10"}/>
     </Link>
   );
 };
@@ -51,10 +51,10 @@ export default function AppLayout({ children }) {
   const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
   const links = [
-    { label: "Dashboard", href: "/dashboard", icon: <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" /> },
-    { label: "Bénéficiaire", href: "/beneficiary", icon: <Contact className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" /> },
-    { label: "Dépot", href: "/dashboard/transaction?type=depot", icon: <Coins className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" /> },
-    { label: "Virement", href: "/dashboard/transaction?type=virement", icon: <ArrowRightLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" /> },
+    { label: "Dashboard", href: "/dashboard", icon: <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 flex-shrink-0" /> },
+    { label: "Bénéficiaire", href: "/beneficiary", icon: <Contact className="text-neutral-700 dark:text-neutral-200 flex-shrink-0" /> },
+    { label: "Dépot", href: "/dashboard/transaction?type=depot", icon: <Coins className="text-neutral-700 dark:text-neutral-200 flex-shrink-0" /> },
+    { label: "Virement", href: "/dashboard/transaction?type=virement", icon: <ArrowRightLeft className="text-neutral-700 dark:text-neutral-200 flex-shrink-0" /> },
   ];
 
   return (
@@ -65,12 +65,12 @@ export default function AppLayout({ children }) {
       )}
     >
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} animate={true}>
-        <SidebarBody className="justify-between gap-10">
+        <SidebarBody className="justify-between gap-10 font-text">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             {sidebarOpen ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
+            <div className={`mt-2 flex flex-col gap-2`}>
               {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
+                <SidebarLink key={idx} link={link} className={"!text-lg"} />
               ))}
             </div>
           </div>
@@ -84,8 +84,9 @@ export default function AppLayout({ children }) {
                 }}
             />
             <SidebarLink
+                className={"cursor-pointer"}
               link={{
-            label: "Déconnexion", icon: <LogOut className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
+            label: "Déconnexion", icon: <LogOut className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 cursor-pointer" />,
             }}
                 onClick={disconnect}
             />

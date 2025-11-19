@@ -61,10 +61,10 @@ function Transaction() {
                 
                 <Tabs defaultValue={defaultTab} className={"font-text z-20 w-full md:w-2/3 max-w-4xl"}>
                     <TabsList className={"px-1.5 !py-1.5 h-11"}>
-                        <TabsTrigger className={"text-md font-text px-10"} value={"depot"}>
+                        <TabsTrigger className={"text-md font-text px-10 cursor-pointer"} value={"depot"}>
                             Dépôt
                         </TabsTrigger>
-                        <TabsTrigger className={"font-text text-md px-10"} value={"virement"}>
+                        <TabsTrigger className={"font-text text-md px-10 cursor-pointer"} value={"virement"}>
                             Virement
                         </TabsTrigger>
                     </TabsList>
