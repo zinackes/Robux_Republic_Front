@@ -39,9 +39,8 @@ function VirementCardForm({allBankAccounts}) {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-2xl mx-auto"> {/* Ajout d'un max-width pour centrer sur grand écran */}
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
 
-            {/* BLOC 1 : Intitulé */}
             <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                 {/* Icône réduite légèrement */}
                 <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
@@ -63,7 +62,6 @@ function VirementCardForm({allBankAccounts}) {
                 </div>
             </div>
 
-            {/* BLOC 2 : Compte de débit */}
             <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                 <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
                     <Landmark className="w-5 h-5 sm:w-6 sm:h-6"/>
@@ -108,7 +106,6 @@ function VirementCardForm({allBankAccounts}) {
                 </div>
             </div>
 
-            {/* BLOC 3 : Bénéficiaire */}
             <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-6 sm:mb-8"> {/* Marge du bas réduite mais un peu plus grande pour séparer la section montant */}
                 <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
                     <User className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6"/>
@@ -138,7 +135,6 @@ function VirementCardForm({allBankAccounts}) {
                 </div>
             </div>
 
-            {/* BLOC 4 : Montant (HERO) */}
             <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-purple-50 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-2 mt-2 mb-4">
                 <label className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
                     montant du virement
