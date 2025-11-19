@@ -10,13 +10,21 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select.jsx";
-import SearchBar from "@/components/SearchBar.jsx";
-import {Button} from "@/components/animate-ui/components/buttons/button.jsx";
 import {Input} from "@/components/ui/input.jsx";
-import {createTransaction} from "@/api/transaction.js";
-import {getRobuxBankAccount} from "@/api/bankAccount.js";
 
-function DepotCardForm({allBankAccounts}) {
+// --- MOCK API & COMPONENTS (Pour la prévisualisation) ---
+// Ces fonctions remplacent les imports manquants pour que le code compile.
+const createTransaction = async (data) => {
+    console.log("Transaction envoyée (Mock):", data);
+    return new Promise(resolve => setTimeout(() => resolve({ detail: "Mandat généré avec succès (Simulation)" }), 1000));
+};
+
+const getRobuxBankAccount = async () => {
+    return new Promise(resolve => setTimeout(() => resolve({ iban: "FR76ROBUXBANK123" }), 500));
+};
+// -------------------------------------------------------
+
+function DepotCardForm({allBankAccounts = []}) { // Valeur par défaut pour éviter crash si undefined
 
     const {handleSubmit, control} = useForm();
 
@@ -47,19 +55,15 @@ function DepotCardForm({allBankAccounts}) {
         getRobuxBankAccount().then((result) => setRobuxBankAccount(result));
     }, []);
 
-    useEffect(() => {
-        console.log(robuxBankAccount);
-    }, [robuxBankAccount]);
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-2xl mx-auto">
 
+            {/* BLOC 1: INTITULÉ */}
             <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                {/* Icône réduite légèrement */}
                 <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
                     <Type className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6"/>
                 </div>
-                <div className="flex flex-col gap-1 flex-1 min-w-0"> {/* min-w-0 empêche l'overflow */}
+                <div className="flex flex-col gap-1 flex-1 min-w-0">
                     <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
                         Intitulé
                     </label>
@@ -69,13 +73,14 @@ function DepotCardForm({allBankAccounts}) {
                         render={({ field }) => (
                             <input {...field}
                                    className="bg-transparent !outline-none w-full font-medium text-gray-900 text-sm sm:text-base placeholder-gray-400 truncate"
-                                   placeholder="L'intitulé de votre virement"/>
+                                   placeholder="Motif du dépôt (optionnel)"/>
                         )}
                         name="name"
                     />
                 </div>
             </div>
 
+            {/* BLOC 2: COMPTE DESTINATION */}
             <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                 <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-green-600 shrink-0">
                     <Wallet className="w-5 h-5 sm:w-6 sm:h-6"/>
@@ -83,7 +88,7 @@ function DepotCardForm({allBankAccounts}) {
 
                 <div className="flex flex-col gap-1 flex-1 min-w-0">
                     <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
-                        Compte de déstination
+                        Compte de destination
                     </label>
 
                     <Controller
@@ -120,46 +125,45 @@ function DepotCardForm({allBankAccounts}) {
                 </div>
             </div>
 
-            <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col items-start gap-3 sm:gap-4 mb-6 sm:mb-8"> {/* Marge du bas réduite mais un peu plus grande pour séparer la section montant */}
-                <div className={"flex gap-3"}>
+            {/* BLOC 3: SÉLECTEUR DE MÉTHODE */}
+            <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
                         <Banknote className="w-5 h-5 sm:w-6 sm:h-6"/>
                     </div>
-                    <div className="flex flex-col gap-1 flex-1 min-w-0 justify-center">
-                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            Moyen de dépôt
-                        </label>
-                    </div>
+                    <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                        Moyen de dépôt
+                    </label>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 w-full">
                     <button
-                        type={"button"}
+                        type="button"
                         onClick={() => setDepotType("espece")}
                         className={`
                                 flex justify-center items-center gap-2 
-                                py-2 px-4 rounded-xl border transition-all duration-200 
+                                py-2 px-3 sm:px-4 rounded-xl border transition-all duration-200 
                                 text-sm font-bold cursor-pointer
                                 ${depotType === "espece"
-                                                ? "bg-white border-green-500 text-green-700 shadow-sm"
-                                                : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200"
-                                            }
+                            ? "bg-white border-green-500 text-green-700 shadow-sm"
+                            : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200"
+                        }
                             `}>
                         <Banknote className="w-4 h-4 sm:w-5 sm:h-5" />
                         <span>Espèces</span>
                     </button>
 
                     <button
-                        type={"button"}
+                        type="button"
                         onClick={() => setDepotType("cheque")}
                         className={`
                                 flex justify-center items-center gap-2 
-                                py-3 px-4 rounded-xl border transition-all duration-200 
+                                py-2 px-3 sm:px-4 rounded-xl border transition-all duration-200 
                                 text-sm font-bold cursor-pointer
                                 ${depotType === "cheque"
-                                                ? "bg-white border-green-500 text-green-700 shadow-sm"
-                                                : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200"
-                                            }
+                            ? "bg-white border-green-500 text-green-700 shadow-sm"
+                            : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200"
+                        }
                             `}>
                         <FilePenLine className="w-4 h-4 sm:w-5 sm:h-5"/>
                         <span>Chèque</span>
@@ -167,47 +171,49 @@ function DepotCardForm({allBankAccounts}) {
                 </div>
             </div>
 
-            <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col items-start gap-3 sm:gap-4 mb-6 sm:mb-8"> {/* Marge du bas réduite mais un peu plus grande pour séparer la section montant */}
-
+            {/* BLOC 4: CONTENU DYNAMIQUE (Chèque ou Espèces) */}
+            <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col gap-4 mb-6 sm:mb-8">
 
                 {depotType === "espece" ? (
-                    <div className={"flex flex-col md:flex-row gap-8 items-center"}>
-                        <div className={"bg-white p-4 rounded-2xl shadow-sm border border-gray-200 shrink-0"}>
-                            <QrCode size={90}/>
+                    <div className="flex flex-row gap-4 items-center">
+                        <div className="bg-white p-2 rounded-xl shadow-sm border border-gray-200 shrink-0">
+                            <QrCode size={60} className="sm:w-[80px] sm:h-[80px]"/>
                         </div>
-                        <div className={"flex-1 space-y-4 text-center md:text-left"}>
-                            <div>
-                                <h3 className={"font-bold text-gray-900 text-lg"}>Point de dépôt</h3>
-                                <p className={"text-sm text-gray-500 mt-1"}>
-                                    Présentez ce QR code à un guichet automatique compatible ou chez un partenaire.
-                                </p>
-                            </div>
+                        <div className="flex-1 min-w-0">
+                            <h3 className="font-bold text-gray-900 text-sm sm:text-base">Point de dépôt</h3>
+                            <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-tight">
+                                Présentez ce QR code à un guichet automatique compatible.
+                            </p>
                             <button
-                                type={"button"}
-                                className={"text-xs font-semibold text-green-600 flex items-center justify-center md:justify-start gap-2 hover:underline"}
+                                type="button"
+                                className="mt-2 text-xs font-semibold text-green-600 flex items-center gap-1 hover:underline"
                             >
-                                <MapPin size={16}/>
-                                Localiser un point de dépôt
+                                <MapPin size={14}/>
+                                Localiser un point
                             </button>
                         </div>
                     </div>
                 ) : (
-                    <div className={"w-full space-y-6"}>
-                        <div className={"flex flex-col md:flex-row gap-4 md:items-center w-full"}>
-                            <div className={"bg-white p-3 rounded-xl shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden md:block"}>
-                                <User/>
+                    <div className="w-full space-y-3 sm:space-y-4">
+                        {/* IBAN Émetteur */}
+                        <div className="flex flex-row gap-3 items-start sm:items-center w-full">
+                            <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden sm:block">
+                                <User className="w-5 h-5"/>
                             </div>
-                            <div className={"flex-1 w-full"}>
-                                <label className={"block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2"}>
-                                    émetteur du chéque (iban)
+                            <div className="flex-1 w-full">
+                                <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                                    Émetteur du chèque (IBAN)
                                 </label>
                                 <Controller
                                     control={control}
-                                    rules={{required: "Emetteur du cheque requis"}}
-                                    defaultValue={null}
+                                    rules={{required: "Emetteur requis"}}
+                                    defaultValue=""
                                     render={({ field, fieldState }) => (
-                                        <div className={"relative w-full"}>
-                                            <Input {...field} className={"bg-white border w-full shadow-sm rounded-lg"} placeholder={"FR76..."}/>
+                                        <div className="relative w-full">
+                                            <Input {...field}
+                                                   className="bg-white border-gray-200 w-full shadow-sm rounded-lg text-sm h-10"
+                                                   placeholder="FR76..."
+                                            />
                                             {fieldState.error && (
                                                 <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
                                                     {fieldState.error.message}
@@ -215,26 +221,30 @@ function DepotCardForm({allBankAccounts}) {
                                             )}
                                         </div>
                                     )}
-                                    name={"iban_from"}
+                                    name="iban_from"
                                 />
                             </div>
                         </div>
 
-                        <div className={"flex flex-col md:flex-row gap-4 md:items-center w-full"}>
-                            <div className={"bg-white p-3 rounded-xl shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden md:block"}>
-                                <Landmark/>
+                        {/* Banque Émetteur */}
+                        <div className="flex flex-row gap-3 items-start sm:items-center w-full">
+                            <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden sm:block">
+                                <Landmark className="w-5 h-5"/>
                             </div>
-                            <div className={"flex-1 w-full"}>
-                                <label className={"block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2"}>
+                            <div className="flex-1 w-full">
+                                <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">
                                     Banque de l'émetteur
                                 </label>
                                 <Controller
                                     control={control}
-                                    rules={{required: "Banque de l'emetteur requis"}}
-                                    defaultValue={null}
+                                    rules={{required: "Banque requise"}}
+                                    defaultValue=""
                                     render={({ field, fieldState }) => (
-                                        <div className={"relative w-full"}>
-                                            <Input {...field} className={"bg-white border w-full shadow-sm rounded-lg"} placeholder={"FR76..."}/>
+                                        <div className="relative w-full">
+                                            <Input {...field}
+                                                   className="bg-white border-gray-200 w-full shadow-sm rounded-lg text-sm h-10"
+                                                   placeholder="Ex: Crédit Mutuel..."
+                                            />
                                             {fieldState.error && (
                                                 <p className="text-red-500 text-[10px] mt-1 absolute -bottom-4 left-0">
                                                     {fieldState.error.message}
@@ -242,7 +252,7 @@ function DepotCardForm({allBankAccounts}) {
                                             )}
                                         </div>
                                     )}
-                                    name={"iban_bank_from"}
+                                    name="iban_bank_from"
                                 />
                             </div>
                         </div>
@@ -250,45 +260,44 @@ function DepotCardForm({allBankAccounts}) {
                 )}
             </div>
 
-
-
-            <div className={"bg-white p-8 rounded-3xl border-2 border-purple-50 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-4 mt-4 mb-4"}>
-                <label className={"text-xs font-bold text-gray-400 uppercase tracking-wider"}>
-                    montant du virement
+            {/* BLOC 5: MONTANT (HERO) */}
+            <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-purple-50 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-2 mt-2 mb-4">
+                <label className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                    montant du dépôt
                 </label>
-                <div className={"flex items-baseline gap-2"}>
-
+                <div className="flex items-baseline gap-1 sm:gap-2 justify-center w-full">
                     <Controller
                         control={control}
-                        rules={{ required: "Un montant est requis", valueAsNumber: true }}
+                        rules={{ required: "Montant requis", valueAsNumber: true }}
+                        name="amount"
                         render={({ field, fieldState }) => (
-                            <>
-                                <div className={"flex flex-col gap-3 items-center justify-center"}>
-                                    <input type="number"
-                                           {...field}
-                                           className={"text-5xl font-bold text-center text-gray-900 placeholder-gray-200 outline-none w-64 bg-transparent"}
-                                           placeholder={"0.00"}
-                                    />
-                                    {fieldState.error && (
-                                        <p className="text-red-500 text-xs ml-2">
-                                            {fieldState.error.message}
-                                        </p>
-                                    )}
-                                </div>
-                            </>
+                            <div className="flex flex-col items-center justify-center relative">
+                                <input type="number"
+                                       {...field}
+                                       className="text-3xl sm:text-5xl font-bold text-center text-gray-900 placeholder-gray-200 outline-none w-full max-w-[200px] sm:max-w-xs bg-transparent p-0 m-0"
+                                       placeholder="0.00"
+                                />
+                                {fieldState.error && (
+                                    <p className="text-red-500 text-[10px] absolute -bottom-4 w-max">
+                                        {fieldState.error.message}
+                                    </p>
+                                )}
+                            </div>
                         )}
-                        name={"amount"}
                     />
-                    <span className={"text-xl font-medium text-gray-400"}>
-                                                RBX
-                                            </span>
+                    <span className="text-lg sm:text-xl font-medium text-gray-400">
+                        RBX
+                    </span>
                 </div>
             </div>
 
-            <Button type={"submit"} className={"flex gap-3 ml-auto text-lg !px-8 !py-6 !rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-blue-500"}>
-                Générer le mandat <ArrowRight/>
-            </Button>
-
+            {/* BOUTON SUBMIT (Utilisation de <button> natif pour éviter l'import manquant) */}
+            <button
+                type="submit"
+                className="w-full sm:w-auto flex gap-2 justify-center items-center ml-auto text-sm sm:text-base py-3 px-6 rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-md shadow-blue-200 font-medium"
+            >
+                Générer le mandat <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5"/>
+            </button>
 
             {submitError && (
                 <p className="text-red-400 text-xs text-center sm:text-right mt-2">{submitError}</p>

@@ -14,6 +14,8 @@ import {Button} from "@/components/animate-ui/components/buttons/button.jsx";
 import {Controller, useForm} from "react-hook-form";
 import {cancelTransaction, createTransaction} from "@/api/transaction.js";
 import {MultiStepLoader} from "@/components/ui/multi-step-loader.jsx";
+import Autocomplete from "@/components/ui/Autocomplete.jsx";
+import {fetchBeneficiaries} from "@/api/beneficiary.js";
 
 function VirementCardForm({allBankAccounts}) {
 
@@ -22,6 +24,9 @@ function VirementCardForm({allBankAccounts}) {
     const [submitError, setSubmitError] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+
+    const [beneficiaries, setBeneficiaries] = React.useState([]);
+    const [beneficiariesName, setBeneficiariesName] = React.useState([]);
 
     const [createdTransactionData, setCreateTransactionData] = React.useState({});
 
@@ -40,18 +45,41 @@ function VirementCardForm({allBankAccounts}) {
         }
     ]
 
+    useEffect(() => {
+        fetchBeneficiaries().then((response) => {
+            setBeneficiaries(response);
+
+            const getBeneficiariesName = response.map((beneficiary) => {
+                return beneficiary.name;
+            })
+            setBeneficiariesName(getBeneficiariesName);
+            console.log(beneficiaries);
+        })
+    }, [])
+
+    useEffect(() => {
+        console.log(beneficiaries)
+    }, [beneficiaries]);
+
 
     const onSubmit = (values) => {
 
+        console.log(values.iban_to);
+        const getBeneficiaryIban = beneficiaries.find((beneficiary) => beneficiary.name === values.iban_to).iban_to ?? values.iban_to;
+
+        console.log(getBeneficiaryIban);
         const finalPayload = {
             ...values,
             amount: parseFloat(values.amount),
+            iban_to: getBeneficiaryIban,
             name: values.name || "",
             action: "virement",
             timestamp: new Date().toISOString(),
             iban_bank_from: null,
             status: "pending",
         }
+
+        console.log(finalPayload)
 
         createTransaction(finalPayload).then((result) => {
             console.log(result);
@@ -163,7 +191,7 @@ function VirementCardForm({allBankAccounts}) {
                                 <div className="relative">
                                     {/* J'ai supposé que SearchBar accepte des classes pour réduire la taille */}
                                     <div className="text-sm sm:text-base">
-                                        <SearchBar {...field} placeholder="Rechercher un bénéficiaire..." className="w-full bg-transparent outline-none placeholder-gray-400"/>
+                                        <Autocomplete {...field} suggestionsList={beneficiariesName} />
                                     </div>
                                     {fieldState.error && (
                                         <p className="text-red-500 text-[10px] mt-1 absolute top-full left-0">
@@ -183,13 +211,12 @@ function VirementCardForm({allBankAccounts}) {
                     <div className="flex items-baseline gap-1 sm:gap-2 justify-center w-full">
                         <Controller
                             control={control}
-                            rules={{ required: "Bénéficiaire requis", valueAsNumber: true }}
+                            rules={{ required: "Montant requis", valueAsNumber: true }}
                             name="amount"
                             render={({ field, fieldState }) => (
                                 <div className="flex flex-col items-center justify-center relative">
                                     <input type="number"
                                            {...field}
-                                        // Taille responsive : text-3xl sur mobile, text-5xl sur desktop
                                            className="text-3xl sm:text-5xl font-bold text-center text-gray-900 placeholder-gray-200 outline-none w-full max-w-[200px] sm:max-w-xs bg-transparent p-0 m-0"
                                            placeholder="0.00"
                                     />
