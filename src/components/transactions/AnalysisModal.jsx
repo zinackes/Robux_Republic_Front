@@ -30,7 +30,7 @@ const TransactionMiniItem = ({ t }) => {
         </div>
         <div>
           <p className="text-sm font-bold text-gray-700 truncate max-w-[150px]">
-            {t.display_name || t.counterparty_name || "Opération"}
+            {t.iban_from || t.counterparty_name || "Opération"}
           </p>
           <p className="text-xs text-gray-400">{date}</p>
         </div>
@@ -61,7 +61,7 @@ const ExpenseDonut = ({ transactions }) => {
 
     const groups = {};
     expenses.forEach((t) => {
-      const name = t.display_name || t.counterparty_name || "Divers";
+      const name = t.iban_from || t.counterparty_name || "Divers";
       const amount = Math.abs(parseFloat(t.amount));
       groups[name] = (groups[name] || 0) + amount;
     });

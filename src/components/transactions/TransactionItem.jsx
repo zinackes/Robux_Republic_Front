@@ -36,7 +36,7 @@ const TransactionItem = ({ transaction }) => {
         </div>
         <div>
           <h3 className="font-semibold">{transaction.transaction_name}</h3>
-          <p className="text-sm text-gray-500">{transaction.account_name} - {formattedDate}</p>
+          <p className="text-sm text-gray-500">{formattedDate}</p>
         </div>
       </div>
       <div className={`text-right `}>

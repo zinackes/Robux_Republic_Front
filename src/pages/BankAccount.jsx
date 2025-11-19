@@ -2,26 +2,24 @@ import React, { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Download,
-  Settings,
   PieChart,
   Ban,
-  SlidersHorizontal,
+  FileText,
   TrendingUp,
   TrendingDown,
-  FileText,
 } from "lucide-react";
 import { useUser } from "@/context/UserContext.jsx";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { getTransactionsByIbanList } from "@/api/transaction.js";
-import { cn } from "@/lib/utils";
 import { getAllBankAccounts } from "@/api/bankAccount";
 import TransactionList from "@/components/transactions/TransactionList.jsx";
 import BankCard from "@/components/Card.jsx";
 import ModalInfo from "@/components/transactions/ModalInfo.jsx";
-import { set } from "react-hook-form";
 import BankDetailsDisplay from "@/components/transactions/BankDetailsDisplay.jsx";
 import AnalysisModal from "@/components/transactions/AnalysisModal.jsx";
 import DeleteAccountModal from "@/components/DeleteModal.jsx";
+import AppLayout from "@/components/AppLayout.jsx";
+
 const ActionButton = ({ icon: Icon, label, onClick }) => (
   <button
     onClick={onClick}
@@ -42,42 +40,45 @@ function BankAccount() {
   const navigate = useNavigate();
   const { user } = useUser();
 
+  useEffect(() => {
+    if (!location.state?.bankAccount) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [location.state, navigate]);
+
   const [bankAccount, setBankAccount] = useState(
     location.state?.bankAccount || null
   );
   const [transactions, setTransactions] = useState(null);
   const [isLoading, setIsLoading] = useState(!bankAccount);
-  const [isAllTransactionsVisible, setIsAllTransactionsVisible] =
-    useState(false);
-      const [deleteBankAccount, setDeleteBankAccount] = useState(false);
-    
+  const [isAllTransactionsVisible, setIsAllTransactionsVisible] = useState(false);
+  const [deleteBankAccount, setDeleteBankAccount] = useState(false);
+
   const [showInfo, setShowInfo] = useState(false);
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [showAnalysis, setShowAnalysis] = useState(false);
   const spendingLimit = 2000;
   const spendingPercentage = (monthlyExpenses / spendingLimit) * 100;
-    const [createAccountIsVisible, setCreateAccountIsVisible] = useState(false);
-  
+
   useEffect(() => {
     const fetchAccountDetails = async () => {
-      if (!user?.uid) {
-        console.log("⏳ Utilisateur non chargé, attente...");
-        return;
-      }
+      if (!user?.uid || !location.state?.bankAccount?.iban) return;
 
       try {
-        const accounts = await getAllBankAccounts(user.uid);
+        const data = await getAllBankAccounts(user.uid);
+        const accountsList = data.account || (Array.isArray(data) ? data : []);
 
-        if (Array.isArray(accounts)) {
-          const freshAccountData = accounts.find(
-            (acc) => String(acc.iban) === String(bankAccount?.iban)
+        if (Array.isArray(accountsList)) {
+          const freshAccountData = accountsList.find(
+            (acc) =>
+              String(acc.iban) === String(location.state?.bankAccount?.iban)
           );
 
           if (freshAccountData) {
             setBankAccount(freshAccountData);
           } else {
-            console.warn("⚠️ Compte non trouvé dans la liste pour l'ID:", id);
+            console.warn("⚠️ Compte introuvable via l'API");
           }
         }
       } catch (error) {
@@ -86,8 +87,9 @@ function BankAccount() {
         setIsLoading(false);
       }
     };
+
     fetchAccountDetails();
-  }, [id, user]);
+  }, [user?.uid, location.state?.bankAccount?.iban]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -106,11 +108,13 @@ function BankAccount() {
 
   if (isLoading || !bankAccount) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-pulse text-blue-600 font-bold">
-          Chargement...
+      <AppLayout>
+        <div className="flex items-center justify-center h-full min-h-[50vh]">
+          <div className="animate-pulse text-blue-600 font-bold">
+            Chargement...
+          </div>
         </div>
-      </div>
+      </AppLayout>
     );
   }
 
@@ -121,16 +125,8 @@ function BankAccount() {
     : [];
 
   return (
-    <div className="relative min-h-screen bg-gray-50/50 font-sans text-gray-800 overflow-x-hidden p-6 md:p-12">
-      <div
-        className={cn(
-          "fixed inset-0 z-0 pointer-events-none opacity-60",
-          "[background-size:40px_40px]",
-          "[background-image:linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)]"
-        )}
-      />
-
-      <div className="max-w-6xl mx-auto relative z-10 space-y-8">
+    <AppLayout>
+      <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex flex-col space-y-4">
           <h1 className="text-3xl font-bold text-gray-900">
             Détails du Compte
@@ -146,40 +142,36 @@ function BankAccount() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-6 flex flex-col gap-8">
-            <div className="">
-              <div className="">
-                <BankCard
-                  label="SOLDE ACTUEL"
-                  accountName={bankAccount.name}
-                  balance={bankAccount.balance}
-                  iban={bankAccount.iban}
-                />
-              </div>
+            <div>
+              <BankCard
+                label="SOLDE ACTUEL"
+                accountName={bankAccount.name}
+                balance={bankAccount.balance}
+                iban={bankAccount.iban}
+              />
             </div>
 
             <div className="grid grid-cols-4 gap-4">
               <ActionButton
                 icon={Download}
                 label="RIB / IBAN"
-                onClick={() => {
-                  setShowInfo(true);
-                }}
+                onClick={() => setShowInfo(true)}
               />
               <ActionButton
                 icon={PieChart}
                 label="Analyses"
-                onClick={() => {
-                  setShowAnalysis(true);
-                }}
+                onClick={() => setShowAnalysis(true)}
               />
               <ActionButton
                 icon={FileText}
                 label="Relevés"
                 onClick={() => {}}
               />
-              <ActionButton icon={Ban} label="Cloturer" onClick={() => {
-                  setDeleteBankAccount(true);
-              }} />
+              <ActionButton
+                icon={Ban}
+                label="Clôturer"
+                onClick={() => setDeleteBankAccount(true)}
+              />
             </div>
           </div>
 
@@ -262,7 +254,6 @@ function BankAccount() {
           Voici les détails de votre compte courant. Vous pouvez copier l'IBAN
           pour le partager.
         </p>
-
         <BankDetailsDisplay iban={bankAccount?.iban} bic="RBUXFRPPXXX" />
       </ModalInfo>
 
@@ -273,13 +264,13 @@ function BankAccount() {
         monthlyExpenses={monthlyExpenses}
         transactions={transactions}
       />
-            <DeleteAccountModal  
-              iban={bankAccount.iban}
-              open={deleteBankAccount}
-              onClose={() => setDeleteBankAccount(false)}
-            />
-
-    </div>
+      
+      <DeleteAccountModal
+        iban={bankAccount.iban}
+        open={deleteBankAccount}
+        onClose={() => setDeleteBankAccount(false)}
+      />
+    </AppLayout>
   );
 }
 

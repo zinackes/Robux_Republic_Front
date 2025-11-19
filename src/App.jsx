@@ -27,12 +27,10 @@ function App() {
             <Route path={"/dashboard"} element={<Dashboard/>}/>
             <Route path={"/bank-account/:account"} element={<BankAccount/>}/>
             <Route path={"/beneficiary"} element={<Beneficiary/>}/>
-            <Route path={"/dashboard"} element={<Home/>}/>
-            <Route path={"/profile"} element={<Home/>}/>
             <Route path={"/dashboard/transaction"} element={<Transaction/>}/>
           </Route>
 
-          <Route >
+          <Route element={<VerifRoute/>}>
             <Route path={"/login"} element={<Login/>}/>
             <Route path={"/register"} element={<Register/>}/>
           </Route>
