@@ -4,6 +4,7 @@ import { RippleButton, RippleButtonRipples } from '@/components/animate-ui/compo
 import { PlusCircle, Trash2, UserMinus, User, AlertTriangle, ChevronsDown, Grid } from "lucide-react";
 import GridBackground from '@/components/ui/GridBackground.jsx';
 import BeneficiaryCard from '@/components/BeneficiaryCard.jsx';
+import AppLayout from '@/components/AppLayout';
 
 function Beneficiary() {
 
@@ -47,7 +48,7 @@ function Beneficiary() {
   };
 
   return (
-    <GridBackground> 
+    <AppLayout>
 
       <div className="min-h-screen px-30">
 
@@ -194,7 +195,7 @@ function Beneficiary() {
     </div>
 
 
-    </GridBackground>
+    </AppLayout>
     
 
 
