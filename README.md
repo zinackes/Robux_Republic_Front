@@ -17,15 +17,15 @@ Le projet met l'accent sur la réalisation technique des User Stories définies 
 Ce projet couvre un large éventail de User Stories (US) pour offrir une expérience complète :
 
 ### 💳 Gestion de Comptes (Account Management)
-- **Vue d'ensemble (Story 9)** : Dashboard unifié affichant tous les comptes (Principal, Secondaire, Épargne) avec graphiques de tendance.
+- **Vue d'ensemble (Story 9)** : Dashboard unifié affichant tous les comptes (Principal, Secondaire).
 - **Création de compte (Story 8)** : Interface modale fluide pour ouvrir un nouveau compte en quelques clics.
 - **Clôture de compte (Story 10)** : Processus sécurisé pour fermer un compte existant.
-- **Détails & Sécurité** : Visualisation détaillée, blocage temporaire de carte, et plafonds de dépenses.
+- **Détails & Sécurité** : Visualisation détaillée, clôture de compte, et plafonds de dépenses.
 
 ### 💸 Transactions & Opérations
-- **Virements & Dépôts** : Interface unifiée pour effectuer des virements ou déposer de l'argent (Espèces/Chèque) avec scan simulé.
-- **Historique Détaillé (Story 11)** : Liste complète des transactions avec recherche, filtrage et détails précis (émetteur, destinataire, date).
-- **Reçus & Documents (Story 14)** : Génération et téléchargement simulé de relevés de compte (PDF).
+- **Virements & Dépôts** : Interface unifiée pour effectuer des virements ou déposer de l'argent (Espèces/Chèque).
+- **Historique Détaillé (Story 11)** : Liste complète des transactions avec recherche, filtrage et détails précis (émetteur, montant, date, nom).
+- **Reçus & Documents (Story 14)** : Génération et téléchargement de relevés de compte (PDF).
 
 ### 👥 Gestion des Bénéficiaires
 - **Annuaire (Story 12)** : Visualisation des bénéficiaires sous forme de cartes d'identité futuristes.
