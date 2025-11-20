@@ -52,7 +52,7 @@ const TransactionList = ({ transactions, toggleView, isExpanded, bankAccountList
 
   if (!transactions || transactions.length === 0) {
     return (
-      <div className="p-4 text-center text-gray-500 bg-gray-50 rounded-lg">
+      <div className="p-4 text-center text-gray-500 bg-gray-50 rounded-lg dark:bg-gray-800 dark:text-gray-200">
         Aucune transaction enregistrée pour cette période.
       </div>
     );
