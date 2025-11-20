@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "@/context/UserContext.jsx";
 import BankCard from "@/components/Card.jsx";
 import CardSwap, { Card } from "@/components/CardSwap.jsx";
+import HomeLayout from "@/components/layouts/HomeLayout.jsx";
 
 function Home() {
   const navigate = useNavigate();
@@ -54,9 +55,10 @@ function Home() {
   };
 
   return (
+    <>
+      <HomeLayout/>
       <GridBackground>
         <div className={"flex flex-col justify-between min-h-screen py-10 overflow-hidden"}>
-          {/* --- HEADER TEXT --- */}
           <div className={"flex flex-col gap-1 items-center h-full my-auto"}>
             <h1 className={"relative z-20 font-title py-8 !text-5xl !font-bold sm:!text-6xl md:!text-7xl flex items-baseline gap-6"}>
               <motion.div className="relative mx-4 my-4 flex flex-col items-center justify-center gap-4 text-center sm:mx-0 sm:mb-0 sm:flex-row">
@@ -70,19 +72,10 @@ function Home() {
               Bienvenue à Robux Republic. La banque nouvelle génération pour les joueurs. Transformez vos Robux en véritable capital.
             </p>
 
-            <button
-                onClick={() => user ? navigate("/dashboard") : navigate("/register")}
-                className={"relative mt-5 z-20 font-bold text-md flex items-center gap-2 font-text bg-blue-600 hover:bg-blue-700 transition text-white px-6 py-3 rounded-full cursor-pointer"}
-            >
-              {user ? "Aller au dashboard" : "S'inscrire"}
-              {user ? <ArrowRight /> : <LogIn />}
-            </button>
           </div>
 
-          {/* --- BOTTOM SECTION --- */}
           <div className={"relative z-20 w-full max-w-6xl mx-auto px-5 gap-10 flex flex-col md:flex-row justify-center md:justify-around items-center mt-20 md:mt-auto font-text font-medium"}>
 
-            {/* CONVERTISSEUR (GAUCHE) */}
             <div className={"bg-gray-100 dark:bg-[#171717] flex flex-col gap-3 rounded-[3rem] px-3 py-3 transition-colors duration-300 shadow-lg"}>
               <div className={"bg-white dark:bg-neutral-800 px-8 py-5 rounded-4xl gap-7 flex flex-col transition-colors duration-300"}>
                 <div>
@@ -165,6 +158,7 @@ function Home() {
           </div>
         </div>
       </GridBackground>
+    </>
   );
 }
 

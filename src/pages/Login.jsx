@@ -6,6 +6,8 @@ import { signInUser } from "@/api/auth.js";
 import { cn } from "@/lib/utils.js";
 import { useUser } from "@/context/UserContext.jsx";
 import { FireworksBackground } from '@/components/animate-ui/components/backgrounds/fireworks';
+import {Button} from "@/components/animate-ui/components/buttons/button.jsx";
+import HomeLayout from "@/components/layouts/HomeLayout.jsx";
 
 function Login() {
 
@@ -13,17 +15,24 @@ function Login() {
 
     const { user, setUser } = useUser();
 
+    const [error, setError] = React.useState(null);
+
     const onSubmit = (values) => {
         signInUser(values).then((data) => {
-            console.log(data)
+            console.log(data);
+            if(data?.detail) {
+                setError(data?.detail);
+                return;
+            }
+
             if (data) setUser(data);
-            console.log("user", user)
 
         });
     };
 
     return (
         <>
+            <HomeLayout/>
             <FireworksBackground className="absolute inset-0 flex items-center justify-center rounded-xl opacity-50"
                 color="blue" fireworkSize="2" particleSize={2}
                 population={0.5} />
@@ -89,6 +98,8 @@ function Login() {
                     >
                         Se connecter &rarr;
                     </button>
+
+                    <p className={"text-red-500 text-sm text-center mt-3"}>{error}</p>
                 </form>
             </div>
         </>

@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { signUpUser } from "@/api/auth.js";
 import { useNavigate } from 'react-router-dom';
 import { FireworksBackground } from '@/components/animate-ui/components/backgrounds/fireworks';
+import HomeLayout from "@/components/layouts/HomeLayout.jsx";
 
 function Register() {
 
@@ -14,12 +15,23 @@ function Register() {
 
     const navigate = useNavigate();
 
-    const onSubmit = (values) => signUpUser(values).finally(() => {
+    const [error, setError] = React.useState(null);
+
+    const onSubmit = (values) => signUpUser(values).then((result) => {
+        console.log(result);
+
+        if(result?.detail) {
+            setError(result?.detail);
+            return;
+        }
+
         navigate("/login");
+
     });
 
     return (
         <>
+            <HomeLayout/>
             <FireworksBackground className="absolute inset-0 flex items-center justify-center rounded-xl opacity-50"
                 color="blue" fireworkSize="2" particleSize={2}
                 population={0.5} />
@@ -165,6 +177,8 @@ function Register() {
                     >
                         S'inscrire &rarr;
                     </button>
+
+                    <p className={"text-red-500 text-sm text-center mt-3"}>{error}</p>
                 </form>
             </div>
         </>

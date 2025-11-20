@@ -20,6 +20,8 @@ export const signUpUser = async (
             })
         })
 
+        return res.json();
+
     } catch (error) {
         console.log(error)
     }
@@ -39,13 +41,15 @@ export const signInUser = async (
                     ...request
             })
         })
+
+        const json = await res.json();
+
         if (!res.ok) {
-            const errorDetails = await res.json();
-            console.error("Erreur serveur :", errorDetails);
-            throw new Error("Échec de la connexion");
+            console.error("Erreur serveur :", json);
+            return json;
         }
-        const data = await res.json();
-        sessionStorage.setItem("access_token", data.token);
+        console.log(json);
+        sessionStorage.setItem("access_token", json.token);
 
         return await getMe();
 
