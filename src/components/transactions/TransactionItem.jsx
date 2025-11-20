@@ -27,7 +27,7 @@ const TransactionItem = ({ transaction }) => {
     symbol = "-";
   }
   return (
-    <div className="flex items-center justify-between p-3 ">
+    <div className="flex items-center justify-between p-3">
       <div className="flex items-center">
         <div
           className={`w-10 h-10 ${iconBgClass} rounded-full mr-4 flex items-center justify-center`}

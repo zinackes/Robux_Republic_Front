@@ -122,12 +122,12 @@ function DepotCardForm({allBankAccounts = []}) {
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-2xl mx-auto">
 
                 {/* BLOC 1: INTITULÉ */}
-                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-green-600 shrink-0">
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-green-600 shrink-0 dark:bg-gray-700 dark:border-gray-600">
                         <Type className="text-green-600 w-5 h-5 sm:w-6 sm:h-6"/>
                     </div>
                     <div className="flex flex-col gap-1 flex-1 min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">
                             Intitulé
                         </label>
                         <Controller
@@ -144,13 +144,13 @@ function DepotCardForm({allBankAccounts = []}) {
                 </div>
 
                 {/* BLOC 2: COMPTE DESTINATION */}
-                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-green-600 shrink-0">
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-green-600 shrink-0 dark:bg-gray-700 dark:border-gray-600">
                         <Wallet className="w-5 h-5 sm:w-6 sm:h-6"/>
                     </div>
 
                     <div className="flex flex-col gap-1 flex-1 min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">
                             Compte de destination
                         </label>
 
@@ -161,7 +161,7 @@ function DepotCardForm({allBankAccounts = []}) {
                             render={({ field, fieldState }) => (
                                 <div className="relative w-full">
                                     <Select {...field} onValueChange={field.onChange}>
-                                        <SelectTrigger className="w-full h-auto p-0 border-0 bg-transparent shadow-none !text-black text-sm sm:text-base font-medium focus:ring-0">
+                                        <SelectTrigger className="w-full h-auto border-0 bg-transparent shadow-none !text-black text-sm sm:text-base font-medium focus:ring-0 dark:!text-gray-200 dark:text-gray-500">
                                             <SelectValue placeholder="Sélectionner un compte"/>
                                         </SelectTrigger>
                                         <SelectContent>
@@ -189,12 +189,12 @@ function DepotCardForm({allBankAccounts = []}) {
                 </div>
 
                 {/* BLOC 3: SÉLECTEUR DE MÉTHODE */}
-                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col gap-3 sm:gap-4 mb-3 sm:mb-4 dark:bg-gray-800 dark:border-gray-700">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
-                            <Banknote className="w-5 h-5 sm:w-6 sm:h-6"/>
+                        <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600">
+                            <Banknote className="w-5 h-5 sm:w-6 sm:h-6 dark:text-green-600"/>
                         </div>
-                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">
                             Moyen de dépôt
                         </label>
                     </div>
@@ -206,10 +206,10 @@ function DepotCardForm({allBankAccounts = []}) {
                             className={`
                                 flex justify-center items-center gap-2 
                                 py-2 px-3 sm:px-4 rounded-xl border transition-all duration-200 
-                                text-sm font-bold cursor-pointer
+                                text-sm font-bold cursor-pointer dark:text-gray-500 dark:hover:bg-gray-700 dark:bg-gray-700
                                 ${depotType === "espece"
-                                ? "bg-white border-green-500 text-green-700 shadow-sm"
-                                : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200"
+                                ? "bg-white border-green-500 text-green-700 shadow-sm dark:text-green-600"
+                                : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700"
                             }
                             `}>
                             <Banknote className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -222,10 +222,10 @@ function DepotCardForm({allBankAccounts = []}) {
                             className={`
                                 flex justify-center items-center gap-2 
                                 py-2 px-3 sm:px-4 rounded-xl border transition-all duration-200 
-                                text-sm font-bold cursor-pointer
+                                text-sm font-bold cursor-pointer dark:text-gray-500 dark:hover:bg-gray-700 dark:bg-gray-700
                                 ${depotType === "cheque"
-                                ? "bg-white border-green-500 text-green-700 shadow-sm"
-                                : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200"
+                                ? "bg-white border-green-500 text-green-700 shadow-sm dark:text-green-600"
+                                : "bg-gray-100 border-transparent text-gray-500 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700"
                             }
                             `}>
                             <FilePenLine className="w-4 h-4 sm:w-5 sm:h-5"/>
@@ -234,16 +234,16 @@ function DepotCardForm({allBankAccounts = []}) {
                     </div>
                 </div>
 
-                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col gap-4 mb-6 sm:mb-8">
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-col gap-4 mb-6 sm:mb-8 dark:bg-gray-800 dark:border-gray-700">
 
                     {depotType === "espece" ? (
                         <div className="flex flex-row gap-4 items-center">
-                            <div className="bg-white p-2 rounded-xl shadow-sm border border-gray-200 shrink-0">
-                                <QrCode size={60} className="sm:w-[80px] sm:h-[80px]"/>
+                            <div className="bg-white p-2 rounded-xl shadow-sm border border-gray-200 shrink-0 dark:bg-gray-700 dark:border-gray-600">
+                                <QrCode size={60} className="sm:w-[80px] sm:h-[80px] dark:text-green-600"/>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h3 className="font-bold text-gray-900 text-sm sm:text-base">Point de dépôt</h3>
-                                <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-tight">
+                                <h3 className="font-bold text-gray-900 text-sm sm:text-base dark:text-gray-100">Point de dépôt</h3>
+                                <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-tight dark:text-gray-400">
                                     Présentez ce QR code à un guichet automatique compatible.
                                 </p>
                                 <button
@@ -259,7 +259,7 @@ function DepotCardForm({allBankAccounts = []}) {
                         <div className="w-full space-y-3 sm:space-y-4">
                             {/* IBAN Émetteur */}
                             <div className="flex flex-row gap-3 items-start sm:items-center w-full">
-                                <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden sm:block">
+                                <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden sm:block dark:text-green-600 dark:bg-gray-700 dark:border-gray-600">
                                     <User className="w-5 h-5"/>
                                 </div>
                                 <div className="flex-1 w-full">
@@ -273,7 +273,7 @@ function DepotCardForm({allBankAccounts = []}) {
                                         render={({ field, fieldState }) => (
                                             <div className="relative w-full">
                                                 <Input {...field}
-                                                       className="bg-white border-gray-200 w-full shadow-sm rounded-lg text-sm h-10"
+                                                       className="bg-white border-gray-200 w-full shadow-sm rounded-lg text-sm h-10 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                                        placeholder="FR76..."
                                                 />
                                                 {fieldState.error && (
@@ -290,7 +290,7 @@ function DepotCardForm({allBankAccounts = []}) {
 
                             {/* Banque Émetteur */}
                             <div className="flex flex-row gap-3 items-start sm:items-center w-full">
-                                <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden sm:block">
+                                <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0 hidden sm:block dark:text-green-600 dark:bg-gray-700 dark:border-gray-600">
                                     <Landmark className="w-5 h-5"/>
                                 </div>
                                 <div className="flex-1 w-full">
@@ -304,7 +304,7 @@ function DepotCardForm({allBankAccounts = []}) {
                                         render={({ field, fieldState }) => (
                                             <div className="relative w-full">
                                                 <Input {...field}
-                                                       className="bg-white border-gray-200 w-full shadow-sm rounded-lg text-sm h-10"
+                                                       className="bg-white border-gray-200 w-full shadow-sm rounded-lg text-sm h-10 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                                        placeholder="Ex: FR76..."
                                                 />
                                                 {fieldState.error && (
@@ -322,8 +322,8 @@ function DepotCardForm({allBankAccounts = []}) {
                     )}
                 </div>
 
-                <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-purple-50 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-2 mt-2 mb-4">
-                    <label className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-purple-50 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-2 mt-2 mb-4 dark:bg-gray-900 dark:border-gray-800 dark:shadow-gray-800">
+                    <label className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">
                         montant du dépôt
                     </label>
                     <div className="flex items-baseline gap-1 sm:gap-2 justify-center w-full">
@@ -340,7 +340,7 @@ function DepotCardForm({allBankAccounts = []}) {
                                 <div className="flex flex-col items-center justify-center relative">
                                     <input type="number"
                                            {...field}
-                                           className="text-3xl sm:text-5xl font-bold text-center text-gray-900 placeholder-gray-200 outline-none w-full max-w-[200px] sm:max-w-xs bg-transparent p-0 m-0"
+                                           className="text-3xl sm:text-5xl font-bold text-center text-gray-900 placeholder-gray-200 outline-none w-full max-w-[200px] sm:max-w-xs bg-transparent p-0 m-0 dark:text-gray-100 dark:placeholder-gray-600"
                                            placeholder="0.00"
                                     />
                                     {fieldState.error && (
@@ -359,7 +359,7 @@ function DepotCardForm({allBankAccounts = []}) {
 
                 <button
                     type="submit"
-                    className="w-full sm:w-auto flex gap-2 justify-center items-center ml-auto text-sm sm:text-base py-3 px-6 rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-md shadow-blue-200 font-medium"
+                    className="w-full sm:w-auto flex gap-2 justify-center items-center ml-auto text-sm sm:text-base py-3 px-6 rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-md shadow-blue-200 font-medium dark:shadow-gray-800 dark:bg-green-700"
                 >
                     Générer le mandat <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5"/>
                 </button>

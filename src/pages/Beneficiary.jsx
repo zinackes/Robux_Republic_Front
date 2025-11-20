@@ -53,7 +53,7 @@ function Beneficiary() {
       <div className="min-h-screen px-30">
 
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-4xl font-extrabold text-gray-800 flex items-center gap-3">
+        <h1 className="text-4xl font-extrabold text-gray-800 flex items-center gap-3 dark:text-gray-100">
           <User className="w-10 h-10 text-indigo-600" />
           Liste des Bénéficiaires
         </h1>
@@ -85,14 +85,15 @@ function Beneficiary() {
         border border-gray-200
         bg-gradient-to-br from-white to-gray-50
         hover:shadow-xl transition-shadow
+        dark:from-gray-800 dark:to-gray-900 dark:border-gray-700 dark:bg-gray-850
       "
             >
 
               <div className="flex items-center gap-3 mb-6 pb-3 border-b border-gray-200 ">
-                <div className="p-2 rounded-xl bg-indigo-100 border border-indigo-200">
+                <div className="p-2 rounded-xl bg-indigo-100 border border-indigo-200 dark:bg-indigo-900 dark:border-indigo-800">
                   <PlusCircle className="w-6 h-6 text-indigo-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                   Ajouter un Bénéficiaire
                 </h2>
               </div>
@@ -123,7 +124,7 @@ function Beneficiary() {
                 <div className="flex justify-end gap-3 mt-4">
                   <button
                     onClick={() => setShowForm(false)}
-                    className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300"
+                    className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600"
                   >
                     Annuler
                   </button>
@@ -152,6 +153,7 @@ function Beneficiary() {
             bg-white shadow-sm hover:shadow-md 
             hover:border-indigo-400 hover:bg-indigo-50/40
             cursor-pointer transition
+            dark:bg-gray-800 dark:border-gray-600 dark:hover:border-indigo-500
           "
         >
           <PlusCircle className="w-10 h-10 text-indigo-500 mb-2" />

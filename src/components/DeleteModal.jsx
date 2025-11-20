@@ -33,11 +33,11 @@ export default function DeleteAccountModal({ open, onClose, iban }) {
           background: "linear-gradient(135deg, #0e0499ff, #2dafd3ff)",
         }}
       >
-        <div className="bg-white rounded-3xl p-6 border border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">
+        <div className="bg-white rounded-3xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+          <h2 className="text-xl font-bold text-gray-800 mb-4 dark:text-gray-100">
             Confirmer la suppression
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 dark:text-gray-300">
             Êtes-vous sûr de vouloir supprimer ce compte ? Cette action est
             irréversible.
           </p>
@@ -47,7 +47,7 @@ export default function DeleteAccountModal({ open, onClose, iban }) {
             )}
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300 transition-colors"
+              className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300 transition-colors dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600"
             >
               Annuler
             </button>
