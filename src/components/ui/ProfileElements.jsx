@@ -109,7 +109,7 @@ export default function BodyProfile() {
 
           <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 flex flex-col md:flex-row items-center gap-6 dark:bg-gray-800 dark:border-gray-700">
             <img
-              src={`https://pbs.twimg.com/media/GEu_yrTXoAAsbY6.jpg`}
+              src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcq2WsjN3Ye_vjrbCQtSx04QXiYRIaZ2uYtg&s`}
               alt="Roblox Avatar"
               className="w-20 h-20 bg-white rounded-full shadow-sm p-1 border border-gray-200 dark:bg-gray-900 dark:border-gray-700 object-cover"
             />
