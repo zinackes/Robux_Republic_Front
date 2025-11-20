@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {ArrowRight, Landmark, Loader, Type, User, X, Plus} from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Landmark, Loader, Type, User, X, Plus } from "lucide-react";
 import {
     Select,
     SelectContent,
@@ -10,19 +10,19 @@ import {
     SelectValue
 } from "@/components/ui/select.jsx";
 import SearchBar from "@/components/SearchBar.jsx";
-import {Button} from "@/components/animate-ui/components/buttons/button.jsx";
-import {Controller, useForm} from "react-hook-form";
-import {cancelTransaction, createTransaction} from "@/api/transaction.js";
-import {MultiStepLoader} from "@/components/ui/multi-step-loader.jsx";
+import { Button } from "@/components/animate-ui/components/buttons/button.jsx";
+import { Controller, useForm } from "react-hook-form";
+import { cancelTransaction, createTransaction } from "@/api/transaction.js";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader.jsx";
 import Autocomplete from "@/components/ui/Autocomplete.jsx";
-import {fetchBeneficiaries} from "@/api/beneficiary.js";
+import { fetchBeneficiaries } from "@/api/beneficiary.js";
 import FinishedTransactionModal from "@/components/FinishedTransactionModal.jsx";
-import {Tooltip, TooltipPanel, TooltipTrigger} from "@/components/animate-ui/components/base/tooltip.jsx";
+import { Tooltip, TooltipPanel, TooltipTrigger } from "@/components/animate-ui/components/base/tooltip.jsx";
 import CreateBeneficiaryModal from "@/components/modals/CreateBeneficiaryModal.jsx";
 
 function VirementCardForm({allBankAccounts , onSuccess}) {
 
-    const {handleSubmit, control, getValues} = useForm();
+    const { handleSubmit, control, getValues } = useForm();
 
     const [submitError, setSubmitError] = React.useState("");
     const [loading, setLoading] = React.useState(false);
@@ -101,7 +101,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
             console.log(result);
             setSubmitError(result?.detail);
 
-            if(result?.detail) return;
+            if (result?.detail) return;
 
             setLoading(true);
             setIsLoading(true);
@@ -157,60 +157,68 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
 
-                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    {/* Icône réduite légèrement */}
-                    <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
-                        <Type className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6"/>
+                <div className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-4 rounded-2xl border border-gray-100 dark:border-gray-800 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                    <div className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-300 shrink-0">
+                        <Type className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
-                    <div className="flex flex-col gap-1 flex-1 min-w-0"> {/* min-w-0 empêche l'overflow */}
-                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase font-title tracking-wider">
+
+                    <div className="flex flex-col gap-1 flex-1 min-w-0">
+                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase font-title tracking-wider">
                             Intitulé
                         </label>
+
                         <Controller
                             control={control}
+                            name="name"
                             render={({ field }) => (
                                 <input {...field}
-                                       className="bg-transparent !outline-none w-full font-medium text-gray-900 text-sm sm:text-base placeholder-gray-400 truncate"
-                                       placeholder="Motif du virement (optionnel)"/>
+                                    className="bg-transparent !outline-none w-full font-medium text-gray-900 dark:text-white text-sm sm:text-base placeholder-gray-400 dark:placeholder-gray-600 truncate"
+                                    placeholder="Motif du virement (optionnel)" />
                             )}
-                            name="name"
                         />
                     </div>
                 </div>
 
-                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
-                        <Landmark className="w-5 h-5 sm:w-6 sm:h-6"/>
+                <div className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-4 rounded-2xl border border-gray-100 dark:border-gray-800 flex flex-row items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                    <div className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-300 shrink-0">
+                        <Landmark className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
 
                     <div className="flex flex-col gap-1 flex-1 min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                             Compte de débit
                         </label>
 
                         <Controller
-                            rules={{ required: "Un compte de débit est requis"}}
+                            rules={{ required: "Un compte de débit est requis" }}
                             control={control}
                             name="iban_from"
                             render={({ field, fieldState }) => (
                                 <div className="relative w-full">
                                     <Select {...field} onValueChange={field.onChange}>
-                                        <SelectTrigger className="w-full h-auto p-0 border-0 bg-transparent shadow-none !text-black text-sm sm:text-base font-medium focus:ring-0">
-                                            <SelectValue placeholder="Sélectionner un compte"/>
+                                        <SelectTrigger className="w-full h-auto border-0 bg-transparent shadow-none text-sm sm:text-base font-medium !text-black dark:!text-white focus:ring-0 dark:text-gray-500">
+                                            <SelectValue placeholder="Sélectionner un compte" />
                                         </SelectTrigger>
-                                        <SelectContent>
+
+                                        <SelectContent className="dark:bg-gray-800 dark:text-white">
                                             <SelectGroup>
-                                                <SelectLabel>Vos comptes</SelectLabel>
+                                                <SelectLabel className="dark:text-gray-300">Vos comptes</SelectLabel>
+
                                                 {allBankAccounts.map(account => (
-                                                    <SelectItem key={account.iban} value={account.iban} className="text-xs sm:text-sm">
+                                                    <SelectItem
+                                                        key={account.iban}
+                                                        value={account.iban}
+                                                        className="text-xs sm:text-sm dark:text-white dark:hover:bg-gray-700"
+                                                    >
                                                         <span className="font-medium">{account.name}</span>
-                                                        <span className="mx-1 text-gray-400">•</span>
+                                                        <span className="mx-1 text-gray-400 dark:text-gray-500">•</span>
                                                         <span>{parseFloat(account.balance).toFixed(2)} RBX</span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
+
                                     {fieldState.error && (
                                         <p className="text-red-500 text-xs my-1">
                                             {fieldState.error.message}
@@ -222,32 +230,41 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
                     </div>
                 </div>
 
-                <div className="bg-gray-50 p-3 sm:p-4 rounded-2xl border border-gray-100 flex flex-row items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-                    <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-500 shrink-0">
-                        <User className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6"/>
+                <div className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-4 rounded-2xl border border-gray-100 dark:border-gray-800 flex flex-row items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                    <div className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-300 shrink-0">
+                        <User className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
+
                     <div className="flex flex-col gap-1 flex-1 min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                        <label className="block text-[10px] sm:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                             Bénéficiaire
                         </label>
+
                         <Controller
                             control={control}
-                            rules={{ required: "Requis"}}
+                            rules={{ required: "Requis" }}
                             name="iban_to"
                             render={({ field, fieldState }) => (
                                 <div className="relative">
 
                                     <div className="flex items-center gap-2">
-
-                                        <div className="flex-1 text-sm sm:text-base">
-                                            <Autocomplete {...field} suggestionsList={beneficiariesName} placeholder={"Chercher un bénéficiaire ou un Iban"}/>
+                                        <div className="flex-1 text-sm sm:text-base dark:text-white dark:placeholder-gray-600 placeholder-gray-400">
+                                            <Autocomplete
+                                                {...field}
+                                                suggestionsList={beneficiariesName}
+                                                placeholder={"Chercher un bénéficiaire ou un Iban"}
+                                            />
                                         </div>
 
                                         {field.value && field.value.toString().includes("RobuxCommunity") && (
                                             <Tooltip followCursor={true}>
-                                                <TooltipTrigger render={<Button type={"button"} onClick={addBeneficiary} variant="outline"><Plus size={13}/></Button>} />
-                                                <TooltipPanel
-                                                >
+                                                <TooltipTrigger render={
+                                                    <Button type="button" onClick={addBeneficiary} variant="outline"
+                                                        className="dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700">
+                                                        <Plus size={13} />
+                                                    </Button>
+                                                } />
+                                                <TooltipPanel className="dark:bg-gray-800 dark:text-white">
                                                     <p>Ajouter en bénéficiaire</p>
                                                 </TooltipPanel>
                                             </Tooltip>
@@ -265,27 +282,27 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
                     </div>
                 </div>
 
-                <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-purple-50 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-2 mt-2 mb-4">
-                    <label className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider">
+                <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-2xl border-2 border-purple-50  dark:hover:bg-gray-800 dark:border-gray-800 dark:shadow-gray-800 shadow-purple-50 shadow-sm flex flex-col items-center justify-center gap-2 mt-2 mb-4">
+                    <label className="text-[10px] sm:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                         montant du virement
                     </label>
+
                     <div className="flex items-baseline gap-1 sm:gap-2 justify-center w-full">
                         <Controller
                             control={control}
-                            rules={{ required: "Montant requis", valueAsNumber: true,
-                                min: {
-                                    value: 0.01,
-                                    message: "Le montant doit être supérieur à 0"
-                                    }
+                            rules={{
+                                required: "Montant requis",
+                                valueAsNumber: true,
+                                min: { value: 0.01, message: "Le montant doit être supérieur à 0" }
                             }}
                             name="amount"
                             defaultValue={0.00}
                             render={({ field, fieldState }) => (
                                 <div className="flex flex-col items-center justify-center relative">
                                     <input type="number"
-                                           {...field}
-                                           className="text-3xl sm:text-5xl font-bold text-center text-gray-900 placeholder-gray-200 outline-none w-full max-w-[200px] sm:max-w-xs bg-transparent p-0 m-0"
-                                           placeholder="0.00"
+                                        {...field}
+                                        className="text-3xl sm:text-5xl font-bold text-center text-gray-900 dark:text-white placeholder-gray-200 dark:placeholder-gray-600 outline-none w-full max-w-[200px] sm:max-w-xs bg-transparent p-0 m-0"
+                                        placeholder="0.00"
                                     />
                                     {fieldState.error && (
                                         <p className="text-red-500 text-xs my-1">
@@ -295,14 +312,18 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
                                 </div>
                             )}
                         />
-                        <span className="text-lg sm:text-xl font-medium text-gray-400">
-                RBX
-            </span>
+                        <span className="text-lg sm:text-xl font-medium text-gray-400 dark:text-gray-500">
+                            RBX
+                        </span>
                     </div>
                 </div>
 
-                <Button type="submit" className="w-full sm:w-auto flex gap-2 justify-center items-center ml-auto text-sm sm:text-base py-3 px-6 rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-md shadow-blue-200">
-                    Envoyer les fonds <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5"/>
+                <Button
+                    type="submit"
+                    className="w-full sm:w-auto flex gap-2 justify-center items-center ml-auto text-sm sm:text-base py-3 px-6 rounded-xl text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition shadow-md shadow-blue-200 dark:shadow-gray-800"
+                >
+                    Envoyer les fonds
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
 
                 {submitError && (
@@ -311,28 +332,36 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
             </form>
 
             {loading && (
-                <div className={"absolute w-full h-full top-0 left-0 bg-white flex items-center justify-center"}>
-                    <MultiStepLoader loadingStates={loadingStates} duration={STEP_DURATION} loading={isLoading} loop={false}/>
+                <div className="absolute w-full h-full top-0 left-0 bg-white dark:bg-gray-900 flex items-center justify-center">
+                    <MultiStepLoader loadingStates={loadingStates} duration={STEP_DURATION} loading={isLoading} loop={false} />
 
-                    <div className={"z-999 mt-auto mb-10 flex flex-col items-center"}>
+                    <div className="z-999 mt-auto mb-10 flex flex-col items-center">
                         <Button
                             onClick={onCancel}
-                            className={"z-999 flex items-center font-bold bg-red-50 text-red-600 hover:!bg-red-100 px-10 py-5"}>
-                            <X size={50}/> Annuler l'opération
+                            className="z-999 flex items-center font-bold bg-red-50 dark:bg-red-900/40 text-red-600 dark:text-red-300 hover:!bg-red-100 dark:hover:!bg-red-800 px-10 py-5"
+                        >
+                            <X size={50} /> Annuler l'opération
                         </Button>
-                        <p className={"text-center text-xs text-gray-400 mt-2 z-999 max-w-xs"}>
+
+                        <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2 z-999 max-w-xs">
                             L'opération sera validée automatiquement à la fin du temps imparti
                         </p>
                     </div>
                 </div>
             )}
 
-            <FinishedTransactionModal open={isModalOpen} onClose={() => setIsModalOpen(false)} transaction={createdTransactionData}/>
+            <FinishedTransactionModal open={isModalOpen} onClose={() => setIsModalOpen(false)} transaction={createdTransactionData} />
+
             {isBeneficiariesOpen && (
-                <CreateBeneficiaryModal ibanParams={getValues("iban_to")} isOpen={isBeneficiariesOpen} setIsOpen={setIsBeneficiariesOpen}/>
+                <CreateBeneficiaryModal
+                    ibanParams={getValues("iban_to")}
+                    isOpen={isBeneficiariesOpen}
+                    setIsOpen={setIsBeneficiariesOpen}
+                />
             )}
         </>
     );
+
 }
 
 export default VirementCardForm;

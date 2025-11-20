@@ -52,9 +52,9 @@ import { set } from "react-hook-form";
 const ActionButton = ({ icon: Icon, label, onClick }) => (
   <button
     onClick={onClick}
-    className="flex flex-col items-center justify-center gap-3 p-4 bg-white rounded-3xl shadow-sm border border-gray-100 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md transition-all duration-200 group w-full aspect-square"
+    className="flex flex-col items-center justify-center gap-3 p-4 bg-white rounded-3xl shadow-sm border border-gray-100 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md transition-all duration-200 group w-full aspect-square dark:bg-gray-800 dark:border-gray-700 dark:hover:border-blue-400 dark:hover:bg-blue-900/50"
   >
-    <div className="p-3 rounded-full bg-gray-50 text-gray-600 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+    <div className="p-3 rounded-full bg-gray-50 text-gray-600 group-hover:bg-white group-hover:text-blue-600 transition-colors dark:bg-gray-700 dark:text-gray-400 dark:group-hover:bg-gray-900/50 dark:group-hover:text-blue-400">
       <Icon size={24} />
     </div>
     <span className="text-xs font-bold text-gray-500 group-hover:text-blue-600 tracking-wide uppercase">
@@ -278,15 +278,15 @@ function BankAccount() {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 h-full flex flex-col justify-between">
+            <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 h-full flex flex-col justify-between dark:bg-gray-800 dark:border-gray-700">
               <div className="flex justify-between items-start mb-8">
-                <h3 className="text-xl font-bold text-gray-900">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                   Plafonds de carte
                 </h3>
               </div>
 
               <div className="space-y-3 mb-10">
-                <div className="flex justify-between text-sm font-bold text-gray-600">
+                <div className="flex justify-between text-sm font-bold text-gray-600 dark:text-gray-300">
                   <span>Dépensé ce mois (30j)</span>
                   <span>
                     {monthlyExpenses}€ / {spendingLimit}€
@@ -302,7 +302,7 @@ function BankAccount() {
 
               <div className="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100">
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase mb-1">
+                  <p className="text-xs font-bold text-gray-400 uppercase mb-1 dark:text-gray-400">
                     Entrées (Mai)
                   </p>
                   <div className="flex items-center gap-2 text-green-600 font-bold text-lg">
@@ -311,10 +311,10 @@ function BankAccount() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase mb-1">
+                  <p className="text-xs font-bold text-gray-400 uppercase mb-1 dark:text-gray-400">
                     Sorties (Mai)
                   </p>
-                  <div className="flex items-center gap-2 text-gray-800 font-bold text-lg">
+                  <div className="flex items-center gap-2 text-gray-800 font-bold text-lg dark:text-gray-200">
                     {monthlyExpenses.toFixed(2)} €
                     <TrendingUp size={16} className="rotate-45" />
                   </div>
@@ -331,7 +331,7 @@ function BankAccount() {
             </h2>
           </div>
 
-          <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden p-2">
+          <div className="rounded-[2rem] shadow-sm overflow-hidden p-2 ">
             {transactions && transactions.length > 0 ? (
               <TransactionList
                 transactions={displayedTransactions}

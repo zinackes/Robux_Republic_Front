@@ -28,19 +28,19 @@ const TransactionList = ({ transactions, toggleView, isExpanded }) => {
     );
   }
   return (
-    <div className="border rounded-lg overflow-hidden bg-white">
-      <div className="flex justify-between items-center px-4 py-3 border-b bg-gray-50">
-        <h3 className="font-semibold text-gray-700">Transactions récentes</h3>
+    <div className="border rounded-lg overflow-hidden bg-white shadow-sm dark:bg-gray-800 ">
+      <div className="flex justify-between items-center px-4 py-3 border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+        <h3 className="font-semibold text-gray-700 dark:text-gray-200">Transactions récentes</h3>
 
-        <div className="flex items-center space-x-2 text-sm">
+        <div className="flex items-center space-x-2 text-sm dark:text-gray-300">
           <span className="text-gray-400 text-xs mr-1">Trier par date :</span>
 
           <button
             onClick={() => setSortOrder("asc")}
-            className={`p-1 rounded hover:bg-gray-200 transition ${
+            className={`p-1 rounded hover:bg-gray-200 transition dark:hover:bg-gray-700 ${
               sortOrder === "asc"
-                ? "text-blue-600 bg-blue-50 font-bold"
-                : "text-gray-500"
+                ? "text-blue-600 bg-blue-50 font-bold dark:bg-gray-700 hover:bg-gray-700"
+                : "text-gray-500 dark:text-gray-400"
             }`}
             title="Plus anciennes en premier"
           >
@@ -62,9 +62,9 @@ const TransactionList = ({ transactions, toggleView, isExpanded }) => {
 
           <button
             onClick={() => setSortOrder("desc")}
-            className={`p-1 rounded hover:bg-gray-200 transition ${
+            className={`p-1 rounded hover:bg-gray-200 transition dark:hover:bg-gray-700 ${
               sortOrder === "desc"
-                ? "text-blue-600 bg-blue-50 font-bold"
+                ? "text-blue-600 bg-blue-50 font-bold dark:bg-gray-700 hover:bg-gray-700"
                 : "text-gray-500"
             }`}
             title="Plus récentes en premier"
@@ -90,7 +90,7 @@ const TransactionList = ({ transactions, toggleView, isExpanded }) => {
       {sortedTransactions.map((t) => (
         <div
           key={`${t.id}-${t.user_iban}-${t.timestamp}`}
-          className="cursor-pointer hover:bg-gray-100 transition-colors duration-200 border-b last:border-b-0"
+          className="cursor-pointer hover:bg-gray-100 transition-colors duration-200 border-b last:border-b-0 dark:hover:bg-gray-700"
           onClick={() => setSelectedTransaction(t)}
         >
           <TransactionItem transaction={t} />
@@ -99,7 +99,7 @@ const TransactionList = ({ transactions, toggleView, isExpanded }) => {
 
       <div className="text-center py-4">
         <button
-          className="hover:bg-gray-100 text-blue-600 font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out text-sm"
+          className="hover:bg-gray-100 text-blue-600 font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out text-sm dark:hover:bg-gray-700 "
           onClick={() => {
             toggleView(!isExpanded);
           }}

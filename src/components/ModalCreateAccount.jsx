@@ -12,14 +12,14 @@ export default function SimpleModal({ isOpen, onClose, title, children }) {
           background: "linear-gradient(135deg, #0e0499ff, #2dafd3ff)",
         }}
       >
-        <div className="bg-white rounded-3xl p-8 border border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:shadow-xl transition-shadow"
-        >
+        <div className="bg-white rounded-3xl p-8 border border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:shadow-xl transition-shadow dark:from-gray-800 dark:to-gray-900 dark:border-gray-700">
+
           <div className="flex justify-between items-center mb-6 pb-3 border-b border-gray-200">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-indigo-100 border border-indigo-200">
+              <div className="p-2 rounded-xl bg-indigo-100 border border-indigo-200 dark:bg-indigo-900 dark:border-indigo-800">
                 <PlusCircle className="w-6 h-6 text-indigo-600" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                 {title}
               </h2>
             </div>

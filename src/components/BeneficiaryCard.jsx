@@ -19,7 +19,7 @@ const BeneficiaryCard = ({ beneficiary, setError, setBeneficiaries }) => {
 
 
     return (
-        <div className="group relative bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col">
+        <div className="group relative bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col dark:bg-gray-800">
 
             {/* Decorative Header */}
             <div className={`h-28 bg-gradient-to-r ${getGradient(beneficiary.id.toString())} relative`}>
@@ -34,25 +34,25 @@ const BeneficiaryCard = ({ beneficiary, setError, setBeneficiaries }) => {
             {/* Avatar & Info */}
             <div className="px-6 py-4 relative flex flex-col items-center text-center flex-1">
                 
-                <h3 className="font-bold text-gray-900 text-xl mb-1">{beneficiary.name}</h3>
+                <h3 className="font-bold text-gray-900 text-xl mb-1 dark:text-gray-100">{beneficiary.name}</h3>
 
                 {/* IBAN Display */}
-                <div className="w-full bg-gray-50 rounded-2xl p-5 border border-gray-100 mb-4 group-hover:border-blue-200 transition-colors relative group/iban">
+                <div className="w-full bg-gray-50 rounded-2xl p-5 border border-gray-100 mb-4 group-hover:border-blue-200 transition-colors relative group/iban dark:bg-gray-900 dark:border-gray-600">
                     
                     <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1 text-left flex justify-between">
                         Identifiant Bancaire
                     </p>
-                    <p className="font-mono text-xs font-medium text-gray-700 tracking-tight text-center break-words ">
+                    <p className="font-mono text-xs font-medium text-gray-700 tracking-tight text-center break-words dark:text-gray-300">
                         {beneficiary.iban_to}
                     </p>
-                    <p className="font-mono text-[8px] font-light italic text-gray-700 tracking-tight break-words text-left opacity-30 mt-2">
+                    <p className="font-mono text-[8px] font-light italic text-gray-700 tracking-tight break-words text-left opacity-30 mt-2 dark:text-gray-300">
                         {beneficiary.creation_date.slice(8, 10)}/{beneficiary.creation_date.slice(5, 7)}/{beneficiary.creation_date.slice(0, 4)}
 
                     </p>
                 </div>
             </div>
 
-            <div className="absolute bottom-3 right-3">
+            <div className="absolute bottom-3 right-3 ">
                 <RippleButton
                     onClick={() => {
                         deleteBeneficiary(beneficiary.iban_to)
@@ -64,7 +64,7 @@ const BeneficiaryCard = ({ beneficiary, setError, setBeneficiaries }) => {
                                 setError(err.message)
                             })
                     }}
-                    className="text-gray-400 hover:text-gray-600 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+                    className="text-gray-400 hover:text-gray-600 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition dark:bg-gray-700 dark:hover:bg-gray-900 dark:hover:text-indigo-600"
                 >
                     <Trash2 className="w-5 h-5" />
                     <RippleButtonRipples />

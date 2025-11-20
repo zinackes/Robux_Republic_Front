@@ -12,8 +12,8 @@ import AppLayout from "@/components/AppLayout.jsx";
 
 const AddAccountCard = () => {
   return (
-    <div className="h-64 w-full max-w-md rounded-3xl border-2 border-dashed border-gray-300 bg-white/50 flex flex-col items-center justify-center gap-3 text-gray-400 cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-all duration-300 group">
-      <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+    <div className="h-64 w-full max-w-md rounded-3xl border-2 border-dashed border-gray-300 bg-white/50 flex flex-col items-center justify-center gap-3 text-gray-400 cursor-pointer hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-all duration-300 group dark:bg-gray-800/50 dark:border-gray-600 dark:text-gray-500 dark:hover:border-blue-400 dark:hover:text-blue-400 dark:hover:bg-gray-700/50">
+      <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 dark:bg-gray-700 dark:group-hover:bg-gray-600">
         <Plus size={24} />
       </div>
       <span className="font-bold text-sm tracking-wide">OUVRIR UN COMPTE</span>
@@ -85,16 +85,16 @@ function Dashboard() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
+              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                 Mes Comptes
               </h1>
-              <p className="text-gray-500 text-sm mt-1">
+              <p className="text-gray-500 text-sm mt-1 dark:text-gray-300">
                 Gérez vos finances et vos transactions
               </p>
             </div>
 
             <button
-              className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-200 transition-all active:scale-95"
+              className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-200 transition-all active:scale-95 dark:shadow-gray-900"
               onClick={() => setIsAllAccountsVisible(!isAllAccountsVisible)}
             >
               <ExternalLink size={18} />
@@ -141,13 +141,13 @@ function Dashboard() {
 
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                 Transactions Récentes
               </h2>
             </div>
 
             {transactions && transactions.length > 0 ? (
-              <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="rounded-3xl shadow-sm border overflow-hidden">
                 <TransactionList
                   transactions={displayedTransactions}
                   toggleView={setIsAllTransactionsVisible}

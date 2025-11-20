@@ -141,7 +141,7 @@ export default function Autocomplete({
                     onKeyDown={handleKeyDown}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    className="pr-10 w-full"
+                    className="pr-10 w-full bg-white dark:bg-gray-800"
                     // Accessibilité
                     aria-label="Search input"
                     aria-autocomplete="list"
@@ -161,13 +161,13 @@ export default function Autocomplete({
             {suggestions.length > 0 && isFocused && (
                 <ul
                     id="suggestions-list"
-                    className="mt-1 bg-white border border-gray-200 rounded-xl shadow-lg absolute z-50 w-full max-h-60 overflow-auto py-1 text-sm"
+                    className="mt-1 bg-white border border-gray-200 rounded-xl shadow-lg absolute z-50 w-full max-h-60 overflow-auto py-1 text-sm dark:bg-gray-800 dark:border-gray-700 "
                     role="listbox"
                 >
                     {suggestions.map((suggestion, index) => (
                         <li
                             key={index}
-                            className={`px-4 py-2 cursor-pointer transition-colors ${
+                            className={`px-4 py-2 cursor-pointer transition-colors dark:hover:bg-gray-700 hover:bg-gray-100${
                                 index === selectedIndex ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50 text-gray-700'
                             }`}
                             onClick={() => handleSuggestionClick(suggestion)}
