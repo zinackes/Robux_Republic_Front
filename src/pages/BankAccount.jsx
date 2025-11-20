@@ -150,8 +150,9 @@ function BankAccount() {
 
   useEffect(() => {
     if (user?.uid) {
-      getAllBankAccountsTransfert(user.uid).then((result) => {
-        setAllBankAccounts(result);
+      getAllBankAccounts(user.uid).then((result) => {
+        console.log("Comptes bancaires pour transfert:", result.account);
+        setAllBankAccounts(result.account);
       });
     }
     fetchBeneficiaries().then((result) => {
