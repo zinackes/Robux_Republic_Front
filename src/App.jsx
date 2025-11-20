@@ -13,6 +13,7 @@ import Profile from "@/pages/Profile.jsx";
 import Beneficiary from './pages/Beneficiary';
 import Dashboard from "@/pages/Dashboard.jsx";
 import BankAccount from "@/pages/BankAccount.jsx";
+import About from './pages/About';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route path={"/bank-account/:account"} element={<BankAccount/>}/>
             <Route path={"/beneficiary"} element={<Beneficiary/>}/>
             <Route path={"/dashboard/transaction"} element={<Transaction/>}/>
+            <Route path={"/about"} element={<About/>}/>
           </Route>
 
           <Route element={<VerifRoute/>}>

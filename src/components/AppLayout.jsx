@@ -8,6 +8,7 @@ import {
   Contact,
   Coins,
   ArrowRightLeft,
+  CircleQuestionMark,
 } from "lucide-react";
 import { useUser } from "@/context/UserContext.jsx";
 import { cn } from "@/lib/utils";
@@ -115,6 +116,16 @@ export default function AppLayout({ children }) {
           </div>
           <div>
             <SidebarLink
+              className={"cursor-pointer"}
+              link={{
+                label: "À propos",
+                href: "/about",
+                icon: (
+                  <CircleQuestionMark className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 cursor-pointer" />
+                ),
+              }}
+            />
+            <SidebarLink
               link={{
                 label: "Profil",
                 href: "/profile",
@@ -133,6 +144,7 @@ export default function AppLayout({ children }) {
               }}
               onClick={disconnect}
             />
+            
           </div>
         </SidebarBody>
       </Sidebar>
