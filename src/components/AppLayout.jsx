@@ -137,7 +137,7 @@ export default function AppLayout({ children }) {
         </SidebarBody>
       </Sidebar>
 
-      <div className="flex-1 flex flex-col relative bg-gray-50 dark:bg-neutral-900">
+      <div className="flex-1 flex flex-col relative bg-gray-50 dark:bg-gray-900">
         <div
           className={cn(
             "absolute inset-0 z-0 pointer-events-none",
@@ -147,7 +147,7 @@ export default function AppLayout({ children }) {
           )}
         />
 
-        <header className="relative z-10 h-16 bg-white dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-700 flex items-center justify-between px-6 md:px-8 shrink-0">
+        <header className="relative z-10 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-neutral-700 flex items-center justify-between px-6 md:px-8 shrink-0">
           <div>
             <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
               Bienvenue, {user?.first_name || "Utilisateur"} 👋
