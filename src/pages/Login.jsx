@@ -28,7 +28,7 @@ function Login() {
                 color="blue" fireworkSize="2" particleSize={2}
                 population={0.5} />
             <div className={"flex flex-col gap-4 items-center justify-center min-h-screen "}>
-                <h2 className="text-xl lg:text-3xl font-bold 
+                <h2 className="text-xl lg:text-3xl font-bold font-text
     [text-shadow:2px_2px_0_white,4px_4px_12px_rgba(0,0,0,0.45)]
     drop-shadow-[4px_6px_18px_rgba(0,122,255,0.55)]
 ">
@@ -37,7 +37,7 @@ function Login() {
 
 
 
-                <form className="my-8 bg-white dark:bg-black px-6 rounded-xl relative z-30 shadow-lg py-6 border " onSubmit={handleSubmit(onSubmit)}>
+                <form className="my-8 bg-white dark:bg-black px-6 rounded-xl relative z-30 shadow-lg py-6 border font-text" onSubmit={handleSubmit(onSubmit)}>
 
                     <Controller name={"email"}
                         control={control}
@@ -81,7 +81,7 @@ function Login() {
                         )}
                     />
 
-                    <p className="text-sm italic font-light text-gray-500 text-center mb-6"> Pas encore robuxien ? <a href={"/register"}>S'inscrire</a> </p>
+                    <p className="text-sm italic font-light text-gray-500 text-center mb-6"> Pas encore robuxien ? <a href={"/register"} className={"hover:underline"}>S'inscrire</a> </p>
 
                     <button
                         className="group/btn relative block cursor-pointer h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
