@@ -138,14 +138,14 @@ export default function TransactionDetailsModal({
 
           <ReadOnlyField
             label="Compte Débité"
-            value={transaction.iban_from}
+            value={transaction.sender_display_name}
             icon={Landmark}
             copyable={true}
           />
 
           <ReadOnlyField
             label="Compte Crédité "
-            value={transaction.iban_to}
+            value={transaction.receiver_display_name}
             icon={ArrowRight}
             copyable={true}
           />

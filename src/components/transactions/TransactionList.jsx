@@ -4,9 +4,12 @@ import { useLocation } from "react-router-dom";
 import TransactionDetailsModal from "@/components/transactions/TransactionsDetailsModal.jsx";
 import { useState, useMemo } from "react";
 
-const TransactionList = ({ transactions, toggleView, isExpanded }) => {
+const TransactionList = ({ transactions, toggleView, isExpanded, bankAccountList }) => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [sortOrder, setSortOrder] = useState("desc");
+
+
+
   const sortedTransactions = useMemo(() => {
     if (!transactions) return [];
 
@@ -20,6 +23,7 @@ const TransactionList = ({ transactions, toggleView, isExpanded }) => {
       }
     });
   }, [transactions, sortOrder]);
+
   if (!transactions || transactions.length === 0) {
     return (
       <div className="p-4 text-center text-gray-500 bg-gray-50 rounded-lg">

@@ -48,6 +48,7 @@ import { fetchBeneficiaries } from "@/api/beneficiary.js";
 import VirementCardForm from "@/components/VirementCardForm.jsx";
 import ModalInfoBig from "@/components/transactions/ModalInfoBig.jsx";
 import { set } from "react-hook-form";
+import {enrichTransactions} from "@/lib/utils.js";
 
 const ActionButton = ({ icon: Icon, label, onClick }) => (
   <button
@@ -126,7 +127,7 @@ function BankAccount() {
     if (!bankAccount?.iban) return;
     try {
       const data = await getTransactionsByIbanList([bankAccount.iban]);
-      setTransactions(data.transactions);
+      setTransactions(enrichTransactions(data.transactions, allBankAccounts, allBeneficiaries));
       setMonthlyExpenses(data.expenses || 0);
       setMonthlyIncome(data.income || 0);
     } catch (error) {

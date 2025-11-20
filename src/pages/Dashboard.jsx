@@ -8,7 +8,9 @@ import BankCard from "@/components/Card.jsx";
 import { useNavigate } from "react-router-dom";
 import CreateAccountModal from "@/components/CreateAccount.jsx";
 
-import AppLayout from "@/components/AppLayout.jsx"; 
+import AppLayout from "@/components/AppLayout.jsx";
+import {enrichTransactions} from "@/lib/utils.js";
+import fetchBeneficiaries from "@/api/beneficiary.js";
 
 const AddAccountCard = () => {
   return (
@@ -30,12 +32,20 @@ function Dashboard() {
   const [isAllAccountsVisible, setIsAllAccountsVisible] = useState(false);
   const [createAccountIsVisible, setCreateAccountIsVisible] = useState(false);
   const [isAllTransactionsVisible, setIsAllTransactionsVisible] = useState(false);
+  const [beneficiaryAccounts, setBeneficiaryAccounts] = useState([]);
 
   const handleAccountCreated = (newAccount) => {
     setBankAccounts((prevAccounts) => [...prevAccounts, newAccount]);
     setCreateAccountIsVisible(false);
   };
 
+  useEffect(() => {
+      fetchBeneficiaries().then((result) => {
+        if(result){
+          setBeneficiaryAccounts(result);
+        }
+      })
+  }, []);
 
   useEffect(() => {
     if (!user?.uid) return;
@@ -57,7 +67,9 @@ function Dashboard() {
       try {
         const ibanList = bankAccounts.map((acc) => acc.iban);
         const data = await getTransactionsByIbanList(ibanList);
-        setTransactions(data.transactions);
+        console.log(data);
+
+        setTransactions(enrichTransactions(data.transactions, bankAccounts, beneficiaryAccounts));
       } catch (error) {
       } finally {
         setIsLoading(false);
@@ -76,7 +88,6 @@ function Dashboard() {
     );
   }
 
-  console.log("Bank Accounts:", user?.uid, bankAccounts);
   const displayedBankAccounts = isAllAccountsVisible ? bankAccounts : bankAccounts.slice(0, 5);
   const displayedTransactions = isAllTransactionsVisible ? transactions : transactions ? transactions.slice(0, 10) : [];
 
@@ -152,6 +163,7 @@ function Dashboard() {
                   transactions={displayedTransactions}
                   toggleView={setIsAllTransactionsVisible}
                   isExpanded={isAllTransactionsVisible}
+                  bankAccountList={bankAccounts}
                 />
               </div>
             ) : (
