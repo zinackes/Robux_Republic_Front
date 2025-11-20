@@ -75,6 +75,7 @@ function Dashboard() {
     );
   }
 
+  console.log("Bank Accounts:", bankAccounts);
   const displayedBankAccounts = isAllAccountsVisible ? bankAccounts : bankAccounts.slice(0, 5);
   const displayedTransactions = isAllTransactionsVisible ? transactions : transactions ? transactions.slice(0, 10) : [];
 
