@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Input } from '@/components/ui/input.jsx'
 import { Search, Loader2 } from 'lucide-react'
 
-// --- Hook useDebounce inchangé ---
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -20,15 +19,13 @@ function useDebounce(value, delay) {
 }
 
 const defaultFetchSuggestions = async (query, suggestionsList) => {
-    // Simulation de délai réseau
     await new Promise((resolve) => setTimeout(resolve, 300))
     if (!suggestionsList) return [];
 
-    // MODIFICATION : Si la query est vide, on retourne tout
     if (!query || query.trim() === '') return suggestionsList;
 
     return suggestionsList.filter((suggestion) =>
-        suggestion.toLowerCase().includes(query.toLowerCase()),
+        suggestion?.toLowerCase().includes(query.toLowerCase()),
     )
 }
 
@@ -47,8 +44,6 @@ export default function Autocomplete({
     const [isFocused, setIsFocused] = useState(false)
 
     const fetchSuggestionsCallback = useCallback(async (q) => {
-        // MODIFICATION 1 : On a supprimé le bloc "if (q.trim() === '') return"
-        // On veut permettre la recherche vide pour afficher la liste par défaut.
 
         setIsLoading(true)
         try {
@@ -68,8 +63,6 @@ export default function Autocomplete({
     }, [value]);
 
     useEffect(() => {
-        // MODIFICATION 3 : On lance la recherche tant qu'on est focus.
-        // Si debouncedQuery est vide, fetchSuggestionsCallback recevra "" et renverra toute la liste.
         if (isFocused) {
             fetchSuggestionsCallback(debouncedQuery || '')
         } else {
@@ -117,8 +110,6 @@ export default function Autocomplete({
 
     const handleFocus = () => {
         setIsFocused(true)
-        // MODIFICATION 2 : On force l'appel même si la query est vide
-        // On passe query || '' pour être sûr de passer une chaine
         fetchSuggestionsCallback(query || '');
     }
 
@@ -142,7 +133,6 @@ export default function Autocomplete({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     className="pr-10 w-full bg-white dark:bg-gray-800"
-                    // Accessibilité
                     aria-label="Search input"
                     aria-autocomplete="list"
                     aria-controls="suggestions-list"

@@ -8,12 +8,14 @@ import { useUser } from "@/context/UserContext.jsx";
 import { FireworksBackground } from '@/components/animate-ui/components/backgrounds/fireworks';
 import {Button} from "@/components/animate-ui/components/buttons/button.jsx";
 import HomeLayout from "@/components/layouts/HomeLayout.jsx";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
 
     const { control, handleSubmit, getValues } = useForm();
 
-    const { user, setUser } = useUser();
+    const {setUser} = useUser();
+    const navigate = useNavigate();
 
     const [error, setError] = React.useState(null);
 

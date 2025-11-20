@@ -59,17 +59,8 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
                 return beneficiary.name;
             })
             setBeneficiariesName(getBeneficiariesName);
-            console.log(beneficiaries);
         })
     }, [])
-
-    useEffect(() => {
-        console.log(beneficiaries)
-    }, [beneficiaries]);
-
-    useEffect(() => {
-        console.log(getValues("iban_to"))
-    }, [getValues])
 
     useEffect(() => {
         if (isModalOpen && onSuccess) {
@@ -80,7 +71,6 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
 
     const onSubmit = (values) => {
 
-        console.log(values.iban_to);
         const getBeneficiaryIban = beneficiaries.find((beneficiary) => beneficiary.name === values.iban_to)?.iban_to ?? values.iban_to;
 
         console.log(getBeneficiaryIban);
@@ -94,8 +84,6 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
             iban_bank_from: null,
             status: "pending",
         }
-
-        console.log(finalPayload)
 
         createTransaction(finalPayload).then((result) => {
             console.log(result);
@@ -128,10 +116,6 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
     const addBeneficiary = () => {
         setIsBeneficiariesOpen(true)
     }
-
-    useEffect(() => {
-        console.log(isLoading)
-    }, [isLoading]);
 
     const STEP_DURATION = 1250;
 
