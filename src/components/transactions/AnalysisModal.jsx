@@ -15,11 +15,11 @@ const TransactionMiniItem = ({ t }) => {
   const date = t.date ? new Date(t.date).toLocaleDateString() : "Date inconnue";
 
   return (
-    <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-sm transition-all duration-200 group">
+    <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-sm transition-all duration-200 group dark:bg-gray-800 dark:border-indigo-700">
       <div className="flex items-center gap-3">
         <div
           className={`
-          p-2 rounded-full 
+          p-2 rounded-full dark:bg-gray-700
           ${
             isCredit ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
           }
@@ -36,7 +36,7 @@ const TransactionMiniItem = ({ t }) => {
         </div>
       </div>
       <span
-        className={`font-mono font-bold text-sm ${
+        className={`font-mono font-bold text-sm dark:text-gray-200 ${
           isCredit ? "text-green-600" : "text-gray-900"
         }`}
       >
@@ -107,7 +107,7 @@ const ExpenseDonut = ({ transactions }) => {
   const backgroundStyle = `conic-gradient(${gradientParts.join(", ")})`;
 
   return (
-    <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mt-4">
+    <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mt-4 dark:bg-gray-800 dark:border-gray-700 dark:border-indigo-700">
       <h4 className="text-xs font-bold text-gray-400 uppercase mb-4 flex items-center gap-2">
         <PieChart size={14} /> Répartition des Dépenses
       </h4>
@@ -169,9 +169,9 @@ export default function AnalysisModal({
   return (
     <ModalInfo open={open} onClose={onClose} title="Analyse Mensuelle">
       <div className="space-y-6">
-        <div className="bg-indigo-50 rounded-2xl p-4 border border-indigo-100 flex items-center justify-between">
+        <div className="bg-indigo-50 rounded-2xl p-4 border border-indigo-100 flex items-center justify-between dark:bg-gray-800 dark:border-indigo-700">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-white rounded-lg text-indigo-600 shadow-sm">
+            <div className="p-2 bg-white rounded-lg text-indigo-600 shadow-sm dark:bg-gray-700 dark:text-indigo-400">
               <Activity size={20} />
             </div>
             <div>
@@ -198,25 +198,25 @@ export default function AnalysisModal({
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <div className="p-4 rounded-2xl border border-green-100 bg-green-50/50 flex flex-col gap-2">
+          <div className="p-4 rounded-2xl border border-green-100 bg-green-50/50 flex flex-col gap-2 dark:bg-gray-800 dark:border-green-700">
             <div className="flex items-center gap-2 text-green-600 mb-1">
               <TrendingDown size={18} className="rotate-45" />
-              <span className="text-xs font-bold uppercase">Reçus</span>
+              <span className="text-xs font-bold uppercase dark:text-gray-300">Reçus</span>
             </div>
-            <span className="text-xl font-bold text-gray-800">
+            <span className="text-xl font-bold text-gray-800 dark:text-gray-200">
               {monthlyIncome.toFixed(2)}{" "}
-              <span className="text-sm font-medium text-gray-500">€</span>
+              <span className="text-sm font-medium text-gray-500 dark:text-gray-300">€</span>
             </span>
           </div>
 
-          <div className="p-4 rounded-2xl border border-red-100 bg-red-50/50 flex flex-col gap-2">
+          <div className="p-4 rounded-2xl border border-red-100 bg-red-50/50 flex flex-col gap-2 dark:bg-gray-800 dark:border-red-700">
             <div className="flex items-center gap-2 text-red-500 mb-1">
               <TrendingUp size={18} className="rotate-45" />
-              <span className="text-xs font-bold uppercase">Dépensés</span>
+              <span className="text-xs font-bold uppercase dark:text-gray-300">Dépensés</span>
             </div>
-            <span className="text-xl font-bold text-gray-800">
+            <span className="text-xl font-bold text-gray-800 dark:text-gray-200">
               {monthlyExpenses.toFixed(2)}{" "}
-              <span className="text-sm font-medium text-gray-500">€</span>
+              <span className="text-sm font-medium text-gray-500 dark:text-gray-300">€</span>
             </span>
           </div>
         </div>
@@ -228,7 +228,7 @@ export default function AnalysisModal({
             <span>Flux Entrant</span>
             <span>Flux Sortant</span>
           </div>
-          <div className="h-3 w-full bg-red-100 rounded-full overflow-hidden flex">
+          <div className="h-3 w-full bg-red-100 rounded-full overflow-hidden flex dark:bg-gray-700">
             <div
               className="h-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)] transition-all duration-500"
               style={{ width: `${incomePercent}%` }}

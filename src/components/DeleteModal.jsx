@@ -33,8 +33,8 @@ export default function DeleteAccountModal({ open, onClose, iban }) {
           background: "linear-gradient(135deg, #0e0499ff, #2dafd3ff)",
         }}
       >
-        <div className="bg-white rounded-3xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-800 mb-4 dark:text-gray-100">
+        <div className="bg-white rounded-3xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
+          <h2 className="text-xl font-bold text-gray-800 mb-4 dark:text-gray-100 dark:text-gray-100">
             Confirmer la suppression
           </h2>
           <p className="text-gray-600 mb-6 dark:text-gray-300">

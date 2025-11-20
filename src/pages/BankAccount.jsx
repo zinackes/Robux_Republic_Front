@@ -352,7 +352,7 @@ function BankAccount() {
         onClose={() => setShowInfo(false)}
         title="Coordonnées Bancaires"
       >
-        <p className="mb-4 text-gray-600">
+        <p className="mb-4 text-gray-600 dark:text-gray-300">
           Voici les détails de votre compte courant. Vous pouvez copier l'IBAN
           pour le partager.
         </p>

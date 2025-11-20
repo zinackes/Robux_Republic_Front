@@ -48,14 +48,16 @@ export default function ModalInfoBig({
             bg-gradient-to-br from-white to-gray-50
             flex flex-col
             max-h-[80vh]
+            dark:from-gray-800
+            dark:to-gray-900
           "
         >
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100 dark:border-gray-700">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
+              <div className="p-2 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400">
                 <Info size={24} />
               </div>
-              <h2 className="text-xl font-bold text-gray-800">{title}</h2>
+              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{title}</h2>
             </div>
 
             <button
