@@ -46,7 +46,7 @@ Suivez ces étapes pour installer et lancer l'interface utilisateur localement :
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/votre-equipe/robux-republic.git
+   git clone https://github.com/votre-equipe/robux-republic_front.git
    cd robux-republic
    ```
 
@@ -72,7 +72,7 @@ Le backend se trouve dans un autre dépôt (ou dossier séparé). Voici la proc�
 
 ```bash
 # Cloner le dépôt backend
-git clone https://github.com/votre-equipe/Robux_Republic_Backend.git
+git clone https://github.com/zinackes/Robux_Republic.git
 
 # Accéder au dossier du projet
 cd Robux_Republic_Backend
