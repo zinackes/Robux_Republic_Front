@@ -1,0 +1,16 @@
+.env
+.env.example
+*.log
+
+.git
+.vscode
+.idea
+.DS_Store
+
+
+node_modules
+dist
+build
+__pycache__
+.pytest_cache
+

@@ -4,7 +4,7 @@ FROM node:22-alpine
 ENV NODE_ENV=production
 # Set the working directory inside the container
 WORKDIR /app
-# Copy package.json and package-lock.json to the working directory
+# Copy all files from the current directory to the working directory
 COPY . .
 # Install production dependencies
 RUN npm install --production
