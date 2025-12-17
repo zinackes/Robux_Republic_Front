@@ -30,8 +30,8 @@ jobs:
     - run: npm run build --if-present
 
     - name: create image
-      run: docker build -t bankFrontend .
+      run: docker build -t bankfrontend .
     - name: tag image
-      run: docker tag bankFrontend klfben/frontendbank
+      run: docker tag bankfrontend klfben/frontendbank
     - name: push image
       run: docker push klfben/frontendbank
