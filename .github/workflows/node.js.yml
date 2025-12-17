@@ -46,3 +46,5 @@ jobs:
         docker build -t $IMAGE_ID:latest .
         docker push $IMAGE_ID:latest
         
+
+        
