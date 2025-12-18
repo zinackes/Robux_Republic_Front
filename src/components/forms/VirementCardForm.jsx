@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Landmark, Loader, Type, User, X, Plus } from "lucide-react";
+import { ArrowRight, Landmark, Type, User, X, Plus } from "lucide-react";
 import {
     Select,
     SelectContent,
@@ -33,7 +33,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isBeneficiariesOpen, setIsBeneficiariesOpen] = React.useState(false);
 
-    const [createdTransactionData, setCreateTransactionData] = React.useState({});
+    const [createdTransactionData, setCreatedTransactionData] = React.useState({});
 
     const loadingStates = [
         {
@@ -75,7 +75,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
         console.log(getBeneficiaryIban);
         const finalPayload = {
             ...values,
-            amount: parseFloat(values.amount),
+            amount: Number.parseFloat(values.amount),
             iban_to: getBeneficiaryIban,
             name: values.name || "",
             action: "virement",
@@ -93,7 +93,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
             setLoading(true);
             setIsLoading(true);
             console.log(beneficiaries);
-            setCreateTransactionData({
+            setCreatedTransactionData({
                 ...finalPayload,
                 ...result,
                 to_account: beneficiaries.find((beneficiary) => beneficiary.iban_to === finalPayload.iban_to)?.name ?? finalPayload.iban_to,
@@ -104,7 +104,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
     }
 
     const onCancel = () => {
-        cancelTransaction(parseInt(createdTransactionData.transaction_id)).then((result) => {
+        cancelTransaction(Number.parseInt(createdTransactionData.transaction_id)).then((result) => {
             console.log(result);
             setSubmitError("Vous avez annuler le virement.")
             setLoading(false);
@@ -195,7 +195,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
                                                     >
                                                         <span className="font-medium">{account.name}</span>
                                                         <span className="mx-1 text-gray-400 dark:text-gray-500">•</span>
-                                                        <span>{parseFloat(account.balance).toFixed(2)} RBX</span>
+                                                        <span>{Number.parseFloat(account.balance).toFixed(2)} RBX</span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectGroup>

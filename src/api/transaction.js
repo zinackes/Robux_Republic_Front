@@ -78,7 +78,7 @@ const processAllTransactions = (apiResults) => {
         tDate.getMonth() === currentMonth &&
         tDate.getFullYear() === currentYear
       ) {
-        const amount = Math.abs(parseFloat(transaction.amount));
+        const amount = Math.abs(Number.parseFloat(transaction.amount));
 
         if (type === "debit") {
           expensesThisMonth += amount;

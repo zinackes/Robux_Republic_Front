@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import GridBackground from "@/components/ui/GridBackground.jsx";
 import { motion } from "motion/react";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip.jsx";
-import { ArrowRight, ArrowUpDown, Coins } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useUser } from "@/context/UserContext.jsx";
+import { ArrowUpDown, Coins } from "lucide-react";
 import BankCard from "@/components/Card.jsx";
 import CardSwap, { Card } from "@/components/CardSwap.jsx";
 import HomeLayout from "@/components/layouts/HomeLayout.jsx";
 import {cn} from "@/lib/utils.js";
 
 function Home() {
-  const navigate = useNavigate();
-  const { user } = useUser();
 
   const [convertMoney, setConvertMoney] = useState({
     top: {
@@ -45,7 +40,7 @@ function Home() {
 
   const handleSwap = () => {
     setConvertMoney((prev) => {
-      const newTopValue = parseFloat(prev.bottom.value) || 0;
+      const newTopValue = Number.parseFloat(prev.bottom.value) || 0;
       const newBottomValue = (newTopValue * prev.bottom.convertionRate).toFixed(2);
 
       return {

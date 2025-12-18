@@ -9,7 +9,7 @@ import { useUser } from "@/context/UserContext.jsx";
 export default function CreateAccountModal({ open, onClose, onSuccess }) {
   const { control, handleSubmit, reset } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
-  const { setUser, user } = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     if (open) {

@@ -4,7 +4,6 @@ import {
   Copy,
   Check,
   Landmark,
-  User,
   Banknote,
   Calendar,
   Hash,
@@ -95,7 +94,7 @@ export default function TransactionDetailsModal({
   if (!transaction) return null;
 
   const isCredit = transaction.type === "credit";
-  const amount = parseFloat(transaction.amount || 0);
+  const amount = Number.parseFloat(transaction.amount || 0);
   const formattedAmount = `${isCredit ? "+" : "-"}${Math.abs(amount).toFixed(
     2
   )} €`;

@@ -1,4 +1,4 @@
-import {ArrowDownCircle, ArrowRightLeft, Send, Banknote, User, ArrowRight} from "lucide-react";
+import {ArrowRightLeft, Banknote, ArrowRight} from "lucide-react";
 
 const TransactionItem = ({ transaction }) => {
   const dateObj = new Date(transaction.timestamp);

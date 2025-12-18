@@ -1,4 +1,3 @@
-import App from '@/App'
 import React from 'react'
 import AppLayout from '@/components/layouts/AppLayout.jsx'
 

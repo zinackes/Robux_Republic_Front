@@ -32,8 +32,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { getTransactionsByIbanList } from "@/api/transaction.js";
-import { getAllBankAccounts } from "@/api/bankAccount";
-import { generateSingleAccountPDF } from "@/api/bankAccount";
+import { getAllBankAccounts, generateSingleAccountPDF } from "@/api/bankAccount";
 import TransactionList from "@/components/transactions/TransactionList.jsx";
 import BankCard from "@/components/Card.jsx";
 import ModalInfo from "@/components/transactions/ModalInfo.jsx";
@@ -63,7 +62,6 @@ const ActionButton = ({ icon: Icon, label, onClick }) => (
 );
 
 function BankAccount() {
-  const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser();
@@ -175,7 +173,7 @@ function BankAccount() {
 
   // Fonction pour mettre a jour dynamiquement le compte bancaire et les transactions
   const handleTransactionSuccess = async (transaction) => {
-    const balance = transaction.type === "Espèces" || transaction.type === "Chèque" ? (parseFloat(bankAccount.balance) + transaction.amount).toString() : (parseFloat(bankAccount.balance) - transaction.amount).toString();
+    const balance = transaction.type === "Espèces" || transaction.type === "Chèque" ? (Number.parseFloat(bankAccount.balance) + transaction.amount).toString() : (Number.parseFloat(bankAccount.balance) - transaction.amount).toString();
     setBankAccount((prevAccount) => ({
       ...prevAccount,
       balance: balance,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { User, Trash2, Copy, ShieldCheck } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { deleteBeneficiary } from '@/api/beneficiary.js';
 import { RippleButton, RippleButtonRipples } from '@/components/animate-ui/components/buttons/ripple'
 

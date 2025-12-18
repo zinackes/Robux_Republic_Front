@@ -1,8 +1,6 @@
-import React, {useEffect} from "react";
 import TransactionItem from "@/components/transactions/TransactionItem.jsx";
-import { useLocation } from "react-router-dom";
 import TransactionDetailsModal from "@/components/transactions/TransactionsDetailsModal.jsx";
-import { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Autocomplete from "@/components/ui/Autocomplete.jsx";
 
 const TransactionList = ({ transactions, toggleView, isExpanded, bankAccountList }) => {

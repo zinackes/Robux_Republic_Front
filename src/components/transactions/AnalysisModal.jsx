@@ -11,7 +11,7 @@ import {
 
 const TransactionMiniItem = ({ t }) => {
   const isCredit = t.type === "credit";
-  const amount = parseFloat(t.amount).toFixed(2);
+  const amount = Number.parseFloat(t.amount).toFixed(2);
   const date = t.date ? new Date(t.date).toLocaleDateString() : "Date inconnue";
 
   return (
@@ -53,7 +53,7 @@ const ExpenseDonut = ({ transactions }) => {
     if (!transactions) return [];
     const expenses = transactions.filter((t) => t.type === "debit");
     const totalExpenses = expenses.reduce(
-      (acc, t) => acc + Math.abs(parseFloat(t.amount)),
+      (acc, t) => acc + Math.abs(Number.parseFloat(t.amount)),
       0
     );
 
@@ -62,7 +62,7 @@ const ExpenseDonut = ({ transactions }) => {
     const groups = {};
     expenses.forEach((t) => {
       const name = t.iban_from || t.counterparty_name || "Divers";
-      const amount = Math.abs(parseFloat(t.amount));
+      const amount = Math.abs(Number.parseFloat(t.amount));
       groups[name] = (groups[name] || 0) + amount;
     });
 

@@ -1,11 +1,6 @@
-"use client";
-import {Button} from "@/components/animate-ui/components/buttons/button.jsx";
-
-;
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import React, { useState, useEffect } from "react";
-import {X} from "lucide-react";
 
 const CheckIcon = ({
   className

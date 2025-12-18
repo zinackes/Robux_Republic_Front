@@ -1,8 +1,7 @@
 import React from "react";
 import PersonalInfoCard from "@/components/ui/PersonalInfoCard.jsx";
-import { CreditCard, LogOut } from "lucide-react";
+import { CreditCard, LogOut, Bell, Gamepad2 } from "lucide-react";
 import { useUser } from "@/context/UserContext.jsx";
-import { Bell, Gamepad2 } from "lucide-react";
 
 export default function BodyProfile() {
   const { user, isPending } = useUser();

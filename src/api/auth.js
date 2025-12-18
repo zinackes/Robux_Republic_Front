@@ -1,4 +1,3 @@
-import {useUser} from "@/context/UserContext.jsx";
 import { Navigate } from "react-router-dom";
 
 // fonction pour inscrire un nouvel utilisateur

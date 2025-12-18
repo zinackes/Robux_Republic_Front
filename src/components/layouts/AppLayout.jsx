@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -15,7 +15,6 @@ import { cn } from "@/lib/utils.js";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar.jsx";
 import { motion } from "framer-motion";
 import { ModeToggle } from "@/components/ui/theme/modeToggle.jsx";
-import { useRef } from "react";
 
 export const Logo = () => {
   return (

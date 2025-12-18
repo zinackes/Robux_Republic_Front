@@ -1,4 +1,4 @@
-import React, {use, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ArrowRight, Banknote, FilePenLine, Landmark, MapPin, QrCode, Type, User, Wallet, X} from "lucide-react";
 import {Controller, useForm} from "react-hook-form";
 import {
@@ -30,7 +30,7 @@ function DepotCardForm({allBankAccounts = [], onSuccess}) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [createdTransactionData, setCreateTransactionData] = React.useState({});
+    const [createdTransactionData, setCreatedTransactionData] = React.useState({});
 
     const [submitError, setSubmitError] = React.useState("");
 
@@ -62,7 +62,7 @@ function DepotCardForm({allBankAccounts = [], onSuccess}) {
 
         const finalPayload = {
             ...values,
-            amount: parseFloat(values.amount),
+            amount: Number.parseFloat(values.amount),
             iban_from: values.iban_from || robuxBankAccount.iban,
             name: values.name || "",
             action: values.iban_bank_from ? "virement" : "depot",
@@ -86,13 +86,13 @@ function DepotCardForm({allBankAccounts = [], onSuccess}) {
                 type: depotType === "espece" ? "Espèces" : "Chèque",
             }
 
-            setCreateTransactionData(transactionPayload );
+            setCreatedTransactionData(transactionPayload );
         });
     }
 
     const onCancel = () => {
         console.log(createdTransactionData);
-        cancelTransaction(parseInt(createdTransactionData.transaction_id)).then((result) => {
+        cancelTransaction(Number.parseInt(createdTransactionData.transaction_id)).then((result) => {
             console.log(result);
             setSubmitError("Vous avez annuler le virement.")
             setLoading(false);
@@ -176,7 +176,7 @@ function DepotCardForm({allBankAccounts = [], onSuccess}) {
                                                     <SelectItem key={account.iban} value={account.iban} className="text-xs sm:text-sm">
                                                         <span className="font-medium">{account.name}</span>
                                                         <span className="mx-1 text-gray-400">•</span>
-                                                        <span>{parseFloat(account.balance).toFixed(2)} RBX</span>
+                                                        <span>{Number.parseFloat(account.balance).toFixed(2)} RBX</span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectGroup>

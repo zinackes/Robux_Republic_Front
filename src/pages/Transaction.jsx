@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { cn } from "@/lib/utils.js";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import {
   Tabs,
