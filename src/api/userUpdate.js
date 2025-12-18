@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_BASE_API_URL || "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_BASE_API_URL || "https://robux-republic.onrender.com";
 // fonction pour mettre à jour le profil utilisateur 
 export const UpdateUserProfile = async (user) => {
     try {

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 // fonction pour inscrire un nouvel utilisateur
 
-const API_BASE_URL = import.meta.env.VITE_BASE_API_URL || "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_BASE_API_URL || "https://robux-republic.onrender.com";
 
 export const signUpUser = async (
     user
