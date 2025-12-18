@@ -22,7 +22,7 @@ COPY --chown=node:node eslint.config.js ./
 
 ARG VITE_BASE_API_URL
 ENV VITE_BASE_API_URL=$VITE_BASE_API_URL
-RUN npm run
+RUN npm run build
 
 FROM node:22-alpine
 
