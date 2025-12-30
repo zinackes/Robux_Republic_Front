@@ -1,13 +1,16 @@
 services:
-  # --- FRONTEND (React) ---
   frontend:
     build:
       context: ./
       dockerfile: Dockerfile
+      args:
+        - VITE_BASE_API_URL=https://api-robux-republic.micdev.fr
     container_name: react_app
     restart: always
     ports:
-      - "3000:3000" 
+      - "6683:3000" 
+    networks:
+      - reseau_partage
 networks:
   reseau_partage:
     external: true

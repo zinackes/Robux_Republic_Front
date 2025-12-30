@@ -171,23 +171,48 @@ function BankAccount() {
   if (!defaultTab) return null;
 
   // Fonction pour mettre a jour dynamiquement le compte bancaire et les transactions
-  const handleTransactionSuccess = async (transaction) => {
-    const balance = transaction.type === "Espèces" || transaction.type === "Chèque" ? (Number.parseFloat(bankAccount.balance) + transaction.amount).toString() : (Number.parseFloat(bankAccount.balance) - transaction.amount).toString();
+const handleTransactionSuccess = async (transaction) => {
+    // 1. Vérifier si le compte actuel est concerné par la transaction
+    const isSender = String(transaction.iban_from) === String(bankAccount.iban);
+    const isReceiver = String(transaction.iban_to) === String(bankAccount.iban);
+
+    // Si le compte n'est ni l'envoyeur ni le receveur, on ne touche pas à la balance
+    if (!isSender && !isReceiver) {
+      console.log("Transaction externe, pas de mise à jour du solde local.");
+      return;
+    }
+
+    // 2. Calculer le nouveau solde uniquement si concerné
+    let newBalance = Number.parseFloat(bankAccount.balance);
+
+    if (isReceiver) {
+      // C'est un crédit (Dépôt ou virement reçu)
+      newBalance += Number.parseFloat(transaction.amount);
+    } else if (isSender) {
+      // C'est un débit (Virement envoyé)
+      newBalance -= Number.parseFloat(transaction.amount);
+    }
+
+    // 3. Mettre à jour l'état local
     setBankAccount((prevAccount) => ({
       ...prevAccount,
-      balance: balance,
-    })); 
-    console.log("Nouvelle transaction ajoutée:", transaction);
-    const transactionPlayload = {
-      ...transaction,
-      transaction_name: transaction.name,
-      type: transaction.type === "Espèces" || transaction.type === "Chèque" ? "credit" : "",
+      balance: newBalance.toString(),
+    }));
 
-    }
+    // 4. Ajouter à la liste des transactions
+    const transactionPayload = {
+      ...transaction,
+      transaction_name: transaction.name || "Transaction",
+      // On définit le type pour l'affichage (rouge/vert)
+      type: isReceiver ? "credit" : "debit", 
+    };
+
     setTransactions((prevTransactions) => [
-      transactionPlayload,
-      ...prevTransactions,
+      transactionPayload,
+      ...(prevTransactions || []),
     ]);
+    
+    console.log("Mise à jour dynamique réussie pour l'IBAN:", bankAccount.iban);
   };
 
   // Fonction pour telecharger le pdf

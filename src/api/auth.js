@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 
-// fonction pour inscrire un nouvel utilisateur
+const API_BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
-const API_BASE_URL = import.meta.env.VITE_BASE_API_URL || "http://localhost:8000";
+console.log("API_BASE_URL dans auth.js :", API_BASE_URL);
 
 export const signUpUser = async (
     user
