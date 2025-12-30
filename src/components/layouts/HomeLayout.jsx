@@ -11,8 +11,7 @@ function HomeLayout({children}) {
         <div className={"min-h-screen min-w-screen flex flex-col absolute"}>
             <Navbar className={"-top-40"}>
                 <NavBody>
-                    <NavbarLogo href={"/robux_republic_logo.png"}/>
-                    <div className={"flex gap-3 items-center"}>
+                    <div className={"flex w-full gap-3 items-center justify-end"}>
                         {!user && (
                             <>
                                 <NavbarButton variant={"secondary"} href={"/register"}>S'inscrire</NavbarButton>

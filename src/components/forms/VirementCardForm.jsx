@@ -195,7 +195,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
                                                     >
                                                         <span className="font-medium">{account.name}</span>
                                                         <span className="mx-1 text-gray-400 dark:text-gray-500">•</span>
-                                                        <span>{Number.parseFloat(account.balance).toFixed(2)} RBX</span>
+                                                        <span>{Number.parseFloat(account.balance).toFixed(2)} €</span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectGroup>
@@ -296,7 +296,7 @@ function VirementCardForm({allBankAccounts , onSuccess}) {
                             )}
                         />
                         <span className="text-lg sm:text-xl font-medium text-gray-400 dark:text-gray-500">
-                            RBX
+                            €
                         </span>
                     </div>
                 </div>

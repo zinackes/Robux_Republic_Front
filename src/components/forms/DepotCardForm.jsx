@@ -176,7 +176,7 @@ function DepotCardForm({allBankAccounts = [], onSuccess}) {
                                                     <SelectItem key={account.iban} value={account.iban} className="text-xs sm:text-sm">
                                                         <span className="font-medium">{account.name}</span>
                                                         <span className="mx-1 text-gray-400">•</span>
-                                                        <span>{Number.parseFloat(account.balance).toFixed(2)} RBX</span>
+                                                        <span>{Number.parseFloat(account.balance).toFixed(2)} €</span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectGroup>
@@ -357,7 +357,7 @@ function DepotCardForm({allBankAccounts = [], onSuccess}) {
                             )}
                         />
                         <span className="text-lg sm:text-xl font-medium text-gray-400">
-                        RBX
+                        €
                     </span>
                     </div>
                 </div>

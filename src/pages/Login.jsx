@@ -41,7 +41,7 @@ function Login() {
     [text-shadow:2px_2px_0_white,4px_4px_12px_rgba(0,0,0,0.45)]
     drop-shadow-[4px_6px_18px_rgba(0,122,255,0.55)]
 ">
-                    Se connecter à Robux Republic
+                    Se connecter à Banque Republic
                 </h2>
 
 
@@ -56,7 +56,7 @@ function Login() {
                             fieldState }) => (
                             <LabelInputContainer className={"mb-4"}>
                                 <Label htmlFor="email">Adresse mail</Label>
-                                <Input {...field} id="email" placeholder="robux@gmail.com" type="email" />
+                                <Input {...field} id="email" placeholder="email@gmail.com" type="email" />
                                 {fieldState.error && (
                                     <p className="text-red-500 text-xs ml-2">
                                         {fieldState.error.message}
@@ -90,7 +90,7 @@ function Login() {
                         )}
                     />
 
-                    <p className="text-sm italic font-light text-gray-500 text-center mb-6"> Pas encore robuxien ? <a href={"/register"} className={"hover:underline"}>S'inscrire</a> </p>
+                    <p className="text-sm italic font-light text-gray-500 text-center mb-6"> Pas encore inscrit ? <a href={"/register"} className={"hover:underline"}>S'inscrire</a> </p>
 
                     <button
                         className="group/btn relative block cursor-pointer h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"

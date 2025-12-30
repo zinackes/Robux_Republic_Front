@@ -22,13 +22,12 @@ export const Logo = () => {
       to="/dashboard"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <img src={"/robux_republic_logo.png"} className={"w-10"} />
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="font-medium text-black dark:text-white whitespace-pre"
       >
-        Robux Republic
+        Banque Republic
       </motion.span>
     </Link>
   );
@@ -40,7 +39,6 @@ export const LogoIcon = () => {
       to="/"
       className="font-normal relative flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <img src={"/robux_republic_logo.png"} className={"w-10"} />
     </Link>
   );
 };
@@ -133,16 +131,6 @@ export default function AppLayout({ children }) {
             </div>
           </div>
           <div>
-            <SidebarLink
-              className={"cursor-pointer"}
-              link={{
-                label: "À propos",
-                href: "/about",
-                icon: (
-                  <CircleQuestionMark className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 cursor-pointer" />
-                ),
-              }}
-            />
             <SidebarLink
               link={{
                 label: "Profil",

@@ -11,7 +11,7 @@ function Home() {
 
   const [convertMoney, setConvertMoney] = useState({
     top: {
-      money: "Robux",
+      money: "Dollars",
       symbol: (
           <img src={"robux_logo.png"} alt={"Robux"} className={"max-w-7"} />
       ),
@@ -67,13 +67,13 @@ function Home() {
             <h1 className={"relative z-20 font-title py-8 !text-5xl !font-bold sm:!text-6xl md:!text-7xl flex items-baseline gap-6"}>
               <motion.div className="relative mx-4 my-4 flex flex-col items-center justify-center gap-4 text-center sm:mx-0 sm:mb-0 sm:flex-row">
                 <LayoutTextFlip
-                    text="Vos Robux. "
+                    text="Vos euros. "
                     words={["Sécurisés.", "Accessibles.", "Valorisés."]}
                 />
               </motion.div>
             </h1>
             <p className={"relative z-20 font-text text-gray-600 md:text-lg text-md max-w-2xl text-center px-4 dark:text-gray-400"}>
-              Bienvenue à Robux Republic. La banque nouvelle génération pour les joueurs. Transformez vos Robux en véritable capital.
+              Bienvenue à Banque Republic. La banque nouvelle génération pour les joueurs. Transformez vos euros en véritable capital.
             </p>
 
           </div>
@@ -160,8 +160,8 @@ function Home() {
                   <BankCard
                       iban={"US88 1234 5678 9012 345"}
                       balance={50200.00}
-                      currency="RBX"
-                      label="ÉPARGNE ROBUX"
+                      currency="€"
+                      label="ÉPARGNE EUROS"
                       accountName="Coffre Fort"
                   />
                 </Card>

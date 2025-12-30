@@ -51,7 +51,7 @@ const TransactionItem = ({ transaction }) => {
         <span className={`font-bold ${colorClass}`}>
           {" " + symbol}
           {Math.abs(transaction.amount).toFixed(2) + " "}
-          RBX
+          €
         </span>
         <p className="text-sm text-gray-500">{transaction.action}</p>
       </div>

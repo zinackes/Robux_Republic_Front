@@ -42,7 +42,7 @@ export default function FinishedTransactionModal({open, onClose, transaction}) {
                                 <span className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wide">Montant Transféré</span>
                                 <div
                                     className="text-5xl md:text-6xl font-bold text-gray-900 tracking-tighter flex items-baseline flex-wrap">{transaction.amount}<span
-                                    className="text-2xl md:text-3xl text-gray-400 ml-2 font-medium">RBX</span></div>
+                                    className="text-2xl md:text-3xl text-gray-400 ml-2 font-medium">€</span></div>
                             </div>
                             <div className={"space-y-6 md:space-y-8 pr-4"}>
                                 {transaction?.to_account && (

@@ -86,43 +86,6 @@ export default function BodyProfile() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm dark:bg-gray-900 dark:border-gray-800 max-w-6xl w-full">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl dark:bg-blue-900/20 dark:text-blue-400">
-              <Gamepad2 size={24} />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-800">
-                Liaison Roblox
-              </h3>
-              <p className="text-xs text-gray-400 font-medium">
-                Nécessaire pour les dépôts en RBX
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 flex flex-col md:flex-row items-center gap-6 dark:bg-gray-800 dark:border-gray-700">
-            <img
-              src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcq2WsjN3Ye_vjrbCQtSx04QXiYRIaZ2uYtg&s`}
-              alt="Roblox Avatar"
-              className="w-20 h-20 bg-white rounded-full shadow-sm p-1 border border-gray-200 dark:bg-gray-900 dark:border-gray-700 object-cover"
-            />
-            <div className="flex-1 w-full">
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1 mb-1 block dark:text-gray-400">
-                Nom d'utilisateur Roblox
-              </label>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  className="flex-1 bg-white border border-gray-200 text-gray-900 font-bold rounded-xl py-3 px-4 focus:outline-none focus:ring-4 focus:ring-gray-100 focus:border-gray-300 transition-all dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:focus:ring-gray-700 dark:focus:border-gray-600"
-                />
-                <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-6 rounded-xl transition-colors py-3 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200">
-                  Vérifier
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
