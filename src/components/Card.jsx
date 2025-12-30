@@ -34,17 +34,17 @@ const BankCard = ({
   
   return (
     <div
-      className="relative w-full max-w-md h-64 rounded-3xl p-6 text-white shadow-xl overflow-hidden transition-transform hover:scale-[1.02] duration-300"
+      className="relative w-full h-56 sm:h-64 rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-white shadow-xl overflow-hidden transition-transform hover:scale-[1.02] duration-300"
       style={{ background: persistentGradient }}
     >
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl pointer-events-none"></div>
 
       <div className="flex justify-between items-start relative z-10">
         <div>
-          <p className="text-xs font-bold tracking-wider opacity-70 uppercase mb-1">
+          <p className="text-[10px] sm:text-xs font-bold tracking-wider opacity-70 uppercase mb-1">
             {label}
           </p>
-          <h2 className="text-2xl font-bold tracking-tight">{accountName}</h2>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight">{accountName}</h2>
         </div>
 
         <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
@@ -54,13 +54,13 @@ const BankCard = ({
 
       <div className="mt-6 relative z-10">
         <div className="flex items-baseline gap-3">
-          <h3 className="text-4xl font-extrabold">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold">
             {formattedBalance} {currency}
           </h3>
         </div>
         <div className="flex items-center gap-2 mt-2">
-          <span className="text-sm opacity-80">Solde disponible</span>
-          <span className="bg-white/20 text-white text-xs font-bold px-2 py-1 rounded-lg backdrop-blur-md">
+          <span className="text-xs sm:text-sm opacity-80">Solde disponible</span>
+          <span className="bg-white/20 text-white text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg backdrop-blur-md">
             {percentage > 0 ? "+" : ""}
             {percentage}%
           </span>

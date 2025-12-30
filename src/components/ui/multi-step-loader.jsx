@@ -40,7 +40,7 @@ const LoaderCore = ({
   value = 0
 }) => {
   return (
-    <div className="flex relative justify-start max-w-xl mx-auto flex-col mt-40">
+    <div className="flex relative justify-start max-w-xl mx-auto flex-col mt-10 sm:mt-20 md:mt-40 px-4">
       {loadingStates.map((loadingState, index) => {
         const distance = Math.abs(index - value);
         const opacity = Math.max(1 - distance * 0.2, 0); // Minimum opacity is 0, keep it 0.2 if you're sane.
@@ -48,23 +48,23 @@ const LoaderCore = ({
         return (
           <motion.div
             key={index}
-            className={cn("text-left flex gap-2 mb-4")}
+            className={cn("text-left flex gap-2 sm:gap-3 mb-3 sm:mb-4")}
             initial={{ opacity: 0, y: -(value * 40) }}
             animate={{ opacity: opacity, y: -(value * 40) }}
             transition={{ duration: 0.5 }}>
-            <div>
+            <div className="shrink-0">
               {index > value && (
-                <CheckIcon className="text-black dark:text-white" />
+                <CheckIcon className="text-black dark:text-white w-5 h-5 sm:w-6 sm:h-6" />
               )}
               {index <= value && (
                 <CheckFilled
-                  className={cn("text-black dark:text-white", value === index &&
+                  className={cn("text-black dark:text-white w-5 h-5 sm:w-6 sm:h-6", value === index &&
                     "text-black dark:text-lime-500 opacity-100")} />
               )}
             </div>
             <span
               className={cn(
-                "text-black dark:text-white",
+                "text-black dark:text-white text-sm sm:text-base leading-snug",
                 value === index && "text-black dark:text-lime-500 opacity-100"
               )}>
               {loadingState.text}

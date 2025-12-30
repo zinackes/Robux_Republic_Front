@@ -5,8 +5,8 @@ export default function SimpleModal({ isOpen, onClose, title, children }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
-      
+    <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-[200] px-4 sm:px-6">
+
       <div className="relative rounded-3xl p-[2px] max-w-md w-full bg-black overflow-hiddenshadow-[0_0_20px_rgba(0,255,200,0.25)]"
         style={{
           background: "linear-gradient(135deg, #0e0499ff, #2dafd3ff)",

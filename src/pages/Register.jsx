@@ -33,16 +33,16 @@ function Register() {
             <FireworksBackground className="absolute inset-0 flex items-center justify-center rounded-xl opacity-50"
                 color="blue" fireworkSize="2" particleSize={2}
                 population={0.5} />
-            <div className={"flex flex-col gap-4 items-center justify-center min-h-screen "}>
-                <h2 className="text-xl lg:text-3xl font-bold font-text
+            <div className={"flex flex-col gap-4 items-center justify-center min-h-screen px-4"}>
+                <h2 className="text-lg sm:text-xl lg:text-3xl font-bold font-text text-center
     [text-shadow:2px_2px_0_white,4px_4px_12px_rgba(0,0,0,0.45)]
     drop-shadow-[4px_6px_18px_rgba(0,122,255,0.55)]
 ">
                     Bienvenue sur Banque Republic
                 </h2>
 
-                <form className="my-8 bg-white dark:bg-black px-6 rounded-xl relative z-30 shadow-lg py-6 border font-text" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+                <form className="my-6 sm:my-8 bg-white dark:bg-black px-4 sm:px-6 rounded-xl relative z-30 shadow-lg py-4 sm:py-6 border font-text w-full max-w-md" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="mb-3 sm:mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                         <Controller name={"first_name"}
                             control={control}
                             defaultValue={""}
@@ -50,8 +50,8 @@ function Register() {
                             render={({ field,
                                 fieldState }) => (
                                 <LabelInputContainer>
-                                    <Label htmlFor="firstname">Prénom</Label>
-                                    <Input {...field} id="firstname" placeholder="Tyler" type="text" />
+                                    <Label htmlFor="firstname" className="text-sm">Prénom</Label>
+                                    <Input {...field} id="firstname" placeholder="Tyler" type="text" className="text-sm sm:text-base" />
                                     {fieldState.error && (
                                         <p className="text-red-500 text-xs ml-2">
                                             {fieldState.error.message}
@@ -69,8 +69,8 @@ function Register() {
                                 fieldState }) => (
 
                                 <LabelInputContainer>
-                                    <Label htmlFor="last_name">Nom</Label>
-                                    <Input {...field} id="last_name" placeholder="Durden" type="text" />
+                                    <Label htmlFor="last_name" className="text-sm">Nom</Label>
+                                    <Input {...field} id="last_name" placeholder="Durden" type="text" className="text-sm sm:text-base" />
                                     {fieldState.error && (
                                         <p className="text-red-500 text-xs ml-2">
                                             {fieldState.error.message}
@@ -87,9 +87,9 @@ function Register() {
                         rules={{ required: "L'adresse est requise" }}
                         render={({ field,
                             fieldState }) => (
-                            <LabelInputContainer className={"mb-4"}>
-                                <Label htmlFor="address">Adresse</Label>
-                                <Input {...field} id="address" placeholder="1 rue du moulin rouge" type="text" />
+                            <LabelInputContainer className={"mb-3 sm:mb-4"}>
+                                <Label htmlFor="address" className="text-sm">Adresse</Label>
+                                <Input {...field} id="address" placeholder="1 rue du moulin rouge" type="text" className="text-sm sm:text-base" />
                                 {fieldState.error && (
                                     <p className="text-red-500 text-xs ml-2">
                                         {fieldState.error.message}
@@ -105,9 +105,9 @@ function Register() {
                         rules={{ required: "L'adresse mail est requise" }}
                         render={({ field,
                             fieldState }) => (
-                            <LabelInputContainer className={"mb-4"}>
-                                <Label htmlFor="email">Adresse mail</Label>
-                                <Input {...field} id="email" placeholder="email@gmail.com" type="email" />
+                            <LabelInputContainer className={"mb-3 sm:mb-4"}>
+                                <Label htmlFor="email" className="text-sm">Adresse mail</Label>
+                                <Input {...field} id="email" placeholder="email@gmail.com" type="email" className="text-sm sm:text-base" />
                                 {fieldState.error && (
                                     <p className="text-red-500 text-xs ml-2">
                                         {fieldState.error.message}
@@ -129,9 +129,9 @@ function Register() {
                         }}
                         render={({ field,
                             fieldState }) => (
-                            <LabelInputContainer className={"mb-4"}>
-                                <Label htmlFor="password">Mot de passe</Label>
-                                <Input {...field} id="password" placeholder="••••••••" type="password" />
+                            <LabelInputContainer className={"mb-3 sm:mb-4"}>
+                                <Label htmlFor="password" className="text-sm">Mot de passe</Label>
+                                <Input {...field} id="password" placeholder="••••••••" type="password" className="text-sm sm:text-base" />
                                 {fieldState.error && (
                                     <p className="text-red-500 text-xs ml-2">
                                         {fieldState.error.message}
@@ -156,9 +156,9 @@ function Register() {
                         }}
                         render={({ field,
                             fieldState }) => (
-                            <LabelInputContainer className={"mb-8"}>
-                                <Label htmlFor="confirm_password">Confirmer votre mot de passe</Label>
-                                <Input {...field} id="confirm_password" placeholder="••••••••" type="password" />
+                            <LabelInputContainer className={"mb-6 sm:mb-8"}>
+                                <Label htmlFor="confirm_password" className="text-sm">Confirmer votre mot de passe</Label>
+                                <Input {...field} id="confirm_password" placeholder="••••••••" type="password" className="text-sm sm:text-base" />
                                 {fieldState.error && (
                                     <p className="text-red-500 text-xs ml-2">
                                         {fieldState.error.message}
@@ -168,9 +168,9 @@ function Register() {
                         )}
                     />
 
-                    <p className="text-sm italic font-light text-gray-500 text-center mb-6"> Déjà inscrit ? <a href={"/login"} className={"hover:underline"}>Se connecter</a> </p>
+                    <p className="text-xs sm:text-sm italic font-light text-gray-500 text-center mb-4 sm:mb-6"> Déjà inscrit ? <a href={"/login"} className={"hover:underline"}>Se connecter</a> </p>
                     <button
-                        className="group/btn relative block cursor-pointer h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+                        className="group/btn relative block cursor-pointer h-10 sm:h-11 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset] text-sm sm:text-base active:scale-95 transition-transform"
                         type="submit"
                     >
                         S'inscrire &rarr;

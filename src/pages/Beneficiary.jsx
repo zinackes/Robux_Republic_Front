@@ -50,24 +50,25 @@ function Beneficiary() {
   return (
     <AppLayout>
 
-      <div className="min-h-screen px-30">
+      <div className="min-h-screen px-4 sm:px-8 md:px-30 py-6 sm:py-8">
 
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-4xl font-extrabold text-gray-800 flex items-center gap-3 dark:text-gray-100">
-          <User className="w-10 h-10 text-indigo-600" />
-          Liste des Bénéficiaires
+      <div className="flex items-center justify-between mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 flex items-center gap-2 sm:gap-3 dark:text-gray-100">
+          <User className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600" />
+          <span className="hidden sm:inline">Liste des Bénéficiaires</span>
+          <span className="sm:hidden">Bénéficiaires</span>
         </h1>
       </div>
 
 
       {showForm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-[200] px-4 sm:px-6 py-4">
           <div
             className="
       relative
-      rounded-3xl 
-      p-[2px] 
-      max-w-md 
+      rounded-2xl sm:rounded-3xl
+      p-[2px]
+      max-w-md
       w-full
       bg-black
       overflow-hidden
@@ -79,9 +80,9 @@ function Beneficiary() {
           >
             <div
               className="
-        bg-white 
-        rounded-3xl 
-        p-8 
+        bg-white
+        rounded-2xl sm:rounded-3xl
+        p-6 sm:p-8
         border border-gray-200
         bg-gradient-to-br from-white to-gray-50
         hover:shadow-xl transition-shadow
@@ -89,11 +90,11 @@ function Beneficiary() {
       "
             >
 
-              <div className="flex items-center gap-3 mb-6 pb-3 border-b border-gray-200 ">
+              <div className="flex items-center gap-3 mb-4 sm:mb-6 pb-3 border-b border-gray-200">
                 <div className="p-2 rounded-xl bg-indigo-100 border border-indigo-200 dark:bg-indigo-900 dark:border-indigo-800">
-                  <PlusCircle className="w-6 h-6 text-indigo-600" />
+                  <PlusCircle className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100">
                   Ajouter un Bénéficiaire
                 </h2>
               </div>
@@ -103,7 +104,7 @@ function Beneficiary() {
                   placeholder="Nom du bénéficiaire"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="border border-gray-300 p-3 mb-4 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  className="border border-gray-300 p-2.5 sm:p-3 mb-3 sm:mb-4 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
                 />
 
                 <input
@@ -111,7 +112,7 @@ function Beneficiary() {
                   placeholder="IBAN"
                   value={iban}
                   onChange={(e) => setIban(e.target.value)}
-                  className="border border-gray-300 p-3 mb-4 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  className="border border-gray-300 p-2.5 sm:p-3 mb-3 sm:mb-4 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
                 />
 
                 {error && (
@@ -143,7 +144,7 @@ function Beneficiary() {
           </div>
         )}
 
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 
         <li
           onClick={() => setShowForm(true)}

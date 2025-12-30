@@ -51,18 +51,17 @@ function Home() {
   };
 
   return (
-    <>
-      <HomeLayout/>
-
-      <div
-          className={cn(
-              "absolute inset-0 z-0 pointer-events-none",
-              "[background-size:40px_40px]",
-              "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
-              "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
-          )}
-      />
-        <div className={"flex flex-col justify-between min-h-screen py-10 overflow-hidden"}>
+    <HomeLayout>
+      <div className={"relative min-h-screen overflow-hidden"}>
+        <div
+            className={cn(
+                "fixed inset-0 z-0 pointer-events-none",
+                "[background-size:40px_40px]",
+                "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
+                "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
+            )}
+        />
+        <div className={"relative z-10 flex flex-col justify-between min-h-screen py-10"}>
           <div className={"flex flex-col gap-1 items-center h-full my-auto"}>
             <h1 className={"relative z-20 font-title py-8 !text-5xl !font-bold sm:!text-6xl md:!text-7xl flex items-baseline gap-6"}>
               <motion.div className="relative mx-4 my-4 flex flex-col items-center justify-center gap-4 text-center sm:mx-0 sm:mb-0 sm:flex-row">
@@ -73,14 +72,14 @@ function Home() {
               </motion.div>
             </h1>
             <p className={"relative z-20 font-text text-gray-600 md:text-lg text-md max-w-2xl text-center px-4 dark:text-gray-400"}>
-              Bienvenue à Banque Republic. La banque nouvelle génération pour les joueurs. Transformez vos euros en véritable capital.
+              Bienvenue à Banque Republic DEVHOPS. La banque nouvelle génération pour les joueurs. Transformez vos euros en véritable capital.
             </p>
 
           </div>
 
-          <div className={"relative z-20 w-full max-w-6xl mx-auto px-5 gap-10 flex flex-col md:flex-row justify-center md:justify-around items-center mt-20 md:mt-auto font-text font-medium"}>
+          <div className={"relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-5 gap-6 sm:gap-10 flex flex-col md:flex-row justify-center md:justify-around items-center mt-10 sm:mt-20 md:mt-auto font-text font-medium"}>
 
-            <div className="bg-white dark:bg-gray-800 rounded-[2rem] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 dark:border-neutral-800 h-full flex flex-col transition-colors duration-300">
+            <div className="bg-white dark:bg-gray-800 rounded-[2rem] p-3 sm:p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 dark:border-neutral-800 h-full flex flex-col transition-colors duration-300 w-full max-w-sm">
 
               <div className="bg-gray-50 dark:bg-gray-700 rounded-[1.5rem] p-6 flex flex-col gap-6 relative transition-colors duration-300">
 
@@ -140,7 +139,7 @@ function Home() {
               </div>
             </div>
 
-            <div className="flex justify-center items-center py-10 md:py-0 w-[500px] mt-10 pointer-events-none">
+            <div className="flex justify-center items-center py-10 md:py-0 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] mt-10 md:mt-0 pointer-events-none">
               <CardSwap
                   cardDistance={35}
                   verticalDistance={40}
@@ -178,7 +177,8 @@ function Home() {
             </div>
           </div>
         </div>
-    </>
+      </div>
+    </HomeLayout>
   );
 }
 

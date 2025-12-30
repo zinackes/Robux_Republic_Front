@@ -377,16 +377,16 @@ function DepotCardForm({allBankAccounts = [], onSuccess}) {
 
 
             {loading && (
-                <div className={"absolute w-full h-full top-0 left-0 bg-white flex items-center justify-center"}>
+                <div className={"fixed inset-0 z-[150] bg-white dark:bg-gray-900 flex flex-col items-center justify-center"}>
                     <MultiStepLoader loadingStates={loadingStates} duration={STEP_DURATION} loading={isLoading} loop={false}/>
 
-                    <div className={"z-999 mt-auto mb-10 flex flex-col items-center"}>
+                    <div className={"absolute bottom-6 sm:bottom-10 left-0 right-0 flex flex-col items-center px-4 z-[200]"}>
                         <Button
                             onClick={onCancel}
-                            className={"z-999 flex items-center font-bold bg-red-50 text-red-600 hover:!bg-red-100 px-10 py-5"}>
-                            <X size={50}/> Annuler l'opération
+                            className={"flex items-center gap-2 font-bold bg-red-50 text-red-600 hover:!bg-red-100 px-6 sm:px-10 py-3 sm:py-5 text-sm sm:text-base min-h-[44px] shadow-lg"}>
+                            <X size={20} className="sm:w-6 sm:h-6"/> Annuler l'opération
                         </Button>
-                        <p className={"text-center text-xs text-gray-400 mt-2 z-999 max-w-xs"}>
+                        <p className={"text-center text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 mt-2 max-w-xs"}>
                             L'opération sera validée automatiquement à la fin du temps imparti
                         </p>
                     </div>

@@ -1,16 +1,15 @@
 services:
   frontend:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-      args:
-        - VITE_BASE_API_URL=https://api-banque-republic.micdev.fr
+    image: ghcr.io/zinackes/robux_republic_front/frontendbank:latest
     container_name: react_app
     restart: always
     ports:
-      - "6683:3000" 
+      - "6683:3000"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     networks:
       - reseau_partage
+
 networks:
   reseau_partage:
     external: true

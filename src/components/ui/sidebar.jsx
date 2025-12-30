@@ -87,16 +87,8 @@ export const MobileSidebar = ({
   const { open, setOpen } = useSidebar();
   return (
     <>
-      <div
-        className={cn(
-          "h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full"
-        )}
-        {...props}>
-        <div className="flex justify-end z-20 w-full">
-          <IconMenu2
-            className="text-neutral-800 dark:text-neutral-200"
-            onClick={() => setOpen(!open)} />
-        </div>
+      {/* MobileSidebar désactivé - le burger menu est maintenant géré dans AppLayout */}
+      <div className="hidden">
         <AnimatePresence>
           {open && (
             <motion.div

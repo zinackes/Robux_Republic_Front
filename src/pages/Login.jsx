@@ -36,8 +36,8 @@ function Login() {
             <FireworksBackground className="absolute inset-0 flex items-center justify-center rounded-xl opacity-50"
                 color="blue" fireworkSize="2" particleSize={2}
                 population={0.5} />
-            <div className={"flex flex-col gap-4 items-center justify-center min-h-screen "}>
-                <h2 className="text-xl lg:text-3xl font-bold font-text
+            <div className={"flex flex-col gap-4 items-center justify-center min-h-screen px-4"}>
+                <h2 className="text-lg sm:text-xl lg:text-3xl font-bold font-text text-center
     [text-shadow:2px_2px_0_white,4px_4px_12px_rgba(0,0,0,0.45)]
     drop-shadow-[4px_6px_18px_rgba(0,122,255,0.55)]
 ">
@@ -46,7 +46,7 @@ function Login() {
 
 
 
-                <form className="my-8 bg-white dark:bg-black px-6 rounded-xl relative z-30 shadow-lg py-6 border font-text" onSubmit={handleSubmit(onSubmit)}>
+                <form className="my-6 sm:my-8 bg-white dark:bg-black px-4 sm:px-6 rounded-xl relative z-30 shadow-lg py-4 sm:py-6 border font-text w-full max-w-md" onSubmit={handleSubmit(onSubmit)}>
 
                     <Controller name={"email"}
                         control={control}
@@ -54,9 +54,9 @@ function Login() {
                         rules={{ required: "L'adresse mail est requise" }}
                         render={({ field,
                             fieldState }) => (
-                            <LabelInputContainer className={"mb-4"}>
-                                <Label htmlFor="email">Adresse mail</Label>
-                                <Input {...field} id="email" placeholder="email@gmail.com" type="email" />
+                            <LabelInputContainer className={"mb-3 sm:mb-4"}>
+                                <Label htmlFor="email" className="text-sm">Adresse mail</Label>
+                                <Input {...field} id="email" placeholder="email@gmail.com" type="email" className="text-sm sm:text-base" />
                                 {fieldState.error && (
                                     <p className="text-red-500 text-xs ml-2">
                                         {fieldState.error.message}
@@ -78,9 +78,9 @@ function Login() {
                         }}
                         render={({ field,
                             fieldState }) => (
-                            <LabelInputContainer className={"mb-4"}>
-                                <Label htmlFor="password">Mot de passe</Label>
-                                <Input {...field} id="password" placeholder="••••••••" type="password" />
+                            <LabelInputContainer className={"mb-3 sm:mb-4"}>
+                                <Label htmlFor="password" className="text-sm">Mot de passe</Label>
+                                <Input {...field} id="password" placeholder="••••••••" type="password" className="text-sm sm:text-base" />
                                 {fieldState.error && (
                                     <p className="text-red-500 text-xs ml-2">
                                         {fieldState.error.message}
@@ -90,16 +90,16 @@ function Login() {
                         )}
                     />
 
-                    <p className="text-sm italic font-light text-gray-500 text-center mb-6"> Pas encore inscrit ? <a href={"/register"} className={"hover:underline"}>S'inscrire</a> </p>
+                    <p className="text-xs sm:text-sm italic font-light text-gray-500 text-center mb-4 sm:mb-6"> Pas encore inscrit ? <a href={"/register"} className={"hover:underline"}>S'inscrire</a> </p>
 
                     <button
-                        className="group/btn relative block cursor-pointer h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+                        className="group/btn relative block cursor-pointer h-10 sm:h-11 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset] text-sm sm:text-base active:scale-95 transition-transform"
                         type="submit"
                     >
                         Se connecter &rarr;
                     </button>
 
-                    <p className={"text-red-500 text-sm text-center mt-3"}>{error}</p>
+                    <p className={"text-red-500 text-xs sm:text-sm text-center mt-3"}>{error}</p>
                 </form>
             </div>
         </>

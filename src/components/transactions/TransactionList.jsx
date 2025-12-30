@@ -56,86 +56,93 @@ const TransactionList = ({ transactions, toggleView, isExpanded, bankAccountList
     );
   }
   return (
-    <div className="border rounded-lg overflow-hidden bg-white shadow-sm dark:bg-gray-800 ">
-      <div className="flex justify-between items-center px-4 py-3 border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-        <h3 className="font-semibold text-gray-700 dark:text-gray-200">Transactions récentes</h3>
+    <div className="border rounded-lg overflow-hidden bg-white shadow-sm dark:bg-gray-800">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-3 sm:px-4 py-3 border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700 gap-3 sm:gap-0">
+        <h3 className="font-semibold text-sm sm:text-base text-gray-700 dark:text-gray-200">Transactions récentes</h3>
 
-        <div className={"flex items-center gap-10"}>
-          <div className="flex items-center space-x-2 text-sm dark:text-gray-300">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-10 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:space-x-2 text-sm dark:text-gray-300">
             <Autocomplete
                 value={query}
                 onChange={setQuery}
                 suggestionsList={transactionsName}
-                placeholder={"Chercher une transaction..."}
+                placeholder={"Chercher..."}
+                className="w-full sm:w-auto"
             />
-            <span className="text-gray-400 text-xs mr-1 whitespace-nowrap mr-2">Trier par date :</span>
+            <div className="flex items-center gap-2">
+              <span className="text-gray-400 text-xs whitespace-nowrap">Trier par date :</span>
 
-            <button
-                onClick={() => setSortOrder("asc")}
-                className={`p-1 rounded hover:bg-gray-200 transition dark:hover:bg-gray-700 ${
-                    sortOrder === "asc"
-                        ? "text-blue-600 bg-blue-50 font-bold dark:bg-gray-700 hover:bg-gray-700"
-                        : "text-gray-500 dark:text-gray-400"
-                }`}
-                title="Plus anciennes en premier"
-            >
-              <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <button
+                  onClick={() => setSortOrder("asc")}
+                  className={`p-1.5 sm:p-1 rounded hover:bg-gray-200 transition dark:hover:bg-gray-700 ${
+                      sortOrder === "asc"
+                          ? "text-blue-600 bg-blue-50 font-bold dark:bg-gray-700"
+                          : "text-gray-500 dark:text-gray-400"
+                  }`}
+                  title="Plus anciennes en premier"
               >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                />
-              </svg>
-            </button>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                  <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
+                  />
+                </svg>
+              </button>
 
-            <button
-                onClick={() => setSortOrder("desc")}
-                className={`p-1 rounded hover:bg-gray-200 transition dark:hover:bg-gray-700 ${
-                    sortOrder === "desc"
-                        ? "text-blue-600 bg-blue-50 font-bold dark:bg-gray-700 hover:bg-gray-700"
-                        : "text-gray-500"
-                }`}
-                title="Plus récentes en premier"
-            >
-              <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <button
+                  onClick={() => setSortOrder("desc")}
+                  className={`p-1.5 sm:p-1 rounded hover:bg-gray-200 transition dark:hover:bg-gray-700 ${
+                      sortOrder === "desc"
+                          ? "text-blue-600 bg-blue-50 font-bold dark:bg-gray-700"
+                          : "text-gray-500"
+                  }`}
+                  title="Plus récentes en premier"
               >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
-                />
-              </svg>
-            </button>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                  <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {sortedFilteredTransactions.map((t) => (
-        <div
-          key={`${t.id}-${t.user_iban}-${t.timestamp}`}
-          className="cursor-pointer hover:bg-gray-100 transition-colors duration-200 border-b last:border-b-0 dark:hover:bg-gray-700"
-          onClick={() => setSelectedTransaction(t)}
-        >
-          <TransactionItem transaction={t} />
+      <div className="overflow-x-auto">
+        <div className="min-w-[600px]">
+          {sortedFilteredTransactions.map((t) => (
+            <div
+              key={`${t.id}-${t.user_iban}-${t.timestamp}`}
+              className="cursor-pointer hover:bg-gray-100 transition-colors duration-200 border-b last:border-b-0 dark:hover:bg-gray-700"
+              onClick={() => setSelectedTransaction(t)}
+            >
+              <TransactionItem transaction={t} />
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
 
-      <div className="text-center py-4">
+      <div className="text-center py-3 sm:py-4">
         <button
-          className="hover:bg-gray-100 text-blue-600 font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out text-sm dark:hover:bg-gray-700 "
+          className="hover:bg-gray-100 text-blue-600 font-semibold py-2 px-3 sm:px-4 rounded-lg transition duration-150 ease-in-out text-xs sm:text-sm dark:hover:bg-gray-700"
           onClick={() => {
             toggleView(!isExpanded);
           }}

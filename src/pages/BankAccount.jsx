@@ -49,12 +49,12 @@ import {enrichTransactions} from "@/lib/utils.js";
 const ActionButton = ({ icon: Icon, label, onClick }) => (
   <button
     onClick={onClick}
-    className="flex flex-col items-center justify-center gap-3 p-4 bg-white rounded-3xl shadow-sm border border-gray-100 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md transition-all duration-200 group w-full aspect-square dark:bg-gray-800 dark:border-gray-700 dark:hover:border-blue-400 dark:hover:bg-blue-900/50"
+    className="flex flex-col items-center justify-center gap-2 sm:gap-3 p-3 sm:p-4 bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md transition-all duration-200 group w-full aspect-square active:scale-95 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-blue-400 dark:hover:bg-blue-900/50 min-h-[100px] sm:min-h-0"
   >
-    <div className="p-3 rounded-full bg-gray-50 text-gray-600 group-hover:bg-white group-hover:text-blue-600 transition-colors dark:bg-gray-700 dark:text-gray-400 dark:group-hover:bg-gray-900/50 dark:group-hover:text-blue-400">
-      <Icon size={24} />
+    <div className="p-2 sm:p-3 rounded-full bg-gray-50 text-gray-600 group-hover:bg-white group-hover:text-blue-600 transition-colors dark:bg-gray-700 dark:text-gray-400 dark:group-hover:bg-gray-900/50 dark:group-hover:text-blue-400">
+      <Icon size={20} className="sm:w-6 sm:h-6" />
     </div>
-    <span className="text-xs font-bold text-gray-500 group-hover:text-blue-600 tracking-wide uppercase">
+    <span className="text-[10px] sm:text-xs font-bold text-gray-500 group-hover:text-blue-600 tracking-wide uppercase text-center leading-tight">
       {label}
     </span>
   </button>
@@ -249,41 +249,43 @@ const handleTransactionSuccess = async (transaction) => {
   return (
     <AppLayout>
       <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex flex-row justify-between items-start">
-          <div className="flex flex-col space-y-4">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0">
+          <div className="flex flex-col space-y-3 sm:space-y-4">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
               Détails du Compte
             </h1>
             <button
               onClick={() => navigate("/dashboard")}
-              className="flex items-center text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors w-fit font-medium"
+              className="flex items-center text-sm sm:text-base text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors w-fit font-medium"
             >
-              <ArrowLeft size={20} className="mr-2" />
+              <ArrowLeft size={18} className="mr-2 sm:w-5 sm:h-5" />
               Retour au Dashboard
             </button>
           </div>
 
           <button
             onClick={() => setCreateTransactionIsVisible(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-blue-200 dark:shadow-none transition-all active:scale-95"
+            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-200 dark:shadow-none transition-all active:scale-95"
           >
-            <ArrowRightLeft size={18} />
+            <ArrowRightLeft size={16} className="sm:w-[18px] sm:h-[18px]" />
             Faire une transaction
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-6 flex flex-col gap-8">
-            <div>
-              <BankCard
-                label="SOLDE ACTUEL"
-                accountName={bankAccount.name}
-                balance={bankAccount.balance}
-                iban={bankAccount.iban}
-              />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+          <div className="lg:col-span-6 flex flex-col gap-6 sm:gap-8">
+            <div className="w-full flex justify-center">
+              <div className="w-full">
+                <BankCard
+                  label="SOLDE ACTUEL"
+                  accountName={bankAccount.name}
+                  balance={bankAccount.balance}
+                  iban={bankAccount.iban}
+                />
+              </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full">
               <ActionButton
                 icon={Download}
                 label="RIB / IBAN"
@@ -308,9 +310,9 @@ const handleTransactionSuccess = async (transaction) => {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 h-full flex flex-col justify-between dark:bg-gray-800 dark:border-gray-700">
-              <div className="flex justify-between items-start mb-8">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="bg-white rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 shadow-sm border border-gray-100 h-full flex flex-col justify-between dark:bg-gray-800 dark:border-gray-700">
+              <div className="flex justify-between items-start mb-6 sm:mb-8">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                   Plafonds de carte
                 </h3>
               </div>
