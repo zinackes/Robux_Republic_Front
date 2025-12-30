@@ -72,7 +72,7 @@ function Home() {
               </motion.div>
             </h1>
             <p className={"relative z-20 font-text text-gray-600 md:text-lg text-md max-w-2xl text-center px-4 dark:text-gray-400"}>
-              Bienvenue à Banque Republic DEVHOPS. La banque nouvelle génération pour les joueurs. Transformez vos euros en véritable capital.
+              Bienvenue à Banque Republic. La banque nouvelle génération pour les joueurs. Transformez vos euros en véritable capital.
             </p>
 
           </div>
