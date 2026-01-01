@@ -178,7 +178,7 @@ export default function AppLayout({ children }) {
           </button>
 
           {/* Texte centré sur mobile, à gauche sur desktop */}
-          <div className="flex-1 md:flex-initial text-center md:text-left">
+          <div className="flex-1 text-center md:text-left">
             <h2 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 dark:text-white">
               Bienvenue, {user?.first_name || "Utilisateur"} 👋
             </h2>
