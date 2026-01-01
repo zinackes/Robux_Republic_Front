@@ -86,8 +86,8 @@ export default function ProjectInfoModal({
                   <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-1">Équipe & durée</h3>
                   <p className="text-sm sm:text-base">
                     Développé par une équipe de <span className="font-semibold">4 personnes</span> en
-                    <span className="font-semibold"> 2 semaines</span>, dont une semaine consacrée au développement
-                    et une semaine dédiée au DevOps.
+                    <span className="font-semibold"> 3 semaines</span> : 1 semaine dédiée au backend FastAPI,
+                    1 semaine au frontend React, et 1 semaine au DevOps.
                   </p>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip.jsx";
 import { ArrowUpDown, Coins } from "lucide-react";
@@ -9,15 +9,7 @@ import {cn} from "@/lib/utils.js";
 import ProjectInfoModal from "@/components/modals/ProjectInfoModal.jsx";
 
 function Home() {
-  const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(false);
-
-  useEffect(() => {
-    const hasSeenProjectInfo = localStorage.getItem("hasSeenProjectInfo");
-    if (!hasSeenProjectInfo) {
-      setIsProjectInfoOpen(true);
-      localStorage.setItem("hasSeenProjectInfo", "true");
-    }
-  }, []);
+  const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(true);
 
   const [convertMoney, setConvertMoney] = useState({
     top: {
