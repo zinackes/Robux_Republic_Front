@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip.jsx";
 import { ArrowUpDown, Coins } from "lucide-react";
@@ -6,8 +6,18 @@ import BankCard from "@/components/Card.jsx";
 import CardSwap, { Card } from "@/components/CardSwap.jsx";
 import HomeLayout from "@/components/layouts/HomeLayout.jsx";
 import {cn} from "@/lib/utils.js";
+import ProjectInfoModal from "@/components/modals/ProjectInfoModal.jsx";
 
 function Home() {
+  const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(false);
+
+  useEffect(() => {
+    const hasSeenProjectInfo = localStorage.getItem("hasSeenProjectInfo");
+    if (!hasSeenProjectInfo) {
+      setIsProjectInfoOpen(true);
+      localStorage.setItem("hasSeenProjectInfo", "true");
+    }
+  }, []);
 
   const [convertMoney, setConvertMoney] = useState({
     top: {
@@ -52,6 +62,10 @@ function Home() {
 
   return (
     <HomeLayout>
+      <ProjectInfoModal
+        open={isProjectInfoOpen}
+        onClose={() => setIsProjectInfoOpen(false)}
+      />
       <div className={"relative min-h-screen overflow-hidden"}>
         <div
             className={cn(
